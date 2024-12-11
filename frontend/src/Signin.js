@@ -1,68 +1,77 @@
-
+import './css/signCss.css';
 import { useRef } from "react";
+import TailButton from "./UI/TailButton";
+import LogoButton from "./UI/LogoButton";
 
 export default function Signin() {
+
   const signinId = useRef();
   const signinPw = useRef();
 
   const clickSignIn = () => {
     console.log("로그인 버튼 클릭");
-    
+
     //입력 공백 확인
-    if(!signinId.current.value){
+    if (!signinId.current.value) {
       alert("이메일을 입력하세요");
       signinId.current.focus();
       return;
     }
 
-    if(!signinPw.current.value){
+    if (!signinPw.current.value) {
       alert("비밀번호를 입력하세요");
       signinPw.current.focus();
       return;
     }
 
     const loginData = {
-      email : signinId.current.value,
-      password : signinPw.current.value
+      email: signinId.current.value,
+      password: signinPw.current.value
     }
   }
 
   return (
-    <div className="w-full h-3/4 lg:w-5/6 xl:w-4/6 flex flex-col justify-center items-center">
-      <form className="flex flex-col w-128
-                       rounded px-8 py-8 mb-4">
-        <label for="email" className="block text-gray-700 text-lg font-bold mb-2">
+    <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">
+      <form className="flex flex-col w-[360px]">
+        <label for="email" className="input_label">
           이메일</label>
         <input id="email" type="text" placeholder="abc@abc.com" ref={signinId}
-              className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 
-               leading-tight focus:outline-none focus:shadow-outline"></input>
-        <label for="password" className="block text-gray-700 text-lg font-bold mb-2 mt-10">
+          className="input_box"></input>
+        <label for="password" className="input_label ">
           비밀번호</label>
         <input id="password" type="password" placeholder="********" ref={signinPw}
-              className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 
-              leading-tight focus:outline-none focus:shadow-outline"></input>
-        <div class="flex items-center justify-center">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold 
-                          w-96 mt-12
-                          py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                  type="button"
-                  onClick={clickSignIn}>
-            로그인하기
-          </button>
+          className="input_box "></input>
+        <div className="flex items-center justify-center mt-[10px]">
+
+
+          <TailButton caption={'로그인하기'} color={'blue'} handleClick={clickSignIn}
+            style={'w-[360px] h-12 text-[14px] border-2 border-gray-300 '} />
         </div>
+
+
       </form>
+      {/* ============  다른방법으로 로그인 ============  */}
+      <div className="flex flex-col w-[360px] mt-12 ">
+        <div className='text-[12px] text-gray-500 mb-2 font-NanumSquareR'>다른 방법으로 로그인</div>
+        <div className="flex-col items-center justify-center">
+          <LogoButton caption={'NAVER 로그인'} color={'naver'} handleClick={clickSignIn}
+            style={'w-[360px] h-12 text-[14px] mb-4'} />
+          <LogoButton caption={'KAKAO 로그인'} color={'kakao'} handleClick={clickSignIn}
+            style={'w-[360px] h-12 text-[14px] mb-4'} />
+          <LogoButton caption={'GOOGLE 로그인'} color={'google'} handleClick={clickSignIn}
+            style={'w-[360px] h-12 text-[14px] mb-4'} />
+        </div>
 
-      <div>
-        <span> 회원가입</span>
-        {/* <span className="mx-2"> | </span> 
-        <span> 아이디찾기</span> */}
+        <div className="mt-8 flex items-center justify-center">
+          <div className='text-[12px] text-gray-500 mb-2 underline underline-offset-1 font-NanumSquareR'>
+            <a href='/signup'>회원가입</a>
+            </div>
+
+        </div>
+
       </div>
 
-      <div className="mt-8">
-        <span> 다른 방법으로 로그인</span>
-        
-      </div>
-      
     </div>
+
   )
 }

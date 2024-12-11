@@ -1,0 +1,32 @@
+.input_label {
+    width: 298px;
+    height: 20px;
+
+    margin-bottom: 10px;
+    padding-left: 2px;
+
+    font-family: 'NanumSquareNeoB';
+    font-style: normal;
+    /* font-weight: 600; */
+    font-size: 14px;
+}
+
+.input_box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px;
+
+    width: 360px;
+    min-width: 240px;
+    height: 44px;
+
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+
+    margin-bottom: 30px;
+
+    font-weight: 400;
+    font-size: 14px;
+}
