@@ -5,6 +5,9 @@ module.exports = {
     extend: {
       width: {
         '128': '32rem',
+      },
+      fontFamily :{
+        'NanumSquareR' : 'NanumSquareR'
       }
     },
   },
