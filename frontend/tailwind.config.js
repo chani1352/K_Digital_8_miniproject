@@ -7,7 +7,9 @@ module.exports = {
         '128': '32rem',
       },
       fontFamily :{
-        'NanumSquareR' : 'NanumSquareR'
+        'NanumSquareR' : 'NanumSquareR',
+        'NanumSquareNeo' : 'NanumSquareNeo',
+        'NanumSquareNeoB' : 'NanumSquareNeoB'
       }
     },
   },

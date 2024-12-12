@@ -29,7 +29,36 @@
     font-size: 14px;
 }
 
+.input_box_short {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px;
 
+    min-width: 240px;
+    height: 44px;
+
+    background: #FFFFFF;
+    /* border:  */
+    border-radius: 8px;
+
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.border_normal {
+    border : 1px solid #D9D9D9;
+}
+
+.border_err {
+    border : 1px solid #ff0000;
+
+}
+
+.border_err:focus {
+    border : 1px solid #ff0000;
+    outline: none;
+}
 .input_box_err {
     display: flex;
     flex-direction: row;

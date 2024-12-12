@@ -8,7 +8,8 @@ export default function Signin() {
   const signinId = useRef();
   const signinPw = useRef();
 
-  const clickSignIn = () => {
+  const clickSignIn = (e) => {
+    e.preventDefault();
     console.log("로그인 버튼 클릭");
 
     //입력 공백 확인

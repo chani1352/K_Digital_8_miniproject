@@ -6,6 +6,7 @@ import './HeaderCss.css';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Signin from "./Signin";
 import Signup from "./Signup";
+import Welcome from './Welcome';
 
 function App() {
   return (
@@ -39,12 +40,13 @@ function App() {
         </div>
       </header>
       {/* ===================== 메인 =================== */}
-      <main className='w-full h-full grow flex flex-col items-center
+      <main className='w-full h-full min-h-[800px] grow flex flex-col items-center
                           overflow-y-auto'>
 
         <Routes>
           <Route path='/login' element={<Signin/>} />
           <Route path='/signup' element={<Signup/>} />
+          <Route path='/welcome' element={<Welcome/>} />
         </Routes>
       </main>
       <footer className='w-full h-[150px] flex bg-slate-300'> 
