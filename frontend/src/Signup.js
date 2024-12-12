@@ -86,7 +86,11 @@ export default function Signup() {
     const postSignUp = async () => {
         
         console.log("post");
+<<<<<<< HEAD
         const url = 'http://10.125.121.214:8080/register';
+=======
+        const url = 'http://localhost:8080/register';
+>>>>>>> bd987e1cc70756c2aaad9fe8d99adc2f0df53ed6
         const postData = {
             method: 'POST',
             headers: {
@@ -122,6 +126,7 @@ export default function Signup() {
             return;
         }
         
+<<<<<<< HEAD
         const url = 'http://10.125.121.214:8080/findMember?email='+signupEmail.current.value;
 
         await fetch(url)
@@ -148,6 +153,12 @@ export default function Signup() {
         }).catch(err=>{
             console.error("Error fetching Board:", err);
         });
+=======
+        // const resp = await axios.post(url, postData);
+        const resp = await fetch('http://localhost:8080/register',postData);
+        if (resp.ok) console(resp);
+        else    console.log("실패");
+>>>>>>> bd987e1cc70756c2aaad9fe8d99adc2f0df53ed6
     }
 
     return (
