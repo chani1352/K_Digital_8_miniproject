@@ -1,6 +1,12 @@
+import './css/signCss.css';
+
 import { useRef, useState, useEffect } from "react";
+import axios from 'axios';
+
+import TailButton from "./UI/TailButton";
 
 export default function Signup() {
+    
     const signupEmail = useRef();
     const signupPw = useRef('');
     const signupPwConfirmed = useRef('');
@@ -20,62 +26,78 @@ export default function Signup() {
     }
 
     //비밀번호 일치 여부 셋팅
-    useEffect(()=>{
-        if(pwConfirmed === password && pwConfirmed.length>0){
+    useEffect(() => {
+        if (pwConfirmed === password && pwConfirmed.length > 0) {
             setIsPwConfirmed(true);
         } else {
             setIsPwConfirmed(false);
         }
-    },[pwConfirmed,password]);
+    }, [pwConfirmed, password]);
+
+    const clickSignUp = () => {
+
+        // form 유효성 다 확인 하고나서 post 진행
+        postSignUp();
+    }
+    
+
+    //서버에 전달
+    const postSignUp = async () => {
+        const url = 'http://localhost:8080/board';
+        const postData = {
+            method: 'POST',
+            header: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                email:signupEmail.current.value,
+                password:signupPw.current.value,
+                name:signupName.current.value,
+                number:signupContact.current.value
+            })
+        }
+        
+        const resp = await axios.post(url, postData);
+        console.log(resp);
+    }
 
     return (
-        <div className="w-full h-full lg:w-5/6 xl:w-4/6 flex flex-col justify-center items-center">
-            <form className="flex flex-col w-128
-                            rounded px-8 py-8 mb-4">          
-                <label for="email" className="block text-gray-700 text-lg font-bold mb-2 mt-10">
-                이메일</label>
+        <div className="w-[560px] h-full flex flex-col justify-center items-center">
+            <form className="flex flex-col w-[360px] my-10">
+                <label for="email" className="input_label mt-[30px]">
+                    이메일<span className='pl-1 text-red-500'>*</span></label>
                 <input id="email" type="text" placeholder="abc@abc.com" ref={signupEmail}
-                    className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 
-                    leading-tight focus:outline-none focus:shadow-outline"></input>
+                    className="input_box"></input>
 
-                <label for="password" className="block text-gray-700 text-lg font-bold mb-2 mt-10">
-                비밀번호</label>
+                <label for="password" className="input_label mt-[30px] ">
+                    비밀번호<span className='pl-1 text-red-500'>*</span></label>
                 <input id="password" type="password" placeholder="********" ref={signupPw}
                     onChange={changePassword}
-                    className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 
-                    leading-tight focus:outline-none focus:shadow-outline"></input>
+                    className="input_box"></input>
 
-                <label for="passwordcf" className="block text-gray-700 text-lg font-bold mb-2 mt-10">
-                비밀번호 확인</label>
+                <label for="passwordcf" className="input_label mt-[30px]">
+                    비밀번호 확인<span className='pl-1 text-red-500'>*</span></label>
                 <input id="passwordcf" type="password" placeholder="********" ref={signupPwConfirmed}
                     onChange={changePwConfirmed}
-                    className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 
-                    leading-tight focus:outline-none focus:shadow-outline"></input>
-                <span className={`${pwConfirmed.length===0? "hidden": isPwConfirmed? "hidden":"text-red-500 text-xs pt-1"}`}>
+                    className={`${pwConfirmed.length === 0 ? "input_box" : isPwConfirmed ? "input_box" : "focus:outline-none input_box_err"}`}></input>
+                <span className={`${pwConfirmed.length === 0 ? "hidden" : isPwConfirmed ? "hidden" : "text-red-500 text-xs pt-1"}`}>
                     비밀번호가 일치하지 않습니다
                 </span>
-                
-                <label for="name" className="block text-gray-700 text-lg font-bold mb-2 mt-10">
-                이름</label>
+
+                <label for="name" className="input_label mt-[30px]">
+                    이름<span className='pl-1 text-red-500'>*</span></label>
                 <input id="name" type="text" placeholder="홍길동" ref={signupName}
-                    className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 
-                    leading-tight focus:outline-none focus:shadow-outline"></input>
+                    className="input_box"></input>
 
-                <label for="contact" className="block text-gray-700 text-lg font-bold mb-2 mt-10">
-                연락처</label>
+                <label for="contact" className="input_label mt-[30px]">
+                    연락처</label>
                 <input id="contact" type="text" placeholder="01012345678" ref={signupContact}
-                    className="shadow appearance-none border rounded w-full h-14 py-2 px-3 text-gray-700 
-                    leading-tight focus:outline-none focus:shadow-outline"></input>
+                    className="input_box"></input>
 
-                <div class="flex items-center justify-center">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold 
-                                w-96 mt-12
-                                py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                        type="button"
-                        //   
-                        >
-                    회원가입하기
-                </button>
+                <div class="flex items-center justify-center mt-[45px] mb-[30px]">
+                    <TailButton caption={'회원가입하기'} color={'blue'} handleClick={clickSignUp}
+                        style={'w-[360px] h-12 text-[14px]'} />
+                    
                 </div>
             </form>
         </div>

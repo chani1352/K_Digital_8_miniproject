@@ -36,16 +36,16 @@ export default function Signin() {
         <label for="email" className="input_label">
           이메일</label>
         <input id="email" type="text" placeholder="abc@abc.com" ref={signinId}
-          className="input_box"></input>
+          className="input_box mb-[30px]"></input>
         <label for="password" className="input_label ">
           비밀번호</label>
         <input id="password" type="password" placeholder="********" ref={signinPw}
-          className="input_box "></input>
+          className="input_box mb-[30px]"></input>
         <div className="flex items-center justify-center mt-[10px]">
 
 
           <TailButton caption={'로그인하기'} color={'blue'} handleClick={clickSignIn}
-            style={'w-[360px] h-12 text-[14px] border-2 border-gray-300 '} />
+            style={'w-[360px] h-12 text-[14px] '} />
         </div>
 
 

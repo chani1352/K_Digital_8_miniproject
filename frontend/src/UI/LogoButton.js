@@ -1,9 +1,9 @@
 
 export default function TailButton({caption, color, handleClick, style}) {
     const btnStyle = {
-        'naver' : 'bg-[#00C300] text-white font-bold rounded border border-gray-200 border-2 border-gray-300',
-        'kakao' : 'bg-[#FAE100] text-[#666666] font-bold rounded border border-gray-200 border-2 border-gray-300',
-        'google' : 'bg-[#FFFFFF] text-[#666666] font-bold rounded border border-gray-200 border-2 border-gray-300'
+        'naver' : 'bg-[#00C300] text-white font-bold rounded',
+        'kakao' : 'bg-[#FAE100] text-[#666666] font-bold rounded',
+        'google' : 'bg-[#f5f5f5] text-[#666666] font-bold rounded '
     }
 
     const logoStyle = {
