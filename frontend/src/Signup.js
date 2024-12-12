@@ -48,10 +48,10 @@ export default function Signup() {
     //서버에 전달
     const postSignUp = async () => {
         console.log("post");
-        const url = 'http://10.125.121.214/8080/register';
+        const url = 'http://localhost:8080/register';
         const postData = {
             method: 'POST',
-            header: {
+            headers: {
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
@@ -68,7 +68,7 @@ export default function Signup() {
         }
         
         // const resp = await axios.post(url, postData);
-        const resp = await fetch('http://10.125.121.214/register',postData);
+        const resp = await fetch('http://localhost:8080/register',postData);
         if (resp.ok) console(resp);
         else    console.log("실패");
     }
