@@ -40,25 +40,37 @@ export default function Signup() {
         postSignUp();
     }
     
+    useEffect(()=>{
+        console.log("useEffect");
+        postSignUp();
+    },[])
 
     //서버에 전달
     const postSignUp = async () => {
-        const url = 'http://localhost:8080/board';
+        console.log("post");
+        const url = 'http://10.125.121.214/8080/register';
         const postData = {
             method: 'POST',
             header: {
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                email:signupEmail.current.value,
-                password:signupPw.current.value,
-                name:signupName.current.value,
-                number:signupContact.current.value
+                // email:signupEmail.current.value,
+                // password:signupPw.current.value,
+                // name:signupName.current.value,
+                // number:signupContact.current.value
+
+                email:"abc@abc.com",
+                password:"abc",
+                name:"홍길동",
+                number:"010-1234-1234"
             })
         }
         
-        const resp = await axios.post(url, postData);
-        console.log(resp);
+        // const resp = await axios.post(url, postData);
+        const resp = await fetch('http://10.125.121.214/register',postData);
+        if (resp.ok) console(resp);
+        else    console.log("실패");
     }
 
     return (
