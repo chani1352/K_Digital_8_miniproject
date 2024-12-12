@@ -1,10 +1,10 @@
-package com.backendTest;
+package com.pnu;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendTestApplicationTests {
+class TeamprojectApplicationTests {
 
 	@Test
 	void contextLoads() {
