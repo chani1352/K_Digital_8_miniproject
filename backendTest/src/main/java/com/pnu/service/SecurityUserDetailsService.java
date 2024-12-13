@@ -17,6 +17,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		System.out.println("UserDetails loadUserByUsername");  //확인용 
 		Member member = memRepo.findById(email).orElse(null);
 		if(member == null) throw new UsernameNotFoundException("Not Found");
 		//넘겨받은 이메일 비번 정보를 User객체에 저장
