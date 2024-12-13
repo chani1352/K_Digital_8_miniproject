@@ -21,6 +21,7 @@ public class MemberController {
 	
 	 @GetMapping("/register")
 	 public ResponseEntity<?> getMembers() {
+		 System.out.println("MemberController getMembers"); //확인용 
 		 log.info("getMembers: All");
 		 return ResponseEntity.ok(memberService.getMembers()); 
 	}
@@ -28,12 +29,14 @@ public class MemberController {
 	//회원 가입
 	@PostMapping("/register")
 	public Member registerMember(@RequestBody Member member){
+		System.out.println("MemberController registerMember"); //확인용 
 		return memberService.registerMember(member);
 	}
 	
 	//회원 가입시 이메일 중복 체크
 	@GetMapping("/findMember")
 	public boolean findMember(Member member) {
+		System.out.println("MemberController findMember"); //확인용 
 		return memberService.findMember(member);
 	}
 	

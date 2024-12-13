@@ -28,7 +28,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{ //인가 설�
 	@Override                                                                         //순차적으로 요청을 처리할수 있는 각 필터
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		System.out.println("doFilterInternal");  //확인용 
+		System.out.println("JWTAuthorizationFilter doFilterInternal");  //확인용 
 		
 		//Authorization: Bearer <JWT 토큰> 형태의 값을 추출 
 		String srcToken = request.getHeader("Authorization");
@@ -57,7 +57,5 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{ //인가 설�
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		filterChain.doFilter(request, response);
 	
-		
-				
 	}
 }

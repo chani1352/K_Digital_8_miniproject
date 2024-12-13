@@ -34,7 +34,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		System.out.println("Authentication attemptAuthentication");  //확인용 
+		System.out.println("JWTAuthenticationFilter attemptAuthentication");  //확인용 
 		ObjectMapper mapper = new ObjectMapper();
 		//JSON 데이터를 Java 객체로 변환하거나 (직렬화), Java 객체를 JSON 데이터로 변환하는 (역직렬화) 기능을 제공
 		try {
@@ -59,7 +59,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		System.out.println("successfulAuthentication"); //확인용 
+		System.out.println("JWTAuthenticationFilter successfulAuthentication"); //확인용 
 		User user = (User)authResult.getPrincipal();
 		System.out.println("auth:" + user);
 		

@@ -25,7 +25,7 @@ public class SecurityConfig {
 	//보안 필터체인 정의 메서드 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		System.out.println("SecurityFilterChain filterChain"); //확인용 
+		System.out.println("SecurityConfig filterChain"); //확인용 
 		http.csrf(cf->cf.disable());
 		http.authorizeHttpRequests(security->security
 									.requestMatchers("/member/**").authenticated()
@@ -41,6 +41,7 @@ public class SecurityConfig {
 	
 	@Bean
 	PasswordEncoder passEncoder() {
+		System.out.println("SecurityConfig passEncoder"); //확인용 
 		return new BCryptPasswordEncoder();
 	}
 
