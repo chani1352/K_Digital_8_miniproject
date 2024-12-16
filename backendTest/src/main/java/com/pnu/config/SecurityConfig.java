@@ -14,6 +14,9 @@ import com.pnu.config.filter.JWTAuthenticationFilter;
 import com.pnu.config.filter.JWTAuthorizationFilter;
 import com.pnu.persistence.MemberRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
 	
@@ -21,6 +24,8 @@ public class SecurityConfig {
 	private AuthenticationConfiguration authenticationConfiguration;
 	@Autowired
 	private MemberRepository memRepo;
+	
+	private final OAuth2SuccessHandler successHandler;
 	
 	//보안 필터체인 정의 메서드 
 	@Bean
@@ -35,14 +40,16 @@ public class SecurityConfig {
 		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
 		//JWT 인증 필터가 AuthorizationFilter 전에 실행되도록 설정하는 코드 
 		http.addFilterBefore(new JWTAuthorizationFilter(memRepo), AuthorizationFilter.class);
+		http.oauth2Login(oauth2->oauth2.loginPage("/login").defaultSuccessUrl("/loginSuccess",true));
+		http.oauth2Login(oauth2->oauth2.successHandler(successHandler));
 
 		return http.build();
 	}
 	
-	@Bean
-	PasswordEncoder passEncoder() {
-		System.out.println("SecurityConfig passEncoder"); //확인용 
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	PasswordEncoder passEncoder() {
+//		System.out.println("SecurityConfig passEncoder"); //확인용 
+//		return new BCryptPasswordEncoder();
+//	}
 
 }
