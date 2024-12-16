@@ -62,7 +62,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		System.out.println("JWTAuthenticationFilter successfulAuthentication"); //확인용 
 		User user = (User)authResult.getPrincipal();
 		System.out.println("auth:" + user);
-		
 		String token = JWT.create()   // JWT 토큰 생성 
 						  .withExpiresAt(new Date(System.currentTimeMillis() + 1000*60*100)) //토큰의 유효기간 100분 
 						  .withClaim("username",user.getUsername())

@@ -12,6 +12,7 @@ public class CustomConfig implements WebMvcConfigurer {
 		System.out.println("CustomConfig addCorsMappings"); //확인용 
 		registry.addMapping("/**") // 모든 경로에 대한 cors 설정 적용
 				.allowedOriginPatterns("*") // 모든 도메인에서의 요청 허용
+				//.allowedOrigins("http://localhost:3000","http://10.125.121.213:3000")
 				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 모든 HTTP 메소드 허용
 				.allowedHeaders("*") // 모든 헤더를 허용
 				.allowCredentials(true) // 쿠키와 같은 자격증명을 포함한 요청 허용
