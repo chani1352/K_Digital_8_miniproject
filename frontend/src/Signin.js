@@ -1,14 +1,14 @@
 import './css/signCss.css';
-import { useRef } from "react";
+import { useRef, useState} from "react";
 import TailButton from "./UI/TailButton";
 import LogoButton from "./UI/LogoButton";
 
 export default function Signin() {
-
+  const [token, setToken] = useState(null);
   const signinId = useRef();
   const signinPw = useRef();
 
-  const clickSignIn = (e) => {
+  const clickSignIn = async(e) => {
     e.preventDefault();
     console.log("로그인 버튼 클릭");
 
@@ -26,9 +26,66 @@ export default function Signin() {
     }
 
     const loginData = {
+      method: 'POST',
+      headers: {
+          'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
       email: signinId.current.value,
       password: signinPw.current.value
+    })
     }
+
+    
+    const url = 'http://10.125.121.214:8080/login';
+    
+    try {
+      const resp = await fetch(url, loginData);  // 로그인 요청 보내기
+      const result = await resp.json();  // 응답을 JSON으로 파싱
+
+      if (resp.ok && result.token) {  // 응답이 성공적이면
+        setToken(result.token);  // 토큰을 상태에 저장
+        localStorage.setItem("token", result.token);  // 토큰을 localStorage에도 저장
+        console.log("Login successful, token: ", result.token);  // 성공 메시지 출력
+        alert("Login successful, token: ", result.token);
+      } else {
+        console.error("Login failed");  // 로그인 실패
+      }
+    } catch (err) {
+      console.error("Error during login: ", err);  // 에러 출력
+    }
+    // handleLogin(loginData);
+
+  }
+
+  const handleLogin = async(data) =>{
+    const url = 'http://10.125.121.214:8080/login';
+    
+    // await fetch(url, data)
+    //     .then(resp=>{
+    //         console.log("handleLogin resp is " + resp);
+    //         return resp.json();
+    //     }).then(result=>{
+    //         console.log("handleLogin result is " + result);                
+    //     }).catch(err=>{
+    //         console.error("Error normal Login:", err);
+    //     });
+
+    
+  }
+  const googleLogin = async(e) => {
+    e.preventDefault();
+    const url = 'http://10.125.121.214:8080/oauth2/authorization/google';
+    
+    // await fetch(url, loginData)
+    //     .then(resp=>{
+    //         console.log("googleLogin resp is " + resp);
+    //         return resp.json();
+    //     }).then(result=>{
+    //         console.log("googleLogin result is " + result);                
+    //     }).catch(err=>{
+    //         console.error("Error Google Login:", err);
+    //     });
   }
 
   return (
@@ -59,7 +116,7 @@ export default function Signin() {
             style={'w-[360px] h-12 text-[14px] mb-4'} />
           <LogoButton caption={'KAKAO 로그인'} color={'kakao'} handleClick={clickSignIn}
             style={'w-[360px] h-12 text-[14px] mb-4'} />
-          <LogoButton caption={'GOOGLE 로그인'} color={'google'} handleClick={clickSignIn}
+          <LogoButton caption={'GOOGLE 로그인'} color={'google'} handleClick={googleLogin}
             style={'w-[360px] h-12 text-[14px] mb-4'} />
         </div>
 
