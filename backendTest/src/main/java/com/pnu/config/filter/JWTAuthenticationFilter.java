@@ -34,7 +34,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		System.out.println("Authentication attemptAuthentication");  //확인용 
+		System.out.println("JWTAuthenticationFilter attemptAuthentication");  //확인용 
 		ObjectMapper mapper = new ObjectMapper();
 		//JSON 데이터를 Java 객체로 변환하거나 (직렬화), Java 객체를 JSON 데이터로 변환하는 (역직렬화) 기능을 제공
 		try {
@@ -59,10 +59,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		System.out.println("successfulAuthentication"); //확인용 
+		System.out.println("JWTAuthenticationFilter successfulAuthentication"); //확인용 
 		User user = (User)authResult.getPrincipal();
 		System.out.println("auth:" + user);
-		
 		String token = JWT.create()   // JWT 토큰 생성 
 						  .withExpiresAt(new Date(System.currentTimeMillis() + 1000*60*100)) //토큰의 유효기간 100분 
 						  .withClaim("username",user.getUsername())
@@ -70,6 +69,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token); //클라이언트에게 토큰을 보냄 ( HTTP 응답 헤더에 JWT 토큰을 포함) 
 																		  //Authorization: Bearer <JWT 토큰> 이 형태(Bearer은 인증 방식을 뜻함) 
 		response.setStatus(HttpStatus.OK.value()); //상태 코드 설정: 이 코드는 HTTP 응답 상태 코드를 200 OK로 설정
+		System.out.println("token : " + token);
 	}
 
 }

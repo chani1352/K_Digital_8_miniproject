@@ -1,9 +1,11 @@
 import "../css/hospitalCardCss.css";
 import CardInfoSmall from "./CardInfoSmall"
-export default function HospitalCard({name, address, vlist}) {
-  //브랜치테스트
+
+export default function HospitalCard({hospital}) {
+  console.log("hospital: ", hospital);
+
   return (
-    <div className="card flex m-8 ">
+    <div className="card flex m-5 ">
       <div className="w-4/5 ">
         <div className="h-1/4 pl-3 flex items-end">
             <CardInfoSmall text={"무료접종"} />
@@ -12,13 +14,14 @@ export default function HospitalCard({name, address, vlist}) {
         </div>
         <div className="h-3/4 px-6 flex flex-col justify-center items-start text-sm  ">
             <div className="py-1 flex w-full">
-                <div className="text-[#8B8B8B] mr-6 w-1/6" >병원 이름</div> <div className="w-5/6">{name}</div>
+                <div className="text-[#8B8B8B] mr-6 w-1/6" >병원 이름</div> <div className="w-5/6">{hospital["orgnm"]}</div>
             </div>
             <div className="py-1 flex w-full">
-                <div className="text-[#8B8B8B] mr-6 w-1/6" >병원 주소</div> <div className="w-5/6">{address}</div>
+                <div className="text-[#8B8B8B] mr-6 w-1/6" >병원 주소</div> <div className="w-5/6">{hospital["orgAddr"]}</div>
             </div>
             <div className="py-1 flex w-full">
-            <div className="text-[#8B8B8B] mr-6 w-1/6" >접종 목록</div> <div className="w-5/6">{vlist}</div>
+            <div className="text-[#8B8B8B] mr-6 w-1/6" >접종 목록</div> 
+            <div className="w-5/6">{hospital["vcnList"][0]["vcnNm"]} {hospital["vcnList"].length-1 === 0? "": ` 외 ${hospital["vcnList"].length-1}개 ` }</div>
             </div>
         </div>
       </div>
