@@ -42,8 +42,7 @@ public class SecurityConfig {
 		//JWT 인증 필터가 AuthorizationFilter 전에 실행되도록 설정하는 코드 
 		http.addFilterBefore(new JWTAuthorizationFilter(memRepo), AuthorizationFilter.class);
 		//http.oauth2Login(oauth2->oauth2.loginPage("/login").defaultSuccessUrl("/loginSuccess",true));
-		http.oauth2Login(oauth2->oauth2.loginPage("/login").defaultSuccessUrl("/oauth",true));
-		http.oauth2Login(oauth2->oauth2.successHandler(successHandler));
+		http.oauth2Login(oauth2->oauth2.loginPage("/login").successHandler(successHandler));
 		http.httpBasic(basic->basic.disable());
 		http.sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		return http.build();

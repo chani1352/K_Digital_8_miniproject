@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {
-	@GetMapping("oauth")
-
+	@GetMapping("/oauth")
 	public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal OAuth2User user) {
 		System.out.println("LoginController auth"); //확인
 		

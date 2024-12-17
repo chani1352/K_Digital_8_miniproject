@@ -34,7 +34,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		System.out.println("OAuth2SuccessHandler onAuthenticationSuccess"); // 확인
 		log.info("OAuth2SuccessHandler:onAuthenticationSuccess");
 		OAuth2User user = (OAuth2User)authentication.getPrincipal();
+		System.out.println("user : " + user.toString());
 		String username = CustomMyUtil.getUsernameFromOAuth2User(user);
+		System.out.println("username : " + username);
 		if(username == null) {
 			log.error("onAuthenticationSuccess:Cannot generate username from oauth2user!");
 			throw new ServletException("Cannot generate username from oauth2user!");
@@ -48,6 +50,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		
 		String jwtToken = JWTUtil.getJWT(username);
 		response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken);
+		response.sendRedirect("http://localhost:3000/hospitals");
+		//response.sendRedirect("http://10.125.121.213:3000/hospitals");
 	}
 
 }
