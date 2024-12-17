@@ -1,6 +1,7 @@
 import "../css/hospitalCardCss.css";
 import CardInfoSmall from "./CardInfoSmall"
 export default function HospitalCard({name, address, vlist}) {
+  //브랜치테스트
   return (
     <div className="card flex m-8 ">
       <div className="w-4/5 ">
