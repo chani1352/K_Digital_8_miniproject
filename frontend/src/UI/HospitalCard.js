@@ -1,7 +1,9 @@
 import "../css/hospitalCardCss.css";
 import CardInfoSmall from "./CardInfoSmall"
+
 export default function HospitalCard({hospital}) {
   console.log("hospital: ", hospital);
+
   return (
     <div className="card flex m-5 ">
       <div className="w-4/5 ">
