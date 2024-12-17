@@ -4,8 +4,8 @@ import TailButton from "./UI/TailButton";
 import LogoButton from "./UI/LogoButton";
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useGoogleLogin } from "@react-oauth/google";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useGoogleLogin} from "@react-oauth/google";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -58,6 +58,7 @@ export default function Signin() {
         // 로컬 스토리지에 토큰 저장
         localStorage.setItem('token', token);
         console.log('token', token);
+
         // 응답 헤더에서 Authorization 값을 추출
         const authHeader = resp.headers.get('Authorization');
         if (authHeader) {
@@ -94,6 +95,7 @@ export default function Signin() {
 
     }
 
+
     const googleLogin = async (e) => {
       e.preventDefault();
 
@@ -110,6 +112,12 @@ export default function Signin() {
       //   }catch (err) {
       //     console.error('Error fetching data:', err);
       //   }
+
+
+
+
+  const googleLogin = async (e) => {
+    e.preventDefault();
 
     testGoogle();
     //window.location.href = 'http://10.125.121.214:8080/oauth2/authorization/google';
@@ -165,9 +173,9 @@ export default function Signin() {
       //   flow:"auth-code"
       // });
     }
-
-
-
+  
+    
+}
 
     return (
       <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">
@@ -208,6 +216,7 @@ export default function Signin() {
             <div className='text-[12px] text-gray-500 mb-2 underline underline-offset-1 font-NanumSquareR'>
               <a href='/signup'>회원가입</a>
             </div>
+
 
           </div>
 
