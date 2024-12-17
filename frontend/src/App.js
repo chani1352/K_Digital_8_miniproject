@@ -10,6 +10,11 @@ import Welcome from './Welcome';
 import Hospitals from './Hospitals';
 
 function App() {
+  const token = localStorage.getItem('token');
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+  }
+
   return (
     <BrowserRouter>
     <div className= "w-full min-w-[1000px] h-full ">
@@ -34,12 +39,15 @@ function App() {
             </li>
           </ul>
         </div>
-        
-
         {/* 로그인 or 마이페이지 */}
-        <div className='header_text whitespace-nowrap'>
+        {/* <div className='header_text whitespace-nowrap'>
               <Link to="/login">로그인</Link>
-        </div>
+        </div> */}
+        {token ? (<button onClick={handleLogout}>로그아웃</button>) : 
+        (<div className='header_text whitespace-nowrap'>
+              <Link to="/login">로그인</Link>
+        </div>)
+        } 
       </header>
       {/* ===================== 메인 =================== */}
       <main className='w-full h-full min-h-[800px] grow flex flex-col items-center

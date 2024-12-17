@@ -40,26 +40,31 @@ export default function Signin() {
     const url = 'http://10.125.121.214:8080/login';
     
     try {
-      const resp = await fetch(url, loginData);  // 로그인 요청 보내기
-      const result = await resp.json();  // 응답을 JSON으로 파싱
+      const resp = await fetch(url, loginData);
 
-      if (resp.ok && result.token) {  // 응답이 성공적이면
-        setToken(result.token);  // 토큰을 상태에 저장
-        localStorage.setItem("token", result.token);  // 토큰을 localStorage에도 저장
-        console.log("Login successful, token: ", result.token);  // 성공 메시지 출력
-        alert("Login successful, token: ", result.token);
-      } else {
-        console.error("Login failed");  // 로그인 실패
+      if (!resp.ok) {
+        throw new Error(`HTTP error! status: ${resp.status}`);
       }
-    } catch (err) {
-      console.error("Error during login: ", err);  // 에러 출력
-    }
-    // handleLogin(loginData);
 
+
+    // 응답 헤더에서 Authorization 값을 추출
+    const authHeader = resp.headers.get('Authorization');
+    if (authHeader) {
+      const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
+      // 로컬 스토리지에 토큰 저장
+      localStorage.setItem('token', token);
+      console.log('token', token);
+      //navigate('/oauth');
+    } else {
+      console.log('Authorization header not found');
+    }
+    } catch (err) {
+      console.error('Error fetching data:', err);
+    }
   }
 
   const handleLogin = async(data) =>{
-    const url = 'http://10.125.121.214:8080/login';
+    //const url = 'http://10.125.121.214:8080/login';
     
     // await fetch(url, data)
     //     .then(resp=>{
@@ -75,7 +80,7 @@ export default function Signin() {
   }
   const googleLogin = async(e) => {
     e.preventDefault();
-    const url = 'http://10.125.121.214:8080/oauth2/authorization/google';
+    //const url = 'http://10.125.121.214:8080/oauth2/authorization/google';
     
     // await fetch(url, loginData)
     //     .then(resp=>{

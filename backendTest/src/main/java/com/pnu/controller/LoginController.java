@@ -1,9 +1,6 @@
 package com.pnu.controller;
 
-<<<<<<< HEAD
 import org.springframework.http.ResponseEntity;
-=======
->>>>>>> c7c3a8d4c8b4a6bc6c21505d96d77488b014d29d
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 	@GetMapping("oauth")
-<<<<<<< HEAD
+
 	public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal OAuth2User user) {
 		System.out.println("LoginController auth"); //확인
 		
@@ -33,18 +30,5 @@ public class LoginController {
 //	    return ResponseEntity.ok(response);  // JSON 응답 반환
 //	}
 
-	
-
-=======
-	public @ResponseBody String auth(@AuthenticationPrincipal OAuth2User user) {
-		System.out.println("LoginController auth"); //확인
-		
-		if(user == null) return "OAuth2:null";
-		
-		System.out.println("attributes:" + user.getAttributes());
-		
-		return "OAuth2:" + user;
-	}
->>>>>>> c7c3a8d4c8b4a6bc6c21505d96d77488b014d29d
 
 }

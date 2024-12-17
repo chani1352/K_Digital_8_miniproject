@@ -41,9 +41,11 @@ export default function Hospitals() {
     const resp = await fetch(url);
     // console.log("resp : ", typeof(resp.ok));
     console.log("resp : ", resp);
+    const contentType = resp.headers.get('Content-Type');
+    console.log("contentType : " ,contentType);
     // console.log("resp : ", resp.Response);
     // if(resp.ok) console.log("ok data : ", resp.data);
-    const data = await (resp.json());
+    const data = await resp.text();
     console.log("data : ", data);
   }
   const examples = [
