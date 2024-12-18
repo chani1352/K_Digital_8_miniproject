@@ -24,7 +24,7 @@ export default function Hospitals() {
     let options1 = region1.map(ops => <option key={ops.cd} value={ops.cd}>{ops.cdNm}</option>);
     setOps1(options1);
 
-    setHosCards(<div>검색해보세요</div>);
+    setHosCards(<div className="opacity-30 w-4/5 pt-10"><img src="./img/findHospitalImg.png"/></div>);
   }, []);
 
 

@@ -8,6 +8,7 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import Welcome from './Welcome';
 import Hospitals from './Hospitals';
+import Test from "./Test";
 
 function App() {
   const token = localStorage.getItem('token');
@@ -58,6 +59,7 @@ function App() {
           <Route path='/signup' element={<Signup/>} />
           <Route path='/welcome' element={<Welcome/>} />
           <Route path='/hospitals' element={<Hospitals/>} />
+          <Route path='/test' element={<Test/>} />
         </Routes>
       </main>
       <footer className='w-full h-[150px] flex bg-slate-300'> 
