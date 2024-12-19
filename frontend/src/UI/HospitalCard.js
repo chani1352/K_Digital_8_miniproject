@@ -11,7 +11,7 @@ export default function HospitalCard({ hospital }) {
 
   //컴포넌트 첫 로딩시
   useEffect(() => {
-    console.log("hospital vcnList :", hospital["vcnList"]);
+    // console.log("hospital vcnList :", hospital["vcnList"]);
     const first =  hospital["vcnList"][0]["vcncd"];
     const vlist_items = hospital["vcnList"].filter(i=>i["vcncd"] != first).map(i=>
         <div key={i["vcncd"]} className="flex text-xs py-1"><div className="w-6 h-full px-1"></div>{i["vcnNm"]}</div>

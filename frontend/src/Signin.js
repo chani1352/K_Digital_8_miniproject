@@ -1,19 +1,27 @@
 import './css/signCss.css';
-import { useRef, useState } from "react";
-import TailButton from "./UI/TailButton";
-import LogoButton from "./UI/LogoButton";
+
 import axios from 'axios';
+import { useRef, useState, useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Navigate, useNavigate } from 'react-router-dom';
+
 import { useGoogleLogin} from "@react-oauth/google";
 import {GoogleOAuthProvider} from "@react-oauth/google";
 
+import { loginToken, memInfo } from "./AtomMem";
+import TailButton from "./UI/TailButton";
+import LogoButton from "./UI/LogoButton";
+
 export default function Signin() {
   const navigate = useNavigate();
+  const [atomToken, setAtomToken] = useRecoilState(loginToken);
+  const [atomMeminfo, setAtomMeminfo] = useRecoilState(memInfo);
   const [token, setToken] = useState(null);
   const signinId = useRef();
   const signinPw = useRef();
 
-  const clickSignIn = async (e) => {
+  // 유효성 검사
+  const clickSignIn = (e) => {
     e.preventDefault();
     console.log("로그인 버튼 클릭");
 
@@ -30,6 +38,13 @@ export default function Signin() {
       return;
     }
 
+    fetchSignIn();
+  }
+
+
+  //로그인 정보 서버에 전달
+  const fetchSignIn = async() => {
+    
     const loginData = {
       method: 'POST',
       headers: {
@@ -56,35 +71,41 @@ export default function Signin() {
       if (authHeader) {
         const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
         // 로컬 스토리지에 토큰 저장
-        localStorage.setItem('token', token);
+        // localStorage.setItem('token', token);
+        
+        // Recoil에 토큰 저장
+        setAtomToken(token);
         console.log('token', token);
-
-        // 응답 헤더에서 Authorization 값을 추출
-        const authHeader = resp.headers.get('Authorization');
-        if (authHeader) {
-          const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
-          // 로컬 스토리지에 토큰 저장
-          setToken(token);
-          localStorage.setItem('token', token);
-          console.log('token', token);
-        } else {
-          console.log('Authorization header not found');
-        }
-        }
+        afterLogin(token);
+        
+      } else {
+        console.log('Authorization header not found');
+        alert("로그인에 실패하였습니다");
+        window.location.reload();
+        //새로고침?
+      }
       }catch (err) {
         console.error('Error fetching data:', err);
+        alert("로그인에 실패하였습니다");
+        window.location.reload();
+        //새로고침?
       }
+    }
 
+    const afterLogin = async(token)=> {
+      console.log("atomToken : " + token);
       try {
-        const response = await fetch('http://localhost:8080/data', {
+        const response = await fetch('http://10.125.121.214:8080/data', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,  // JWT 토큰을 Authorization 헤더에 포함
+            'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
           },
         });
-        console.log("token1 : " + localStorage.getItem('token'))
+        console.log("token1 : " + token)
         const data = await response.json();  // JSON 형식으로 응답 받기
         console.log(data);  // 서버에서 반환된 데이터
+        setAtomMeminfo(data);
+        navigate("/");
       } catch (error) {
         console.error('Error fetching data', error);
       }
@@ -95,87 +116,19 @@ export default function Signin() {
 
     }
 
-
-    const googleLogin = async (e) => {
-      e.preventDefault();
-
-      window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-
-      //const url = 'http://localhost:8080/login/oauth2/code/google';
-
-
-      // try {
-      //   const resp = await fetch(url);
-      //   if (!resp.ok) {
-      //     throw new Error(`HTTP error! status: ${resp.status}`);
-      //   } 
-      //   }catch (err) {
-      //     console.error('Error fetching data:', err);
-      //   }
-
-
-
+  
 
   const googleLogin = async (e) => {
-    e.preventDefault();
+      e.preventDefault();
 
-    testGoogle();
-    //window.location.href = 'http://10.125.121.214:8080/oauth2/authorization/google';
+      window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+      //window.location.href = 'https://nid.naver.com/nidlogin.logout';
+      //window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+      //window.location.href = 'https://accounts.google.com/Logout';
+      //const url = 'http://localhost:8080/login/oauth2/code/google';
+      console.log("로그인성공");
+  }
 
-    // try {
-    //   const resp = await fetch(url, {method : 'POST'});
-
-    //   if (!resp.ok) {
-    //     throw new Error(`HTTP error! status: ${resp.status}`);
-    //   }
-
-    //   // 응답 헤더에서 Authorization 값을 추출
-    //   const authHeader = resp.headers.get('Authorization');
-    //   if (authHeader) {
-    //     const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
-    //     // 로컬 스토리지에 토큰 저장
-    //     localStorage.setItem('token', token);
-    //     console.log('token', token);
-
-    //     //로그인 성공시 이동 페이지 설정
-    //     navigate('/hospitals');
-    //   } else {
-    //     console.log('Authorization header not found');
-    //   }
-    // } catch (err) {
-    //   console.error('Error fetching data:', err);
-    // }
-
-    //await fetch(url);
-    //     .then(resp=>{
-    //         console.log("googleLogin resp is " + resp);
-    //         return resp.json();
-    //     }).then(result=>{
-    //         console.log("googleLogin result is " + result);
-    //     }).catch(err=>{
-    //         console.error("Error Google Login:", err);
-    //     });
-
-    }
-
-    const testGoogle = () => {
-      // const googleSocialLogin = useGoogleLogin({
-      //   scope: "email profile",
-      //   onSuccess: async({code}) =>{
-      //     axios.post('http://10.125.121.214:8080/oauth2/authorization/google', {code})
-      //     .then(({data})=>{
-      //       console.log(data);
-      //     });
-      //   },
-      //   onError: (err)=>{
-      //     console.log(err);
-      //   },
-      //   flow:"auth-code"
-      // });
-    }
-  
-    
-}
 
     return (
       <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">

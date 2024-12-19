@@ -30,8 +30,9 @@ export default function Hospitals() {
 
   // 첫번째 선택되면 그에 따른 시/군/구 셋팅하기
   const selectReg1 = async (e) => {
+    setOps2(<option value="default2" disabled>로딩중</option>);
     let items;
-    console.log("시/도 :", e.target.value);
+    // console.log("시/도 :", e.target.value);
     let url = "https://apis.data.go.kr/1790387/orglist3/getCondSggCd3?";
     let key = "BrWobrMEW9ec09ztWv0IXtPs3Z39MOf8jtxl27UnVy4jnZ%2FCktcP1mCywJd%2F%2FBTF300vXPA2aV8HGakMYTWopw%3D%3D";
     
@@ -41,9 +42,9 @@ export default function Hospitals() {
 
     await axios.get(url)
       .then(resp => {
-        console.log("resp : ", resp);
+        // console.log("resp : ", resp);
         let data = resp.data;
-        console.log("data : ", data);
+        // console.log("시/군/구 리스트 : ", data);
         data = data.replace('"resultCode":00', '"resultCode":"00"');
         data = data.replace(/"item":/g, '');
 
@@ -62,18 +63,6 @@ export default function Hospitals() {
       setOps2(options2);
       
   }
-  const examples = [
-    {
-      name: "365삼성의원",
-      address: "서울특별시 강남구 도곡로 331, (역삼동) 7층",
-      vlist: "인플루엔자(Flu) 접종 가능"
-    },
-    {
-      name: "강남더드림병원",
-      address: "서울특별시 서울특별시 서울특별시 강남구 선릉로 404, (대치동) 더드림병원 ",
-      vlist: "사람유두종바이러스_자궁경부암 접종 가능"
-    }
-  ]
 
   const fetchHospital = async(cd1, cd2) => {
     let url = "https://apis.data.go.kr/1790387/orglist3/getOrgList3?"
@@ -134,14 +123,14 @@ export default function Hospitals() {
         <select id="countries"
                 onChange={selectReg1}
                 ref={ops1Ref}
-                class=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
-          <option selected value="default1">시/도</option>
+                className=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
+          <option defaultValue value="default1">시/도</option>
           {ops1}
         </select>
         <select id="countries" 
                 ref={ops2Ref}
-                class=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
-          <option selected value="default2">시/군/구</option>
+                className=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
+          <option defaultValue value="default2">시/군/구</option>
           {ops2}
         </select>
         <TailButton caption={'검색'} color={'blue'} handleClick={hospitalSearch}
