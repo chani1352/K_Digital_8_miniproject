@@ -20,7 +20,7 @@ public class VaccineInfo {
 	
 	@Id
 	private Integer idx;
-	private String vaccine_name;
+	private String vaccineName;
 	private int periodFrom;
 	private int periodTo;
 	private String phase;
