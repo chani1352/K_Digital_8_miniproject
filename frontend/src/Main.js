@@ -12,6 +12,8 @@ import Hospitals from './Hospitals';
 import Test from "./Test";
 import MainPage from './MainPage';
 import MyPage from './MyPage';
+import Vaccines from './Vaccines';
+
 
 export default function Main() {
 
@@ -36,7 +38,7 @@ export default function Main() {
                     <div>
                         <ul className='flex justify-between '>
                             <li className='header_li_box'>
-                                <Link to="/">연령별 예방접종 정보</Link>
+                                <Link to="/vaccines">연령별 예방접종 정보</Link>
                             </li>
                             <li className='header_li_box '>
                                 <Link to="/hospitals">우리 동네 병원</Link>
@@ -69,6 +71,7 @@ export default function Main() {
                         <Route path='/hospitals' element={<Hospitals />} />
                         <Route path='/test' element={<Test />} />
                         <Route path='/mypage' element={<MyPage/>}/>
+                        <Route path='/vaccines' element={<Vaccines/>} />
                     </Routes>
                 </main>
                 <footer className='w-full h-[150px] flex bg-slate-300'>
