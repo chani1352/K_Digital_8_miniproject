@@ -19,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
     <div className= "w-full min-w-[1000px] h-full ">
-      <header className="w-full h-[120px] px-10 lg:px-[120px]
+      <header className="w-full h-[120px] px-10 lg:px-[120px] z-50
                           sticky top-0 flex justify-between items-center
                           bg-[#ecf3f9]">
         <div className='min-w-[140px] h-[70px] '>

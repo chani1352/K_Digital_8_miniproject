@@ -41,6 +41,7 @@ export default function Hospitals() {
 
     await axios.get(url)
       .then(resp => {
+        console.log("resp : ", resp);
         let data = resp.data;
         console.log("data : ", data);
         data = data.replace('"resultCode":00', '"resultCode":"00"');
@@ -113,7 +114,18 @@ export default function Hospitals() {
   const hospitalSearch = () => {
     console.log("시/도 : ", ops1Ref.current.value);
     console.log("시/군/구  : ", ops2Ref.current.value);
-    fetchHospital(ops1Ref.current.value, ops2Ref.current.value);
+
+    let sggCd = ops2Ref.current.value;
+    if(ops1Ref.current.value === "default1"){
+      alert("시/도를 선택하세요");
+      ops1Ref.current.focus();
+      return;
+    }
+
+    if(ops2Ref.current.value === "default2"){
+      sggCd = "";
+    }
+    fetchHospital(ops1Ref.current.value, sggCd);
   }
 
   return (
@@ -122,14 +134,14 @@ export default function Hospitals() {
         <select id="countries"
                 onChange={selectReg1}
                 ref={ops1Ref}
-                class=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>시/도</option>
+                class=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
+          <option selected value="default1">시/도</option>
           {ops1}
         </select>
         <select id="countries" 
                 ref={ops2Ref}
-                class=" w-1/3 h-12   mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>시/군/구</option>
+                class=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
+          <option selected value="default2">시/군/구</option>
           {ops2}
         </select>
         <TailButton caption={'검색'} color={'blue'} handleClick={hospitalSearch}
