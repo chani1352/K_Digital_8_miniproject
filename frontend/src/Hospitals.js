@@ -24,14 +24,15 @@ export default function Hospitals() {
     let options1 = region1.map(ops => <option key={ops.cd} value={ops.cd}>{ops.cdNm}</option>);
     setOps1(options1);
 
-    setHosCards(<div>검색해보세요</div>);
+    setHosCards(<div className="opacity-30 w-4/5 pt-10"><img src="./img/findHospitalImg.png"/></div>);
   }, []);
 
 
   // 첫번째 선택되면 그에 따른 시/군/구 셋팅하기
   const selectReg1 = async (e) => {
+    setOps2(<option value="default2" disabled>로딩중</option>);
     let items;
-    console.log("시/도 :", e.target.value);
+    // console.log("시/도 :", e.target.value);
     let url = "https://apis.data.go.kr/1790387/orglist3/getCondSggCd3?";
     let key = "daBaiCV77sxcqPXV92b7JWpWkJKXs4eEy6sDwPDK%2BxgKSjp%2ByWEUzgSfMHfoGoa33abEE762dZO0VJhe8bl5tA%3D%3D";
     
@@ -41,8 +42,9 @@ export default function Hospitals() {
 
     await axios.get(url)
       .then(resp => {
+        // console.log("resp : ", resp);
         let data = resp.data;
-        console.log("data : ", data);
+        // console.log("시/군/구 리스트 : ", data);
         data = data.replace('"resultCode":00', '"resultCode":"00"');
         data = data.replace(/"item":/g, '');
 
@@ -61,18 +63,6 @@ export default function Hospitals() {
       setOps2(options2);
       
   }
-  const examples = [
-    {
-      name: "365삼성의원",
-      address: "서울특별시 강남구 도곡로 331, (역삼동) 7층",
-      vlist: "인플루엔자(Flu) 접종 가능"
-    },
-    {
-      name: "강남더드림병원",
-      address: "서울특별시 서울특별시 서울특별시 강남구 선릉로 404, (대치동) 더드림병원 ",
-      vlist: "사람유두종바이러스_자궁경부암 접종 가능"
-    }
-  ]
 
   const fetchHospital = async(cd1, cd2) => {
     let url = "https://apis.data.go.kr/1790387/orglist3/getOrgList3?"
@@ -114,7 +104,18 @@ export default function Hospitals() {
   const hospitalSearch = () => {
     console.log("시/도 : ", ops1Ref.current.value);
     console.log("시/군/구  : ", ops2Ref.current.value);
-    fetchHospital(ops1Ref.current.value, ops2Ref.current.value);
+
+    let sggCd = ops2Ref.current.value;
+    if(ops1Ref.current.value === "default1"){
+      alert("시/도를 선택하세요");
+      ops1Ref.current.focus();
+      return;
+    }
+
+    if(ops2Ref.current.value === "default2"){
+      sggCd = "";
+    }
+    fetchHospital(ops1Ref.current.value, sggCd);
   }
 
   return (
@@ -123,14 +124,14 @@ export default function Hospitals() {
         <select id="countries"
                 onChange={selectReg1}
                 ref={ops1Ref}
-                class=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>시/도</option>
+                className=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
+          <option defaultValue value="default1">시/도</option>
           {ops1}
         </select>
         <select id="countries" 
                 ref={ops2Ref}
-                class=" w-1/3 h-12   mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>시/군/구</option>
+                className=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
+          <option defaultValue value="default2">시/군/구</option>
           {ops2}
         </select>
         <TailButton caption={'검색'} color={'blue'} handleClick={hospitalSearch}

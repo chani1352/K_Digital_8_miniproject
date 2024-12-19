@@ -1,19 +1,27 @@
 import './css/signCss.css';
-import { useRef, useState,useEffect } from "react";
-import TailButton from "./UI/TailButton";
-import LogoButton from "./UI/LogoButton";
+
 import axios from 'axios';
+import { useRef, useState, useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Navigate, useNavigate } from 'react-router-dom';
+
 import { useGoogleLogin} from "@react-oauth/google";
 import {GoogleOAuthProvider} from "@react-oauth/google";
 
+import { loginToken, memInfo } from "./AtomMem";
+import TailButton from "./UI/TailButton";
+import LogoButton from "./UI/LogoButton";
+
 export default function Signin() {
   const navigate = useNavigate();
+  const [atomToken, setAtomToken] = useRecoilState(loginToken);
+  const [atomMeminfo, setAtomMeminfo] = useRecoilState(memInfo);
   const [token, setToken] = useState(null);
   const signinId = useRef();
   const signinPw = useRef();
 
-  const clickSignIn = async (e) => {
+  // 유효성 검사
+  const clickSignIn = (e) => {
     e.preventDefault();
     console.log("로그인 버튼 클릭");
 
@@ -30,6 +38,13 @@ export default function Signin() {
       return;
     }
 
+    fetchSignIn();
+  }
+
+
+  //로그인 정보 서버에 전달
+  const fetchSignIn = async() => {
+    
     const loginData = {
       method: 'POST',
       headers: {
@@ -56,25 +71,41 @@ export default function Signin() {
       if (authHeader) {
         const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
         // 로컬 스토리지에 토큰 저장
-        localStorage.setItem('token', token);
+        // localStorage.setItem('token', token);
+        
+        // Recoil에 토큰 저장
+        setAtomToken(token);
         console.log('token', token);
+        afterLogin(token);
+        
       } else {
         console.log('Authorization header not found');
+        alert("로그인에 실패하였습니다");
+        window.location.reload();
+        //새로고침?
       }
       }catch (err) {
         console.error('Error fetching data:', err);
+        alert("로그인에 실패하였습니다");
+        window.location.reload();
+        //새로고침?
       }
+    }
 
+    const afterLogin = async(token)=> {
+      console.log("atomToken : " + token);
       try {
-        const response = await fetch('http://localhost:8080/data', {
+        const response = await fetch('http://10.125.121.214:8080/data', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,  // JWT 토큰을 Authorization 헤더에 포함
+            'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
           },
         });
-        console.log("token1 : " + localStorage.getItem('token'))
+        console.log("token1 : " + token)
         const data = await response.json();  // JSON 형식으로 응답 받기
         console.log(data);  // 서버에서 반환된 데이터
+        setAtomMeminfo(data);
+        navigate("/");
       } catch (error) {
         console.error('Error fetching data', error);
       }
