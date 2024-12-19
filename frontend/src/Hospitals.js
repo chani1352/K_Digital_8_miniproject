@@ -33,7 +33,7 @@ export default function Hospitals() {
     let items;
     console.log("시/도 :", e.target.value);
     let url = "https://apis.data.go.kr/1790387/orglist3/getCondSggCd3?";
-    let key = "BrWobrMEW9ec09ztWv0IXtPs3Z39MOf8jtxl27UnVy4jnZ%2FCktcP1mCywJd%2F%2FBTF300vXPA2aV8HGakMYTWopw%3D%3D";
+    let key = "daBaiCV77sxcqPXV92b7JWpWkJKXs4eEy6sDwPDK%2BxgKSjp%2ByWEUzgSfMHfoGoa33abEE762dZO0VJhe8bl5tA%3D%3D";
     
     url += "serviceKey=" + key;
     url += "&brtcCd=" + e.target.value + "&returnType=JSON";
@@ -76,7 +76,7 @@ export default function Hospitals() {
 
   const fetchHospital = async(cd1, cd2) => {
     let url = "https://apis.data.go.kr/1790387/orglist3/getOrgList3?"
-    let key = "BrWobrMEW9ec09ztWv0IXtPs3Z39MOf8jtxl27UnVy4jnZ%2FCktcP1mCywJd%2F%2FBTF300vXPA2aV8HGakMYTWopw%3D%3D";
+    let key = "daBaiCV77sxcqPXV92b7JWpWkJKXs4eEy6sDwPDK%2BxgKSjp%2ByWEUzgSfMHfoGoa33abEE762dZO0VJhe8bl5tA%3D%3D";
     url = `${url}serviceKey=${key}`;
     url = `${url}&pageNo=1&numOfRows=10&brtcCd=${cd1}&sggCd=${cd2}&returnType=JSON`;
     // &searchTpcd=ADDR&searchWord=%EC%84%9C%EC%9A%B8&returnType=XML
@@ -96,16 +96,17 @@ export default function Hospitals() {
     console.log("파싱된 JSON 데이터:", parsedData);
 
     const dataAll = parsedData.response.body;
-    
-    //총 페이지수
-    let totalPage = dataAll.maxPage;
-    // 총 데이터 개수
-    let totalCount = dataAll.totalCount;
 
     let hospitalAll = dataAll.items;
-
     const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} />);
-    
+
+    //페이지당 card수
+    const itemCountPerPage = 8;
+    //지역당 총 데이터 개수
+    let totalPage = Object.keys(cards).length / itemCountPerPage;
+
+    console.log("count : ",Object.keys(cards).length);
+
     setHosCards(cards);
 
 

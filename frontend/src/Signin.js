@@ -1,5 +1,5 @@
 import './css/signCss.css';
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect } from "react";
 import TailButton from "./UI/TailButton";
 import LogoButton from "./UI/LogoButton";
 import axios from 'axios';
@@ -58,19 +58,9 @@ export default function Signin() {
         // 로컬 스토리지에 토큰 저장
         localStorage.setItem('token', token);
         console.log('token', token);
-
-        // 응답 헤더에서 Authorization 값을 추출
-        const authHeader = resp.headers.get('Authorization');
-        if (authHeader) {
-          const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
-          // 로컬 스토리지에 토큰 저장
-          setToken(token);
-          localStorage.setItem('token', token);
-          console.log('token', token);
-        } else {
-          console.log('Authorization header not found');
-        }
-        }
+      } else {
+        console.log('Authorization header not found');
+      }
       }catch (err) {
         console.error('Error fetching data:', err);
       }
@@ -95,87 +85,19 @@ export default function Signin() {
 
     }
 
-
-    const googleLogin = async (e) => {
-      e.preventDefault();
-
-      window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-
-      //const url = 'http://localhost:8080/login/oauth2/code/google';
-
-
-      // try {
-      //   const resp = await fetch(url);
-      //   if (!resp.ok) {
-      //     throw new Error(`HTTP error! status: ${resp.status}`);
-      //   } 
-      //   }catch (err) {
-      //     console.error('Error fetching data:', err);
-      //   }
-
-
-
+  
 
   const googleLogin = async (e) => {
-    e.preventDefault();
+      e.preventDefault();
 
-    testGoogle();
-    //window.location.href = 'http://10.125.121.214:8080/oauth2/authorization/google';
+      window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+      //window.location.href = 'https://nid.naver.com/nidlogin.logout';
+      //window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+      //window.location.href = 'https://accounts.google.com/Logout';
+      //const url = 'http://localhost:8080/login/oauth2/code/google';
+      console.log("로그인성공");
+  }
 
-    // try {
-    //   const resp = await fetch(url, {method : 'POST'});
-
-    //   if (!resp.ok) {
-    //     throw new Error(`HTTP error! status: ${resp.status}`);
-    //   }
-
-    //   // 응답 헤더에서 Authorization 값을 추출
-    //   const authHeader = resp.headers.get('Authorization');
-    //   if (authHeader) {
-    //     const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
-    //     // 로컬 스토리지에 토큰 저장
-    //     localStorage.setItem('token', token);
-    //     console.log('token', token);
-
-    //     //로그인 성공시 이동 페이지 설정
-    //     navigate('/hospitals');
-    //   } else {
-    //     console.log('Authorization header not found');
-    //   }
-    // } catch (err) {
-    //   console.error('Error fetching data:', err);
-    // }
-
-    //await fetch(url);
-    //     .then(resp=>{
-    //         console.log("googleLogin resp is " + resp);
-    //         return resp.json();
-    //     }).then(result=>{
-    //         console.log("googleLogin result is " + result);
-    //     }).catch(err=>{
-    //         console.error("Error Google Login:", err);
-    //     });
-
-    }
-
-    const testGoogle = () => {
-      // const googleSocialLogin = useGoogleLogin({
-      //   scope: "email profile",
-      //   onSuccess: async({code}) =>{
-      //     axios.post('http://10.125.121.214:8080/oauth2/authorization/google', {code})
-      //     .then(({data})=>{
-      //       console.log(data);
-      //     });
-      //   },
-      //   onError: (err)=>{
-      //     console.log(err);
-      //   },
-      //   flow:"auth-code"
-      // });
-    }
-  
-    
-}
 
     return (
       <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">

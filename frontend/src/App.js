@@ -8,6 +8,7 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import Welcome from './Welcome';
 import Hospitals from './Hospitals';
+import Vaccines from './Vaccines';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -29,7 +30,7 @@ function App() {
         <div>
           <ul className='flex justify-between'>
             <li className='header_li_box'>
-              <Link to="/">연령별 예방접종 정보</Link>
+              <Link to="/vaccines">연령별 예방접종 정보</Link>
             </li>
             <li className='header_li_box'>
               <Link to="/hospitals">우리 동네 병원</Link>
@@ -58,6 +59,7 @@ function App() {
           <Route path='/signup' element={<Signup/>} />
           <Route path='/welcome' element={<Welcome/>} />
           <Route path='/hospitals' element={<Hospitals/>} />
+          <Route path='/vaccines' element={<Vaccines/>} />
         </Routes>
       </main>
       <footer className='w-full h-[150px] flex bg-slate-300'> 

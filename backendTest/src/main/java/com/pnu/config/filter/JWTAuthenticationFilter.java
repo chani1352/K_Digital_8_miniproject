@@ -44,9 +44,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Member member = mapper.readValue(request.getInputStream(), Member.class);
 			//2.member에 저장된 email,비번을 이용하여 토큰 생성
 			Authentication authToken = new UsernamePasswordAuthenticationToken(member.getEmail(),member.getPassword());
-			//인증 처리하기 위해 AuthenticationManager에 토큰을 파라미터로 넘김
+			System.out.println("authToken : " + authToken);
+			//인증 처리하기 위해 AuthenticationManager에 토큰을 파라미터로 넘김 (사용자 정보)
 			//넘긴 토큰은 UserDatailsService구현체의 loadUserByUsername메소드를 호출하면서 파라미터로 전달
-			//(SecurityUserDetailsServcie 참조)
+			//AuthenticationProvider**에 전달 (SecurityUserDetailsService 참조)
 			return authenticationManager.authenticate(authToken);
 			//Authentication은 UserDetails를 포함하고 있으며, 인증 상태와 사용자의 권한 정보도 포함
 		} catch(Exception e) {
