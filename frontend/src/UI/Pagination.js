@@ -7,18 +7,18 @@ export default function Pagination({ totalPage, setCurrentPage, currentPage }) {
     const [pagesBtn, setPagesBtn] = useState('');
 
     useEffect(() => {
-
+        // console.log("페이지네이션 시작");
         //시작페이지 (5개기준)
         const startPage = (Math.floor((crtPage-1)/5))*5 + 1;
         
         for (let i = startPage; (i <= (startPage+4)) && (i<=totalPage); i++) {
             pageList.push(i);
         }
-        console.log("pageList : ", pageList);
+        // console.log("pageList : ", pageList);
         const pagelist = pageList.map(page =>
-            <div className={`w-8 h-8 rounded-md m-1
-                flex justify-center items-center 
-                ${crtPage === page ? "text-red-500 bg-slate-300" : "hover:bg-slate-100"}`}
+            <div className={`w-8 h-8 rounded-md m-2
+                flex justify-center items-center font-NanumSquareNeoB
+                ${crtPage === page ? "text-red-500 bg-red-100" : "text-gray-500 hover:bg-gray-100"}`}
                 key={page}
             >
                 <button
@@ -45,21 +45,27 @@ export default function Pagination({ totalPage, setCurrentPage, currentPage }) {
     }
     return (
         <div className='flex'>
-            <button onClick={()=>setCurrentPage(1)} disabled={crtPage === 1}>
-                처음
+            <button onClick={()=>setCurrentPage(1)} 
+                    disabled={crtPage === 1}
+                    className='text-gray-500 mx-4 font-NanumSquareNeoB'>
+                {'<<'}
             </button>
 
-            <button onClick={goToPrevPage} disabled={crtPage === 1}>
-                이전
+            <button onClick={goToPrevPage} disabled={crtPage === 1}
+                    className='text-gray-500 mr-4 font-NanumSquareNeoB'>
+                {'<'}
             </button>
 
             { pagesBtn }
-            <button onClick={goNextPage} disabled={crtPage === totalPage}>
-                다음
+            <button onClick={goNextPage} 
+                    disabled={crtPage === totalPage}
+                    className='text-gray-500 ml-4 font-NanumSquareNeoB'>
+                {'>'}
             </button>
 
-            <button onClick={()=>setCurrentPage(totalPage)} disabled={crtPage === totalPage}>
-                마지막
+            <button onClick={()=>setCurrentPage(totalPage)} disabled={crtPage === totalPage}
+                    className='text-gray-500 mx-4 font-NanumSquareNeoB'>
+                {'>>'}
             </button>
         </div>
     )

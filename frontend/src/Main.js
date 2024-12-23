@@ -13,7 +13,8 @@ import Test from "./Test";
 import MainPage from './MainPage';
 import MyPage from './MyPage';
 import Vaccines from './Vaccines';
-
+import Child from './child/Child';
+import Register from './child/Register';
 
 export default function Main() {
 
@@ -31,7 +32,7 @@ export default function Main() {
                     <div className='min-w-[140px] h-[70px] '>
                         <Link to="/">
                             {/* 로고 */}
-                            <img className="h-full " src='./img/headerLogo.png' />
+                            <img className="h-full " src='./img/headerLogo.png' alt="logo"/>
                         </Link>
                     </div>
 
@@ -44,7 +45,7 @@ export default function Main() {
                                 <Link to="/hospitals">우리 동네 병원</Link>
                             </li>
                             <li className='header_li_box '>
-                                <Link to="/">우리아이 접종 플랜</Link>
+                                <Link to="/child">우리아이 접종 플랜</Link>
                             </li>
                         </ul>
                     </div>
@@ -72,6 +73,8 @@ export default function Main() {
                         <Route path='/test' element={<Test />} />
                         <Route path='/mypage' element={<MyPage/>}/>
                         <Route path='/vaccines' element={<Vaccines/>} />
+                        <Route path='/child' element={<Child/>} />
+                        <Route path='/child/register' element={<Register/>} />
                     </Routes>
                 </main>
                 <footer className='w-full h-[150px] flex bg-slate-300'>

@@ -36,7 +36,7 @@ export default function Hospitals() {
   useEffect(()=>{
     // 쿼리가 1개 이상일 때
     if(qlist.length>=1){
-      console.log("if : ", qlist[0][1],qlist[1][1],qlist[2][1] );
+      // console.log("if : ", qlist[0][1],qlist[1][1],qlist[2][1] );
       fetchHospital(qlist[0][1],qlist[1][1],qlist[2][1]);
     } 
     
@@ -100,7 +100,6 @@ export default function Hospitals() {
 
   // 병원정보 패치
   const fetchHospital = async(cd1, cd2, crtPage) => {
-    console.log("fetchHospital실행시 currentPage : ", crtPage);
     let url = "https://apis.data.go.kr/1790387/orglist3/getOrgList3?"
     let key = "BrWobrMEW9ec09ztWv0IXtPs3Z39MOf8jtxl27UnVy4jnZ%2FCktcP1mCywJd%2F%2FBTF300vXPA2aV8HGakMYTWopw%3D%3D";
     url = `${url}serviceKey=${key}`;
@@ -122,7 +121,7 @@ export default function Hospitals() {
 
     // //총 페이지 수
     let maxPage = dataAll.maxPage;
-    // console.log("maxPage : ",maxPage);
+    console.log("maxPage : ",maxPage);
 
     const pageTags = <Pagination totalPage={maxPage} 
                                  setCurrentPage = {setCurrentPage}
@@ -131,14 +130,18 @@ export default function Hospitals() {
 
     let hospitalAll = dataAll.items;
     const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} />);
-    setPages(pageTags);
+    
     setHosCards(cards);
+    console.log("card 변경");
+    setPages(pageTags);
+    
+    console.log("page 변경");
   }
 
   //검색버튼 클릭
   const searchBtnClick = () => {
-    console.log("시/도 : ", ops1Ref.current.value);
-    console.log("시/군/구  : ", ops2Ref.current.value);
+    // console.log("시/도 : ", ops1Ref.current.value);
+    // console.log("시/군/구  : ", ops2Ref.current.value);
 
     let sggCd = ops2Ref.current.value;
     if(ops1Ref.current.value === "default1"){
@@ -159,7 +162,7 @@ export default function Hospitals() {
 
   return (
     <div className="w-3/5 flex flex-col justify-center">
-      <div className="flex justify-center items-center my-5">
+      <div className="flex justify-center items-center mt-14 mb-10">
         <select id="countries"
                 onChange={selectReg1}
                 ref={ops1Ref}
@@ -176,10 +179,9 @@ export default function Hospitals() {
         <TailButton caption={'검색'} color={'blue'} handleClick={searchBtnClick}
           style={'w-1/3 h-12  mx-2 text-[14px] '} />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mb-6">
         {hosCards}
-        <div>페이징</div>
-        <div>{pages}</div>
+        <div className="my-12">{pages}</div>
       </div>
     </div>
 
