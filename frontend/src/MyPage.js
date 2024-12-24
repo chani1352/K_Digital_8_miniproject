@@ -16,6 +16,7 @@ export default function MyPage() {
     console.log("memInfo: ",atomMeminfo);
     const handleLogout = () => {
         setAtomToken(null);
+        // localStorage.removeItem("token");
         window.location.href = "/";
         console.log("logout 후 atomToken : ", atomToken);
     }

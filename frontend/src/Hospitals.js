@@ -53,42 +53,12 @@ export default function Hospitals() {
     }
   },[location.search]);
 
-  // 첫번째 선택되면 그에 따른 시/군/구 셋팅하기
+  // 시/도 선택되면 그에 따른 시/군/구 셋팅하기
   const selectReg1 = async (e) => {
-    setOps2(<option value="default2" disabled>로딩중</option>);
-    let items;
-
-    let url = "https://apis.data.go.kr/1790387/orglist3/getCondSggCd3?";
-    let key = "daBaiCV77sxcqPXV92b7JWpWkJKXs4eEy6sDwPDK%2BxgKSjp%2ByWEUzgSfMHfoGoa33abEE762dZO0VJhe8bl5tA%3D%3D";
-    
-    url += "serviceKey=" + key;
-    url += "&brtcCd=" + e.target.value + "&returnType=JSON";
-    console.log("시군구 url: ", url);
-
-    await axios.get(url)
-      .then(resp => {
-        let data = resp.data;
-
-        data = data.replace('"resultCode":00', '"resultCode":"00"');
-        data = data.replace(/"item":/g, '');
-
-        let parsedData;
-        try {
-          parsedData = JSON.parse(data);
-          items = parsedData.response.body.items;
-        } catch (error) {
-          console.error("JSON 파싱 오류:", error);
-        }
-
-      }).catch(err => { console.log(err); });
-
-      let options2 = items.map(ops => <option key={ops.cd} value={ops.cd}>{ops.cdNm}</option>);
-      setOps2(options2);
-    
-      // ============== json 파일 바로 처리하기 ========================
-    // let sggdata = sggcode
-
-      
+    // ============== json 파일 바로 처리하기 ========================
+    let sggdata = sggcode[e.target.value];
+    let options2 = sggdata.map(ops => <option key={ops.cd} value={ops.cd}>{ops.cdNm}</option>);
+    setOps2(options2);
   }
 
   //페이지 변경될때마다
