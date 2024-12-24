@@ -1,9 +1,13 @@
 package com.pnu.domain;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,17 +22,27 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VaccineInfo {
+public class ChildVaccine {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idx;
-	private String vaccineName;
-	private int periodFrom;
-	private int periodTo;
-	private String phase;
-	private String optional;
-	private String method;
-	private String disease;
+	
+	@ManyToOne
+	@JoinColumn(name="CHILD_IDX")
+	private Child child;	
+	
+	@ManyToOne
+	@JoinColumn(name="VACCINEINFO_IDX")
+	@Builder.Default
+	private VaccineInfo vaccine = null;
+	
+	@Builder.Default
+	private boolean proof = false;
+	
+	@Builder.Default
+	private LocalDate vaccineDate = null;
+	
+	
 
 }

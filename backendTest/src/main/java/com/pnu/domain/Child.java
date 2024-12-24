@@ -1,5 +1,7 @@
 package com.pnu.domain;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,14 +28,10 @@ public class Child {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idx;
 	private String childName;
+	private LocalDate birth;
 	
 	@ManyToOne
 	@JoinColumn(name="MEMBER_EMAIL")
-	private Member member;
-	
-	@ManyToOne
-	@JoinColumn(name="VACCINEINFO_IDX")
-	private VaccineInfo vaccine;
-	
+	private Member member;	
 
 }
