@@ -2,6 +2,7 @@ import HospitalCard from "./UI/HospitalCard";
 import TailButton from "./UI/TailButton";
 import  Pagination  from "./UI/Pagination";
 import { useLocation, useSearchParams, Link, useNavigate } from "react-router-dom";
+import sggcode from "./data/sggcode.json";
 
 import { useRef, useState, useEffect } from "react";
 import axios from 'axios';
@@ -34,6 +35,7 @@ export default function Hospitals() {
 
   //쿼리 파라미터들이 변경될때마다 실행
   useEffect(()=>{
+    window.scrollTo(0,0);
     // 쿼리가 1개 이상일 때
     if(qlist.length>=1){
       // console.log("if : ", qlist[0][1],qlist[1][1],qlist[2][1] );
@@ -61,7 +63,7 @@ export default function Hospitals() {
     
     url += "serviceKey=" + key;
     url += "&brtcCd=" + e.target.value + "&returnType=JSON";
-    // console.log("url: ", url);
+    console.log("시군구 url: ", url);
 
     await axios.get(url)
       .then(resp => {
@@ -82,6 +84,11 @@ export default function Hospitals() {
 
       let options2 = items.map(ops => <option key={ops.cd} value={ops.cd}>{ops.cdNm}</option>);
       setOps2(options2);
+    
+      // ============== json 파일 바로 처리하기 ========================
+    // let sggdata = sggcode
+
+      
   }
 
   //페이지 변경될때마다
@@ -121,7 +128,7 @@ export default function Hospitals() {
 
     // //총 페이지 수
     let maxPage = dataAll.maxPage;
-    console.log("maxPage : ",maxPage);
+    // console.log("maxPage : ",maxPage);
 
     const pageTags = <Pagination totalPage={maxPage} 
                                  setCurrentPage = {setCurrentPage}
@@ -132,10 +139,8 @@ export default function Hospitals() {
     const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} />);
     
     setHosCards(cards);
-    console.log("card 변경");
     setPages(pageTags);
-    
-    console.log("page 변경");
+    // setPages("페이지");
   }
 
   //검색버튼 클릭

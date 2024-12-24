@@ -35,7 +35,7 @@ export default function Register2({ info }) {
         if (!resp.ok) {
             throw new Error(`HTTP error! status: ${resp.status}`);
         }
-
+        // =========== 성공시 코드 짜야함 ==================== 
         console.log("resp : ", resp);
     }
 

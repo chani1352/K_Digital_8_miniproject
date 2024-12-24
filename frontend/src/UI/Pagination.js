@@ -6,8 +6,9 @@ export default function Pagination({ totalPage, setCurrentPage, currentPage }) {
     const crtPage = parseInt(currentPage);
     const [pagesBtn, setPagesBtn] = useState('');
 
+    // console.log("페이지네이션 시작", totalPage, currentPage,crtPage, pageList);
     useEffect(() => {
-        // console.log("페이지네이션 시작");
+        // console.log("페이지네이션 시작", totalPage, currentPage,crtPage);
         //시작페이지 (5개기준)
         const startPage = (Math.floor((crtPage-1)/5))*5 + 1;
         
@@ -29,8 +30,7 @@ export default function Pagination({ totalPage, setCurrentPage, currentPage }) {
             </div>);
 
         setPagesBtn(pagelist);
-    }, [crtPage]);
-
+    },[currentPage, totalPage]);
 
     const goNextPage = () => {
         setCurrentPage(crtPage + 1);
