@@ -40,6 +40,5 @@ public class Member {
 	@Builder.Default
 	@Column(columnDefinition="timestamp default current_timestamp")
 	private Date createDate = new Date();
-
 	
 }

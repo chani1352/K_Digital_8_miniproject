@@ -11,11 +11,11 @@
 
 .vacCard{
 
-    width: 400px;
-    height: 200px;
+    width: 300px;
+    height: 180px;
 
     background: #FFFFFF;
     border: 1px solid #E4E4E4;
     box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.15);
-    border-radius: 3px;
+    border-radius: 10px;
 }
