@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -18,6 +17,7 @@ import com.pnu.util.CustomMyUtil;
 import com.pnu.util.JWTUtil;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -63,11 +63,23 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		}
 		
 		String jwtToken = JWTUtil.getJWT(oauthMail);
+		jwtToken = jwtToken.replace("Bearer ",""); 
 		System.out.println("token : " + jwtToken);
-		response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken);
-		//response.setStatus(HttpStatus.OK.value());
-		response.sendRedirect("http://localhost:3000/hospitals");
+		
+		response.addCookie(createCookie("Authorization", jwtToken));
+		//response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken);
+		//response.sendRedirect("http://localhost:3000?redirectedFromSocialLogin=true");
+		response.sendRedirect("http://localhost:3000/");
 		//response.sendRedirect("http://10.125.121.213:3000/hospitals");
+	}
+	
+	private Cookie createCookie(String key, String value) {
+		Cookie cookie = new Cookie(key,value);
+		cookie.setMaxAge(60*60*60);
+		cookie.setPath("/");
+		cookie.setHttpOnly(true);
+		return cookie;
+		
 	}
 
 }

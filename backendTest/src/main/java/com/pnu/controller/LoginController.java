@@ -20,14 +20,5 @@ public class LoginController {
 		return ResponseEntity.ok(user);
 		//return "OAuth2:" + user;
 	}
-	
-//	@PostMapping("/login")
-//	public ResponseEntity<Map<String, String>> login(@RequestBody Member member) {
-//	    Map<String, String> response = new HashMap<>();
-//	    String token = loginService.authenticate(member.getEmail(), member.getPassword());
-//	    response.put("token", token);
-//	    return ResponseEntity.ok(response);  // JSON 응답 반환
-//	}
-
 
 }
