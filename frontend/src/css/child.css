@@ -1,0 +1,18 @@
+.childlist{
+    width: 202px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 0px 11.4px 7px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    
+    padding: 10px 20px;
+}
+
+.namecard{
+    width: 100%;
+    /* width: 171px; */
+    height: 36px;
+
+    /* background: #5C99FF; */
+    border-radius: 10px;
+}
