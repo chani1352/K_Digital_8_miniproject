@@ -68,14 +68,13 @@ export default function Signin() {
 
       // 응답 헤더에서 Authorization 값을 추출
       const authHeader = resp.headers.get('Authorization');
+      // console.log('resp', resp.headers.get('Authorization'));
       if (authHeader) {
         const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
-        // 로컬 스토리지에 토큰 저장
-        // localStorage.setItem('token', token);
-        
+        // console.log('token', token);
+
         // Recoil에 토큰 저장
         setAtomToken(token);
-        console.log('token', token);
         afterLogin(token);
         
       } else {

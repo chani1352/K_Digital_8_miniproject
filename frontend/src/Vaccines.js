@@ -34,7 +34,7 @@ export default function Vaccines() {
   }, [vaccineAllList]);
 
   useEffect(()=>{
-    console.log("isClicks1",isClicks);
+    // console.log("isClicks1",isClicks);
   },[isClicks]);
 
   const vaccineAll = (caption) => {
@@ -48,8 +48,8 @@ export default function Vaccines() {
 
   const selectVaccine = (value) => {
     setIsClicks(value);
-    console.log("isClicks",isClicks);
-    console.log("value",value);
+    // console.log("isClicks",isClicks);
+    // console.log("value",value);
     let selectVaccine = vaccineAllList;
     if (value !== 15 && vaccineAllList !== "") {
       selectVaccine = vaccineAllList.filter(item => {
