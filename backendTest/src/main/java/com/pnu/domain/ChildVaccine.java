@@ -23,7 +23,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChildVaccine {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idx;
@@ -43,6 +43,7 @@ public class ChildVaccine {
 	@Builder.Default
 	private LocalDate vaccineDate = null;
 	
-	
+	private LocalDate scheduledFrom;
+	private LocalDate scheduledTo;
 
 }

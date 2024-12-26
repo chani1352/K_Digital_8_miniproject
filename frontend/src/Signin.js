@@ -12,6 +12,8 @@ import { loginToken, memInfo } from "./AtomMem";
 import TailButton from "./UI/TailButton";
 import LogoButton from "./UI/LogoButton";
 
+import cookie from 'react-cookies';
+
 export default function Signin() {
   const navigate = useNavigate();
   const [atomToken, setAtomToken] = useRecoilState(loginToken);
@@ -19,6 +21,7 @@ export default function Signin() {
   const [token, setToken] = useState(null);
   const signinId = useRef();
   const signinPw = useRef();
+  const [cook,setCook] = useState(null);
 
   // 유효성 검사
   const clickSignIn = (e) => {
@@ -71,7 +74,7 @@ export default function Signin() {
       if (authHeader) {
         const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
         // 로컬 스토리지에 토큰 저장
-        // localStorage.setItem('token', token);
+        //localStorage.setItem('token', token);
         
         // Recoil에 토큰 저장
         setAtomToken(token);
@@ -121,13 +124,20 @@ export default function Signin() {
   const googleLogin = async (e) => {
       e.preventDefault();
 
-      window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+      //window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
       //window.location.href = 'https://nid.naver.com/nidlogin.logout';
-      //window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+      window.location.href = 'http://localhost:8080/oauth2/authorization/google';
       //window.location.href = 'https://accounts.google.com/Logout';
       //const url = 'http://localhost:8080/login/oauth2/code/google';
       console.log("로그인성공");
+      setCook(cookie.load('Authorization'));
+      console.log("cook",cook);
   }
+
+  useEffect(()=>{
+    console.log("cook11",cook);
+  },[cook]);
+
 
 
     return (
