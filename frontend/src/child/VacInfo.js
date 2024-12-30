@@ -1,19 +1,23 @@
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
+import axios from 'axios';
 import "./checkbox.css";
-
-import TailButton from "../UI/TailButton";
 import CardInfoSmall from '../UI/CardInfoSmall';
-import { useEffect, useState } from "react";
+import TailButton from '../UI/TailButton';
 
-export default function Register2({ info }) {
-    const memEmail = localStorage.getItem("memEmail");
+export default function VacInfo() {
 
+    const child_idx = useParams().idx;
+
+    // 수정 모드 체크
+    const [isUpdate, setIsUpdate] = useState(false);
     //테이블 Tr 만들기
     const [vacTrs, setVacTrs] = useState('');
 
-    // 체크된 목록
-    const [checkedList, setCheckedList] = useState([]);
-
+    // 접종 완료한 백신 목록
+    const [prevVac, setprevVac] = useState([]);
     const vaccineList = [
         { disease: "결핵", code: "BCG", idx: [1], optional: "필수접종" },
         { disease: "수두", code: "VAR", idx: [2], optional: "필수접종" },
@@ -35,90 +39,100 @@ export default function Register2({ info }) {
     ]
 
     useEffect(() => {
+        fetchVacInfo();
+    }, [])
+
+    useEffect(() => {
+        // console.log("[VacInfo] prevVac : ", prevVac); 
         makeTable();
-    }, []);
+        console.log("배열 :", prevVac);
+    }, [prevVac]);
 
     const makeTable = () => {
+
         const tags = vaccineList.map(item =>
             <tr className="bg-white border-b" key={item.idx[0]}>
-                <th scope="row" className="px-2 py-4 font-medium text-gray-900 "><CardInfoSmall text={item.optional} type="short" /></th>
+                <th scope="row" className="px-2 py-4 font-medium text-gray-900 "><CardInfoSmall text={item.optional} type={"short"} /></th>
                 <td className="px-6 py-4">{item.disease}</td>
                 <td className="px-6 py-4">{item.code}</td>
                 <td className="px-6 py-4 flex">{item.idx.map(idx =>
                     <div className="round w-[28px] h-[28px] mx-1 " key={idx}>
                         <input id={"check" + idx} type="checkbox" value={idx}
+                            // disabled={!isUpdate}
                             onClick={(e) => handleCheck(e.target.checked, e.target.value)}
                         />
-                        <label htmlFor={"check" + idx} ></label>
+                        <label htmlFor={"check" + idx}></label>
                     </div>
                 )}</td>
             </tr>
         );
 
         setVacTrs(tags);
-        // console.log("tags:", tags);
+        makeCheck();
+    }
+
+    const makeCheck = () => {
+        prevVac.map(idx => {
+            const checkbox = document.getElementById("check" + idx);
+            if (checkbox) {
+                checkbox.checked = true; // 체크 여부 설정
+            }
+        });
+
+        // console.log("makeCheck 할때 isUpdate :",isUpdate );
+        if(!isUpdate){
+            const allCheck = document.getElementsByTagName("input");
+            // console.log("makeCheck 할때 allCheck :",allCheck );
+            for (let i = 0; i < allCheck.length; i++) {
+                allCheck[i].disabled = true;
+            }
+        }
     }
 
     const handleCheck = (checked, id) => {
         console.log("checked : ", checked);
         console.log("checked : ", id);
 
+        const checked_id = parseInt(id);
         if (checked) {
-            setCheckedList((prev) => [...prev, id]);
+            setprevVac((prev) => [...prev, checked_id]);
         } else {
-            setCheckedList((prev) => prev.filter((i) => i !== id));
+            setprevVac((prev) => prev.filter((i) => i !== checked_id));
         }
     }
 
-    useEffect(() => {
-        console.log("checkedList : ", checkedList);
-    }, [checkedList])
+    const fetchVacInfo = async () => {
+        let url = `http://10.125.121.214:8080/checkVaccine?child_idx=${child_idx}`;
 
-    const handleNext = async (e) => {
-        e.preventDefault();
-        // let url = "10.125.121.214:8080/registerChild?childName=aa&member=chan@naver.com&vaccine=1";
-        let url = "http://10.125.121.214:8080/registerChild";
+        const resp = await axios.get(url);
+        // console.log("[VacInfo] data : ", resp.data);
 
-        const childData = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                childName: info.name,
-                member: memEmail,
-                birth: info.birth
-            })
-        }
-
-        console.log("===== fetch ====== ");
-
-        const resp = await fetch(url, childData);
-        const data = await resp.json();
-        if (!resp.ok) {
-            throw new Error(`HTTP error! status: ${resp.status}`);
-        }
-        // =========== 성공시 코드 짜야함 ==================== 
-        console.log("resp : ", resp);
-        console.log("data : ", data);
-
-
-        // 체크한 항목이 없을 때
-        if (checkedList.length > 0) putVaccineList(data.idx);
+        setprevVac(resp.data);
     }
 
-    const putVaccineList = async (idx) => {
-        checkedList.sort((a, b) => a - b);
-        console.log("checkedList", checkedList);
+    // 수정하기 버튼 클릭시 모드 변경
+    const changeToModify = () => {
+        console.log("수정하기");
+        setIsUpdate(true);
 
+        const checkboxs = document.getElementsByTagName("input");
+        for (var i = 0; i < checkboxs.length; i++) {
+            var checkbox1 = checkboxs.item(i);
+            checkbox1.disabled = false;
+            checkbox1.classList.remove('hover:cursor-not-allowed');
+        }
+    }
+
+    const putModify = async () => {
+        prevVac.sort((a, b) => a - b);
         let vaccine_idxs = ""
-        checkedList.forEach(idx => { vaccine_idxs = vaccine_idxs + idx + "," })
-        console.log("vaccine_idxs", vaccine_idxs);
+        prevVac.forEach(idx => { vaccine_idxs = vaccine_idxs + idx + "," })
+        // console.log("vaccine_idxs", vaccine_idxs);
 
         let url = "http://10.125.121.214:8080/selectVaccine?";
-        url = `${url}child_idx=${idx}&vaccine_idx=${vaccine_idxs}`
+        url = `${url}child_idx=${child_idx}&vaccine_idx=${vaccine_idxs}`
 
-        console.log("put URL : ", url);
+        // console.log("put URL : ", url);
         const VaccineListData = {
             method: 'PUT',
             headers: {
@@ -127,21 +141,21 @@ export default function Register2({ info }) {
         }
 
         const resp = await fetch(url, VaccineListData);
-        if (resp.ok) window.location.href = "/child";
+        if (resp.ok) window.location.href = "/child/vacInfo/"+child_idx;
+            setIsUpdate(false);
+            window.location.href = "/child/vacInfo/"+child_idx;
     }
 
     return (
-        <div className="w-[800px] h-full flex flex-col justify-start items-center py-12">
-            <div>
-                <div>
-                    2단계
+        <div className='w-[800px] h-full flex flex-col justify-start items-center py-12'>
+            <img src='/img/flushot.png' className='w-20 m-6' />
+            <div className='text-4xl font-bold m-6'> 우리 아이 접종 체크리스트 </div>
+            <div className="relative overflow-x-auto  m-6 mt-12">
+                <div onClick={changeToModify}
+                    className={`w-full text-right p-4 text-gray-500 font-NanumSquareNeoB
+                                hover:cursor-pointer ${isUpdate ? "hidden" : ""}`}>
+                    {isUpdate ? "" : "수정"}
                 </div>
-                <div>
-                    아이의 접종 정보를 입력해주세요.
-                </div>
-            </div>
-
-            <div className="relative overflow-x-auto">
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                         <tr>
@@ -164,11 +178,8 @@ export default function Register2({ info }) {
                         {vacTrs}
                     </tbody>
                 </table>
-            </div>
 
-            <div className="flex items-center justify-center mt-[10px]">
-                <TailButton caption={'다음'} color={'blue'} handleClick={handleNext}
-                    style={'w-[360px] h-12 text-[14px] '} />
+                <TailButton caption="수정하기" color={"blue"} style={isUpdate ? "" : "hidden"} handleClick={putModify} />
             </div>
         </div>
     )

@@ -25,11 +25,11 @@ export default function Register1({goNext}) {
                 </div>
             </div>
             <div className="flex flex-col w-[360px]">
-                <label for="childName" className="input_label mt-[30px]">
+                <label htmlFor="childName" className="input_label mt-[30px]">
                     이름<span className='pl-1 text-red-500 '>*</span></label>
                 <input id="childName" type="text" placeholder="ex. 김예방" ref={nameRef}
                     className="input_box mb-[30px]"></input>
-                <label for="childBirth" className="input_label ">
+                <label htmlFor="childBirth" className="input_label ">
                     생년월일<span className='pl-1 text-red-500 '>*</span></label>
                 <input id="childBirth" type="date" placeholder="생년월일" ref={birthRef}
                     className="input_box mb-[30px]" />

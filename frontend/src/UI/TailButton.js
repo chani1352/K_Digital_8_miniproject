@@ -1,7 +1,7 @@
 export default function TailButton({caption, color, handleClick, style, fontStyle, disabled}) {
     const btnStyle = {
         'blue' : 'bg-blue-500 text-white font-bold rounded focus:outline-none focus:shadow-outline disabled:bg-opacity-40',
-        'blueSmallText' : 'bg-blue-500 hover:bg-blue-700 text-white rounded focus:outline-none focus:shadow-outline'
+        'gray' : 'bg-gray-300 text-gray-600'
     }
 
     const btColorHover = {
