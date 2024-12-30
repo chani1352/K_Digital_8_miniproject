@@ -2,10 +2,12 @@ package com.pnu.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pnu.DTO.ChildDTO;
@@ -29,10 +31,11 @@ public class ChildController {
 	} 
 	
 	@PutMapping("/selectVaccine")
-	public List<ChildVaccine> selectVaccine(Integer child_idx,String vaccine_idx) {
+	public List<ChildVaccine> selectVaccine(Integer child_idx,@RequestParam(defaultValue = "0") String vaccine_idx) {
 		System.out.println("ChildController selectVaccine");
 		return childService.selectVaccine(child_idx,vaccine_idx);
 	}
+
 	
 	
 	@PostMapping("/registerVaccine")
@@ -41,12 +44,34 @@ public class ChildController {
 		return childService.registerVaccine(chVa);
 	}
 	
-	
-	
 	@GetMapping("/getChild")
 	public List<Child> getChild(String email) {
 		System.out.println("ChildController findChild");
 		return childService.getChild(email);
+	}
+	
+	@DeleteMapping("/deleteChild")
+	public void deleteChild(Integer child_idx) {
+		System.out.println("ChildController deleteChild");
+		childService.deleteChild(child_idx);
+	}
+	
+	@GetMapping("/checkVaccine")
+	public List<Integer> checkVaccine(Integer child_idx){
+		return childService.checkVaccine(child_idx);
+	}
+	
+	@GetMapping("/scheduleVaccine")
+	public List<ChildVaccine> scheduleVaccine(Integer child_idx){
+		return childService.scheduleVaccine(child_idx);
+	}
+	
+	
+	
+	
+	@PutMapping("/updateChild")
+	public Child updateChild(Child child) {
+		return childService.updateChild(child);
 	}
 
 

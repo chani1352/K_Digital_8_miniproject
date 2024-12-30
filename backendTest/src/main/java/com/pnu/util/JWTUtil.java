@@ -4,10 +4,12 @@ import java.util.Date;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 
 public class JWTUtil {
 	private static final long ACCESS_TOKEN_MSEC = 100 * (60 * 1000); //100분
-	private static final String JWT_KEY = "com.pnu.kwtkey"; //인코딩을 위한 secret key
+	//private static final long ACCESS_TOKEN_MSEC = 10 * 1000; //100분
+	private static final String JWT_KEY = "com.pnu.jwt"; //인코딩을 위한 secret key
 	private static final String ClaimName = "username";		//토큰에 담을 정보의 key
 	private static final String prefix = "Bearer ";			//JWT 토큰 헤더 문자열
 	
@@ -35,10 +37,14 @@ public class JWTUtil {
 	}
 	
 	public static boolean isExpired(String token) {
+		try {
 		System.out.println("JWTUtil isExpired");
-		
 		String tok = getJWTSource(token);
+
 		return JWT.require(Algorithm.HMAC256(JWT_KEY)).build().verify(tok).getExpiresAt().before(new Date());
+		}catch (TokenExpiredException e) {
+			return true;
+		}
 	}
 
 }

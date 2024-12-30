@@ -26,8 +26,11 @@ import lombok.ToString;
 public class Member {
 	
 	@Id
+	@Column(length = 30)
 	private String email;
+	@Column(length = 5)
 	private String name;
+	@Column(length = 15)
 	private String number;
 	private String password;
 	@Enumerated(EnumType.STRING)
