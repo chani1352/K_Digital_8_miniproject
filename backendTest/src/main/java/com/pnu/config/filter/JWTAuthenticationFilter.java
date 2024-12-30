@@ -53,6 +53,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		User user = (User)authResult.getPrincipal();
 		String token = JWT.create()   // JWT 토큰 생성 
 						  .withExpiresAt(new Date(System.currentTimeMillis() + 1000*60*100)) //토큰의 유효기간 100분 
+						  //.withExpiresAt(new Date(System.currentTimeMillis() + 1000*6)) //토큰의 유효기간 100분 
 						  .withClaim("username",user.getUsername())
 						  .sign(Algorithm.HMAC256("com.pnu.jwt")); //HMAC256알고리즘을 사용해 토큰 서명 추가 "com.pnu.jwt"는 비밀키 
 		response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token); //클라이언트에게 토큰을 보냄 ( HTTP 응답 헤더에 JWT 토큰을 포함) 

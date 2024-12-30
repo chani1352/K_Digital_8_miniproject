@@ -11,6 +11,7 @@ public class CustomMyUtil {
 		String userString = user.toString();
 		String regName = null;
 		String name = null;
+		System.out.println("ss : " + userString.toString());
 		if(userString.contains("google")) {
 			regName = "Google";
 			name = user.getAttribute("email");
@@ -22,7 +23,9 @@ public class CustomMyUtil {
 		}
 		else if(userString.contains("kakao"))	{
 			regName = "Kakao";
-			name = user.getAttribute("email");
+			Map<String,String> info = user.getAttribute("properties");
+			name = info.get("nickname");
+			System.out.println("name :" + name);
 		}
 		else {
 			if(userString.contains("id=") && userString.contains("resultcode=") && userString.contains("response=")) {

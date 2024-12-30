@@ -3,6 +3,7 @@ package com.pnu.config.filter;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -14,9 +15,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.pnu.domain.Member;
 import com.pnu.persistence.MemberRepository;
+import com.pnu.util.JWTUtil;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +32,33 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{ //인가 설�
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		System.out.println("JWTAuthorizationFilter doFilterInternal");  //확인용 
-		
-		//Authorization: Bearer <JWT 토큰> 형태의 값을 추출 
-		String srcToken = request.getHeader("Authorization");
-		if(srcToken == null || !srcToken.startsWith("Bearer ")) {
-			filterChain.doFilter(request, response);    // 다음필터가 어디?? 
-			return;
+		String srcToken = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+		    for (Cookie cookie : cookies) {
+		        if("Authorization".equals(cookie.getName())) {
+		        	System.out.println("aa : " + cookie.getName());
+		        	srcToken = cookie.getValue();
+		        	break;
+		        }
+		    }
+		} else {
+			srcToken = request.getHeader("Authorization");
 		}
 		
+		if(srcToken == null || !srcToken.startsWith("Bearer ")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
+		System.out.println("srcToken : " + srcToken);
 		String jwtToken = srcToken.replace("Bearer ",""); //토큰에서 bearer제거후 문자열 저장
+		if (JWTUtil.isExpired(jwtToken)) {
+		    System.out.println("JWT Token has expired");
+		    // 응답 상태 코드 설정: 401 Unauthorized
+		    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  // 401 상태 코드
+		    return;
+		}
 															     //build()검증객체 생성 verify 토큰 검증 username의 클레임값을 문자열로 반환 
 		String email = JWT.require(Algorithm.HMAC256("com.pnu.jwt")).build().verify(jwtToken).getClaim("username").asString();
 		

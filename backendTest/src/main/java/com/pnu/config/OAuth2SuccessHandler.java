@@ -45,6 +45,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 			log.error("onAuthenticationSuccess:Cannot generate username from oauth2user!");
 			throw new ServletException("Cannot generate username from oauth2user!");
 		}
+		System.out.println("oauthmail : " + oauthMail);
 		log.info("onAuthenticationSuccess:" + oauthMail);
 		if(oauthMail.contains("Google")) {
 			name = user.getAttribute("name");
@@ -52,6 +53,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		else if(oauthMail.contains("Naver")) {
 			Map<String,String> info = user.getAttribute("response");
 			name = info.get("name");
+		} else if(oauthMail.contains("Kakao")) {
+			Map<String,String> info = user.getAttribute("properties");
+			name = info.get("nickname");
 		}
 		if(memRepo.findById(oauthMail).orElse(null) == null) {
 			memRepo.save(Member.builder()
@@ -67,19 +71,15 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		System.out.println("token : " + jwtToken);
 		
 		response.addCookie(createCookie("Authorization", jwtToken));
-		//response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken);
-		//response.sendRedirect("http://localhost:3000?redirectedFromSocialLogin=true");
-		response.sendRedirect("http://localhost:3000/");
-		//response.sendRedirect("http://10.125.121.213:3000/hospitals");
+		response.sendRedirect("http://localhost:3000/oauth2");
 	}
 	
 	private Cookie createCookie(String key, String value) {
 		Cookie cookie = new Cookie(key,value);
-		cookie.setMaxAge(60*60*60);
+		cookie.setMaxAge(5);
 		cookie.setPath("/");
 		cookie.setHttpOnly(true);
 		return cookie;
-		
 	}
 
 }
