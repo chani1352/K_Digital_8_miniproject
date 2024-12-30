@@ -92,9 +92,11 @@ export default function Hospitals() {
     data = data.replace(/"item":/g, '');
     data = data.replace(/"vcnInfo":/g, '');
     
+    
+
     let parsedData = JSON.parse(data);
     const dataAll = parsedData.response.body;
-
+    console.log("data :", dataAll);
 
     // //총 페이지 수
     let maxPage = dataAll.maxPage;

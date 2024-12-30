@@ -1,18 +1,38 @@
-.childlist{
+.childlist {
     width: 202px;
 
     background: #FFFFFF;
     box-shadow: 0px 0px 11.4px 7px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
-    
-    padding: 10px 20px;
+
+    padding: 5px 10px;
 }
 
-.namecard{
+.namecard {
     width: 100%;
     /* width: 171px; */
-    height: 36px;
+    height: 30px;
+
 
     /* background: #5C99FF; */
     border-radius: 10px;
+
+}
+
+.seleced_namecard {
+    width: 100%;
+    /* width: 171px; */
+    height: 40px;
+
+
+    /* background: #5C99FF; */
+    border-radius: 10px;
+
+    background-color: #5C99FF;
+}
+
+.shadowBox {
+    background: #FFFFFF;
+    box-shadow: 0px 0px 11.4px 7px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
 }

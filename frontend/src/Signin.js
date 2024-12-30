@@ -1,27 +1,16 @@
 import './css/signCss.css';
 
-import axios from 'axios';
-import { useRef, useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useRef} from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
-import { useGoogleLogin} from "@react-oauth/google";
-import {GoogleOAuthProvider} from "@react-oauth/google";
-
-import { loginToken, memInfo } from "./AtomMem";
 import TailButton from "./UI/TailButton";
 import LogoButton from "./UI/LogoButton";
 
-import cookie from 'react-cookies';
 
 export default function Signin() {
-  const navigate = useNavigate();
-  const [atomToken, setAtomToken] = useRecoilState(loginToken);
-  const [atomMeminfo, setAtomMeminfo] = useRecoilState(memInfo);
-  const [token, setToken] = useState(null);
+
   const signinId = useRef();
   const signinPw = useRef();
-  const [cook,setCook] = useState(null);
 
   // 유효성 검사
   const clickSignIn = (e) => {
@@ -46,8 +35,8 @@ export default function Signin() {
 
 
   //로그인 정보 서버에 전달
-  const fetchSignIn = async() => {
-    
+  const fetchSignIn = async () => {
+
     const loginData = {
       method: 'POST',
       headers: {
@@ -76,118 +65,109 @@ export default function Signin() {
         const token = authHeader.replace('Bearer ', '');  // 'Bearer '를 제거하고 토큰만 추출
 
         // 로컬 스토리지에 토큰 저장
-        //localStorage.setItem('token', token);
-        // console.log('token', token);
+        localStorage.setItem('token', token);
+        console.log('token', token);
 
-        // Recoil에 토큰 저장
-        setAtomToken(token);
+        // 로그인 성공 후 사용자 정보 가져오기
         afterLogin(token);
-        
+
       } else {
         console.log('Authorization header not found');
         alert("로그인에 실패하였습니다");
         window.location.reload();
-        //새로고침?
       }
-      }catch (err) {
-        console.error('Error fetching data:', err);
-        alert("로그인에 실패하였습니다");
-        window.location.reload();
-        //새로고침?
-      }
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      alert("로그인에 실패하였습니다");
+      window.location.reload();
     }
-
-    const afterLogin = async(token)=> {
-      console.log("atomToken : " + token);
-      try {
-        const response = await fetch('http://10.125.121.214:8080/data', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
-          },
-        });
-        console.log("token1 : " + token)
-        const data = await response.json();  // JSON 형식으로 응답 받기
-        console.log(data);  // 서버에서 반환된 데이터
-        setAtomMeminfo(data);
-        navigate("/");
-      } catch (error) {
-        console.error('Error fetching data', error);
-      }
-
-    }
-
-  const handleLogin = async (data) => {
-
-    }
-
-  
-
-  const googleLogin = async (e) => {
-      e.preventDefault();
-
-      //window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
-      //window.location.href = 'https://nid.naver.com/nidlogin.logout';
-      window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-      //window.location.href = 'https://accounts.google.com/Logout';
-      //const url = 'http://localhost:8080/login/oauth2/code/google';
-      console.log("로그인성공");
-      setCook(cookie.load('Authorization'));
-      console.log("cook",cook);
   }
 
-  useEffect(()=>{
-    console.log("cook11",cook);
-  },[cook]);
+  // 로그인 성공 후 사용자 정보 가져오기
+  const afterLogin = async (token) => {
+    try {
+      const response = await fetch('http://10.125.121.214:8080/data', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
+        },
+      });
+      const data = await response.json();  // JSON 형식으로 응답 받기
+      // console.log(data);  // 서버에서 반환된 데이터
+      localStorage.setItem("memName", data.name);
+      localStorage.setItem("memEmail", data.email);
+      window.location.href = "/";
+    } catch (error) {
+      console.error('Error fetching data', error);
+    }
+
+  }
+
+  // 네이버 로그인
+  const naverLogin = async(e) => {
+    e.preventDefault();
+    //window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+  }
+
+  // 카카오 로그인
+  const kakaoLogin = async(e) => {
+    e.preventDefault();
+
+  }
+
+  const googleLogin = async (e) => {
+    e.preventDefault();
+    // window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  }
 
 
 
-    return (
-      <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">
-        <form className="flex flex-col w-[360px]">
-          <label for="email" className="input_label">
-            이메일</label>
-          <input id="email" type="text" placeholder="abc@abc.com" ref={signinId}
-            className="input_box mb-[30px]"></input>
-          <label for="password" className="input_label ">
-            비밀번호</label>
-          <input id="password" type="password" placeholder="********" ref={signinPw}
-            className="input_box mb-[30px]" />
-          <div className="flex items-center justify-center mt-[10px]">
+  return (
+    <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">
+      <form className="flex flex-col w-[360px]">
+        <label for="email" className="input_label">
+          이메일</label>
+        <input id="email" type="text" placeholder="abc@abc.com" ref={signinId}
+          className="input_box mb-[30px]"></input>
+        <label for="password" className="input_label ">
+          비밀번호</label>
+        <input id="password" type="password" placeholder="********" ref={signinPw}
+          className="input_box mb-[30px]" />
+        <div className="flex items-center justify-center mt-[10px]">
 
 
-            <TailButton caption={'로그인하기'} color={'blue'} handleClick={clickSignIn}
-              style={'w-[360px] h-12 text-[14px] '} />
-          </div>
+          <TailButton caption={'로그인하기'} color={'blue'} handleClick={clickSignIn}
+            style={'w-[360px] h-12 text-[14px] '} />
+        </div>
 
 
-        </form>
-        {/* ============  다른방법으로 로그인 ============  */}
-        <div className="flex flex-col w-[360px] mt-12 ">
-          <div className='text-[12px] text-gray-500 mb-2 font-NanumSquareR'>다른 방법으로 로그인</div>
-          <div className="flex-col items-center justify-center">
-            <LogoButton caption={'NAVER 로그인'} color={'naver'} handleClick={clickSignIn}
+      </form>
+      {/* ============  다른방법으로 로그인 ============  */}
+      <div className="flex flex-col w-[360px] mt-12 ">
+        <div className='text-[12px] text-gray-500 mb-2 font-NanumSquareR'>다른 방법으로 로그인</div>
+        <div className="flex-col items-center justify-center">
+          <LogoButton caption={'NAVER 로그인'} color={'naver'} handleClick={naverLogin}
+            style={'w-[360px] h-12 text-[14px] mb-4'} />
+          <LogoButton caption={'KAKAO 로그인'} color={'kakao'} handleClick={kakaoLogin}
+            style={'w-[360px] h-12 text-[14px] mb-4'} />
+          <GoogleOAuthProvider clientId='peb1021@gmail.com'>
+            <LogoButton caption={'GOOGLE 로그인'} color={'google'} handleClick={googleLogin}
               style={'w-[360px] h-12 text-[14px] mb-4'} />
-            <LogoButton caption={'KAKAO 로그인'} color={'kakao'} handleClick={clickSignIn}
-              style={'w-[360px] h-12 text-[14px] mb-4'} />
-            <GoogleOAuthProvider clientId='peb1021@gmail.com'>
-              <LogoButton caption={'GOOGLE 로그인'} color={'google'} handleClick={googleLogin}
-                style={'w-[360px] h-12 text-[14px] mb-4'} />
-            </GoogleOAuthProvider>
+          </GoogleOAuthProvider>
 
+        </div>
+
+        <div className="mt-8 flex items-center justify-center">
+          <div className='text-[12px] text-gray-500 mb-2 underline underline-offset-1 font-NanumSquareR'>
+            <a href='/signup'>회원가입</a>
           </div>
 
-          <div className="mt-8 flex items-center justify-center">
-            <div className='text-[12px] text-gray-500 mb-2 underline underline-offset-1 font-NanumSquareR'>
-              <a href='/signup'>회원가입</a>
-            </div>
-
-
-          </div>
 
         </div>
 
       </div>
 
-    )
-  }
+    </div>
+
+  )
+}
