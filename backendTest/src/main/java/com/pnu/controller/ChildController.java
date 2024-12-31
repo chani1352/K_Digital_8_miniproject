@@ -45,9 +45,16 @@ public class ChildController {
 	}
 	
 	@GetMapping("/getChild")
-	public List<Child> getChild(String email) {
+	public Child getChild(Integer idx) {
+		System.out.println("ChildController findChid");
+		return childService.getChild(idx);
+	}
+	
+	
+	@GetMapping("/getChildren")
+	public List<Child> getChildren(String email) {
 		System.out.println("ChildController findChild");
-		return childService.getChild(email);
+		return childService.getChildren(email);
 	}
 	
 	@DeleteMapping("/deleteChild")

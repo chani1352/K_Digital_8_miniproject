@@ -3,11 +3,14 @@ import CardInfoSmall from "./CardInfoSmall"
 import { useState, useEffect,useRef } from 'react';
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
-export default function HospitalCard({ hospital, showDetail }) {
+export default function HospitalCard({ hospital,vaccine, showDetail }) {
+
   const dropdownRef = useRef();
 
   const [expanded, setExpanded] = useState(false);
   const [vlist, setVlist] = useState('');
+  const [mandatory, setMandatory] = useState(false);
+  const [option, setOption] = useState(false);
 
   //컴포넌트 첫 로딩시
   useEffect(() => {
@@ -18,6 +21,7 @@ export default function HospitalCard({ hospital, showDetail }) {
         <div key={i["vcncd"]} className="flex text-xs py-1"><div className="w-6 h-full px-1"></div>{i["vcnNm"]}</div>
     );
     setVlist(vlist_items);
+    setOptionCard();
 
     //드롭다운 영역 외 클릭시 닫게 하기
     function handleOutsideClick(event) {
@@ -30,11 +34,22 @@ export default function HospitalCard({ hospital, showDetail }) {
       document.removeEventListener("click", handleOutsideClick);
     };
 
-  }, [])
 
-  const makeSmallCard = () => {
-    console.log("makeSmallCard" ,hospital.vcnList );
+
+  }, []);
+
+  const setOptionCard = () => {
+    for (let i = 0; i < vaccine.length; i++) {
+      for (let j = 0; j < hospital["vcnList"].length; j++) {
+        if(mandatory&&option) return;
+        if(hospital["vcnList"][j]["vcnNm"].slice(0,3) == vaccine[i]["disease"].slice(0,3)){
+          if(vaccine[i]["optional"] == "필수접종") setMandatory(true);
+          else setOption(true);
+        }
+      }
+    }
   }
+
   const listClick = () => {
     setExpanded(!expanded);
     console.log("expanded : ", expanded);
@@ -51,8 +66,10 @@ export default function HospitalCard({ hospital, showDetail }) {
       <div className="w-4/5">
         <div className="h-[44px] pl-3 flex items-end ">
           <CardInfoSmall text={"무료접종"} />
-          <CardInfoSmall text={"필수접종"} />
-          <CardInfoSmall text={"선택접종"} />
+
+           {mandatory ? <CardInfoSmall text={"필수접종"} /> : ""}
+           {option ? <CardInfoSmall text={"선택접종"} className="" /> : ""}
+
         </div>
         <div className="h-fit px-6 pb-3 flex flex-col justify-start items-start text-sm mt-3 ">
           <div className="py-1 flex w-full">

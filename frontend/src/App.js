@@ -20,6 +20,7 @@ import OAuth2 from './OAuth2';
 import Modifychild from "./child/Modifychild";
 import ModifyMyInfo from './pages/ModifyMyInfo';
 
+
 function App() {
 
   let loginToken = localStorage.getItem("token");
@@ -81,6 +82,7 @@ function App() {
                             <Route path='/child/vacInfo/:idx' element={<VacInfo/>} />
                             <Route path='/oauth2' element={<OAuth2/>} />
                             <Route path='/modify' element={<ModifyMyInfo/>} />
+
                         </Routes>
                     </main>
                     <footer className='w-full h-[150px] flex bg-slate-300'>

@@ -30,10 +30,23 @@ export default function Hospitals() {
   const [sparams] = useSearchParams();
   const qlist = [...sparams];
 
+  const [vaccineAllList, setVaccineAllList] = useState([]);
+
   //페이지 정보
   const [currentPage, setCurrentPage] = useState(0);
   const [pages, setPages] = useState('');
 
+  //필수접종,선택접종 구분을 위한 백신 정보
+  useEffect(()=>{
+    const dataAll = async () => {
+      const url = 'http://10.125.121.214:8080/findVaccine';
+      await fetch(url)
+        .then(resp => resp.json())
+        .then(data => setVaccineAllList(data))
+        .catch(err => console.error("Error fetching Board:", err));
+    }
+    dataAll();
+  },[]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState('');
@@ -46,7 +59,6 @@ export default function Hospitals() {
   const closeModal = () => {
     setModalOpen(false);
   };
-
 
   //쿼리 파라미터들이 변경될때마다 실행
   useEffect(() => {
@@ -99,6 +111,7 @@ export default function Hospitals() {
     setHosCards(<div className="flex opacity-30 w-4/5 h-full text-2xl pt-10 justify-center">로딩중...</div>);
     let url = "https://apis.data.go.kr/1790387/orglist3/getOrgList3?"
     const key = process.env.REACT_APP_DATA_KEY;
+
     url = `${url}serviceKey=${key}`;
     url = `${url}&pageNo=${crtPage}&numOfRows=10&brtcCd=${cd1}&sggCd=${cd2}&returnType=JSON`;
 
@@ -117,7 +130,6 @@ export default function Hospitals() {
     let parsedData = JSON.parse(data);
     const dataAll = parsedData.response.body;
     console.log("data :", dataAll);
-
     // //총 페이지 수
     let maxPage = dataAll.maxPage;
     // console.log("maxPage : ",maxPage);
@@ -128,10 +140,8 @@ export default function Hospitals() {
     />
 
     let hospitalAll = dataAll.items;
-    const cards = hospitalAll.map(h =>
-      <HospitalCard key={h.orgcd} hospital={h} showDetail={()=>openModal(h)} >
-        
-      </HospitalCard>);
+
+    const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} vaccine={vaccineAllList} showDetail={()=>openModal(h)/>);
 
     setHosCards(cards);
     setPages(pageTags);

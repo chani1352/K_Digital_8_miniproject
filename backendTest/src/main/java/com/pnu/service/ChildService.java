@@ -76,9 +76,14 @@ public class ChildService {
 		return chVaRepo.save(chVa);
 	}
 	
+	public Child getChild(Integer idx) {
+		System.out.println("ChildController getChild");
+		return childRepo.findById(idx).orElse(null);
+	}
+	
 	//아이 전체 정보
-	public List<Child> getChild(String email) {
-		System.out.println("ChildController findChild");
+	public List<Child> getChildren(String email) {
+		System.out.println("ChildController findChildren");
 		List<Child> childList = childRepo.queryGetChild(email);
 		for(Child ch : childList) {
 			int idx = ch.getIdx();
