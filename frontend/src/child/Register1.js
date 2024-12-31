@@ -6,6 +6,17 @@ export default function Register1({goNext}) {
     const nameRef = useRef();
     const birthRef = useRef();
 
+    // 달력 날짜 오늘이후로 선택 불가능하도록 max 설정
+    useEffect(() => {
+        const today= new Date();
+        let dateString = '';
+        dateString = dateString + today.getFullYear() +"-"
+                    +(("0" +(today.getMonth()+1))).slice(-2) + "-"
+                    +("0" +today.getDate()).slice(-2)
+
+        birthRef.current.max = dateString;
+    }, []);
+
     const beforeNext = () => {
         const childInfo = {
             name : nameRef.current.value,
@@ -14,6 +25,7 @@ export default function Register1({goNext}) {
         goNext(<Register2 info={childInfo}/>);
     }
 
+    
     return (
         <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">
             <div>
