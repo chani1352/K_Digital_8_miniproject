@@ -80,7 +80,7 @@ export default function VacInfo() {
         });
 
         // console.log("makeCheck 할때 isUpdate :",isUpdate );
-        if(!isUpdate){
+        if (!isUpdate) {
             const allCheck = document.getElementsByTagName("input");
             // console.log("makeCheck 할때 allCheck :",allCheck );
             for (let i = 0; i < allCheck.length; i++) {
@@ -141,9 +141,9 @@ export default function VacInfo() {
         }
 
         const resp = await fetch(url, VaccineListData);
-        if (resp.ok) window.location.href = "/child/vacInfo/"+child_idx;
-            setIsUpdate(false);
-            window.location.href = "/child/vacInfo/"+child_idx;
+        if (resp.ok) window.location.href = "/child/vacInfo/" + child_idx;
+        setIsUpdate(false);
+        window.location.href = "/child/vacInfo/" + child_idx;
     }
 
     return (
@@ -179,7 +179,13 @@ export default function VacInfo() {
                     </tbody>
                 </table>
 
-                <TailButton caption="수정하기" color={"blue"} style={isUpdate ? "" : "hidden"} handleClick={putModify} />
+                <div className='w-full flex justify-center'>
+                <TailButton caption="수정하기" color={"blue"}
+                    style={isUpdate ? "w-full m-10 h-12" : "hidden"}
+                    fontStyle={`text-base`}
+                    handleClick={putModify} />
+                </div>
+                
             </div>
         </div>
     )

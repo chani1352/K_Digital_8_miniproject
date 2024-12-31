@@ -56,3 +56,8 @@
   font-family: "NanumSquareNeoB";
   src: url("./fonts/NanumSquareNeo-cBd.ttf");
 }
+
+@font-face {
+  font-family: "SBAggroM";
+  src: url("./fonts/SBAggroM.ttf");
+}

@@ -10,7 +10,7 @@ export default function VacSchedule({child}) {
     const [trTags, setTrTags] = useState('');
 
     useEffect(() => {
-        console.log("VacSchedule child: ", child);
+        // console.log("VacSchedule child: ", child);
         makeMonthOptions();
         fetchData();
     }, [child]);
@@ -39,7 +39,7 @@ export default function VacSchedule({child}) {
 
     const fetchData = async () => {
         let url = `http://10.125.121.214:8080/scheduleVaccine?child_idx=${child.idx}`;
-        console.log("스케쥴 url : ", url);
+        // console.log("스케쥴 url : ", url);
         const resp = await axios.get(url);
         setData(resp.data);
         // console.log("[VacSchedule] resp:", resp);
@@ -78,14 +78,14 @@ export default function VacSchedule({child}) {
                 <p className='font-bold'>접종 일정표</p>
                 <select ref={monthRef}
                     onChange={handleMonthChange}
-                    className=" w-1/6 h-10 mx-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg">
+                    className=" w-1/6 h-10 mx-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg font-NanumSquareR" >
                     {/* <option value={202412}>2024년 12월</option> */}
                     {months}
                 </select>
             </div>
 
             <div className='w-auto h-[200px] overflow-y-auto relative'>
-                <table className="w-full h-auto text-xs text-left font-NanumSquareR text-gray-600  ">
+                <table className="w-full h-auto text-xs text-left font-NanumSquareNeo text-gray-600  ">
                 
                     <thead className="text-gray-400 bg-gray-50 sticky top-0 z-10">
                         <tr>

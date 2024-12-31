@@ -39,7 +39,7 @@ export default function Child() {
   }, []);
 
   const fetchChildList = async () => {
-    let url = `http://10.125.121.214:8080/getChild?email=${memEmail}`;
+    let url = `http://10.125.121.214:8080/getChildren?email=${memEmail}`;
 
     const resp = await axios.get(url);
     // console.log("resp:", resp);

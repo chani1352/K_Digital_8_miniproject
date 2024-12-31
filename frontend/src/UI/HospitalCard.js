@@ -3,7 +3,7 @@ import CardInfoSmall from "./CardInfoSmall"
 import { useState, useEffect,useRef } from 'react';
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
-export default function HospitalCard({ hospital }) {
+export default function HospitalCard({ hospital, showDetail }) {
   const dropdownRef = useRef();
 
   const [expanded, setExpanded] = useState(false);
@@ -11,6 +11,7 @@ export default function HospitalCard({ hospital }) {
 
   //컴포넌트 첫 로딩시
   useEffect(() => {
+    makeSmallCard();
     // console.log("hospital vcnList :", hospital["vcnList"]);
     const first =  hospital["vcnList"][0]["vcncd"];
     const vlist_items = hospital["vcnList"].filter(i=>i["vcncd"] != first).map(i=>
@@ -31,11 +32,18 @@ export default function HospitalCard({ hospital }) {
 
   }, [])
 
-
+  const makeSmallCard = () => {
+    console.log("makeSmallCard" ,hospital.vcnList );
+  }
   const listClick = () => {
     setExpanded(!expanded);
     console.log("expanded : ", expanded);
 
+  }
+
+  const handleDetail = () => {
+    console.log("병원 카드 클릭 ");
+    showDetail();
   }
 
   return (
@@ -44,7 +52,7 @@ export default function HospitalCard({ hospital }) {
         <div className="h-[44px] pl-3 flex items-end ">
           <CardInfoSmall text={"무료접종"} />
           <CardInfoSmall text={"필수접종"} />
-          <CardInfoSmall text={"선택접종"} className="" />
+          <CardInfoSmall text={"선택접종"} />
         </div>
         <div className="h-fit px-6 pb-3 flex flex-col justify-start items-start text-sm mt-3 ">
           <div className="py-1 flex w-full">
@@ -85,8 +93,9 @@ export default function HospitalCard({ hospital }) {
         </div>
       </div>
       <div className="w-1/5 flex justify-center items-center py-3 ">
-        <div className="border-l border-[#D3D3D3] h-full w-full flex items-center justify-center">
-          <img className="w-full px-3" src='../img/findHosBtn.png' />
+        <div  onClick={handleDetail}
+              className="border-l border-[#D3D3D3] h-full w-full flex items-center justify-center">
+          <img className="w-full px-3 hover:cursor-pointer" src='../img/findHosBtn.png' />
         </div>
       </div>
     </div>
