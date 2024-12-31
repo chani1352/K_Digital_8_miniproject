@@ -35,6 +35,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{ //인가 설�
 		String srcToken = null;
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
+			System.out.println("cookie");
 		    for (Cookie cookie : cookies) {
 		        if("Authorization".equals(cookie.getName())) {
 		        	System.out.println("aa : " + cookie.getName());
@@ -44,6 +45,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{ //인가 설�
 		    }
 		} else {
 			srcToken = request.getHeader("Authorization");
+			//System.out.println("get : " + request.);
+			System.out.println("token : " + srcToken);
 		}
 		
 		if(srcToken == null || !srcToken.startsWith("Bearer ")) {

@@ -7,6 +7,25 @@ import TailButton from "./UI/TailButton";
 import LogoButton from "./UI/LogoButton";
 
 
+  // 로그인 성공 후 사용자 정보 가져오기
+  export const afterLogin = async (token) => {
+    try {
+      const response = await fetch('http://10.125.121.214:8080/data', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
+        },
+      });
+      const data = await response.json();  // JSON 형식으로 응답 받기
+      // console.log(data);  // 서버에서 반환된 데이터
+      localStorage.setItem("memName", data.name);
+      localStorage.setItem("memEmail", data.email);
+      window.location.href = "/";
+    } catch (error) {
+      console.error('Error fetching data', error);
+    }
+  }
+
 export default function Signin() {
 
   const signinId = useRef();
@@ -83,41 +102,22 @@ export default function Signin() {
     }
   }
 
-  // 로그인 성공 후 사용자 정보 가져오기
-  const afterLogin = async (token) => {
-    try {
-      const response = await fetch('http://10.125.121.214:8080/data', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
-        },
-      });
-      const data = await response.json();  // JSON 형식으로 응답 받기
-      // console.log(data);  // 서버에서 반환된 데이터
-      localStorage.setItem("memName", data.name);
-      localStorage.setItem("memEmail", data.email);
-      window.location.href = "/";
-    } catch (error) {
-      console.error('Error fetching data', error);
-    }
-
-  }
 
   // 네이버 로그인
   const naverLogin = async(e) => {
     e.preventDefault();
-    //window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+    window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
   }
 
   // 카카오 로그인
   const kakaoLogin = async(e) => {
     e.preventDefault();
-
+    window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
   }
 
   const googleLogin = async (e) => {
     e.preventDefault();
-    // window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   }
 
 

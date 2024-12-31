@@ -3,11 +3,13 @@ import CardInfoSmall from "./CardInfoSmall"
 import { useState, useEffect,useRef } from 'react';
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
-export default function HospitalCard({ hospital }) {
+export default function HospitalCard({ hospital,vaccine }) {
   const dropdownRef = useRef();
 
   const [expanded, setExpanded] = useState(false);
   const [vlist, setVlist] = useState('');
+  const [mandatory, setMandatory] = useState(false);
+  const [option, setOption] = useState(false);
 
   //컴포넌트 첫 로딩시
   useEffect(() => {
@@ -17,6 +19,7 @@ export default function HospitalCard({ hospital }) {
         <div key={i["vcncd"]} className="flex text-xs py-1"><div className="w-6 h-full px-1"></div>{i["vcnNm"]}</div>
     );
     setVlist(vlist_items);
+    setOptionCard();
 
     //드롭다운 영역 외 클릭시 닫게 하기
     function handleOutsideClick(event) {
@@ -29,8 +32,20 @@ export default function HospitalCard({ hospital }) {
       document.removeEventListener("click", handleOutsideClick);
     };
 
-  }, [])
 
+  }, []);
+
+  const setOptionCard = () => {
+    for (let i = 0; i < vaccine.length; i++) {
+      for (let j = 0; j < hospital["vcnList"].length; j++) {
+        if(mandatory&&option) return;
+        if(hospital["vcnList"][j]["vcnNm"].slice(0,3) == vaccine[i]["disease"].slice(0,3)){
+          if(vaccine[i]["optional"] == "필수접종") setMandatory(true);
+          else setOption(true);
+        }
+      }
+    }
+  }
 
   const listClick = () => {
     setExpanded(!expanded);
@@ -38,13 +53,31 @@ export default function HospitalCard({ hospital }) {
 
   }
 
+  const openMap = () => {
+
+    const data = hospital["orgAddr"];
+    const address = data.split(',')[0];
+    const url = `http://localhost:3000/test?address=${address}&name=${hospital["orgnm"]}`; // URL에 데이터를 추가
+    const newWindow = window.open(
+      url, // 열고자 하는 URL
+      '_blank', // 새 창에서 열기
+      'width=800,height=600,left=100,top=100,scrollbars=yes,resizable=yes'
+    );
+    // 팝업 창이 제대로 열렸는지 확인
+    if (newWindow) {
+      newWindow.focus(); // 새 창을 포커스
+    } else {
+      alert("팝업이 차단되었습니다. 팝업 차단을 해제해 주세요.");
+    }
+  };
+
   return (
     <div className="card flex m-6">
       <div className="w-4/5">
         <div className="h-[44px] pl-3 flex items-end ">
           <CardInfoSmall text={"무료접종"} />
-          <CardInfoSmall text={"필수접종"} />
-          <CardInfoSmall text={"선택접종"} className="" />
+           {mandatory ? <CardInfoSmall text={"필수접종"} /> : ""}
+           {option ? <CardInfoSmall text={"선택접종"} className="" /> : ""}
         </div>
         <div className="h-fit px-6 pb-3 flex flex-col justify-start items-start text-sm mt-3 ">
           <div className="py-1 flex w-full">
@@ -86,7 +119,7 @@ export default function HospitalCard({ hospital }) {
       </div>
       <div className="w-1/5 flex justify-center items-center py-3 ">
         <div className="border-l border-[#D3D3D3] h-full w-full flex items-center justify-center">
-          <img className="w-full px-3" src='../img/findHosBtn.png' />
+          <img className="w-full px-3" src='../img/findHosBtn.png' onClick={openMap} />
         </div>
       </div>
     </div>

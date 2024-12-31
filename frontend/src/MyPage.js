@@ -16,6 +16,13 @@ export default function MyPage() {
     const handleLogout = () => {
         // setAtomToken(null);
         // localStorage.removeItem("token");
+        if(memEmail.includes("Google")) {
+            window.location.href = 'https://accounts.google.com/Logout';
+        } else if (memEmail.includes("Naver") ) {
+            window.location.href = 'https://nid.naver.com/nidlogin.logout';
+        } else if (memEmail.includes("Kakao") ) {
+            window.location.href = 'https://kapi.kakao.com/v1/user/logout';
+        } 
         localStorage.clear();
         window.location.href = "/";
         console.log("logout 후 atomToken : ", loginToken);

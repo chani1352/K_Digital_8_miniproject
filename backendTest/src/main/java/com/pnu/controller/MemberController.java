@@ -2,6 +2,7 @@ package com.pnu.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -50,7 +51,7 @@ public class MemberController {
     }
 	
 	@PutMapping("/updateMember")
-	public Member updateMember(Member member) {
+	public Member updateMember(@RequestBody Member member) {
 		return memberService.updateMember(member);
 	}
 

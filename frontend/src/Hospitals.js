@@ -29,9 +29,24 @@ export default function Hospitals() {
   const [sparams] = useSearchParams();
   const qlist = [...sparams];
 
+  const [vaccineAllList, setVaccineAllList] = useState([]);
+
   //페이지 정보
   const [currentPage, setCurrentPage] = useState(0);
   const [pages, setPages] = useState('');
+
+  //필수접종,선택접종 구분을 위한 백신 정보
+  useEffect(()=>{
+    const dataAll = async () => {
+      const url = 'http://10.125.121.214:8080/findVaccine';
+      await fetch(url)
+        .then(resp => resp.json())
+        .then(data => setVaccineAllList(data))
+        .catch(err => console.error("Error fetching Board:", err));
+    }
+    dataAll();
+  },[]);
+
 
   //쿼리 파라미터들이 변경될때마다 실행
   useEffect(()=>{
@@ -78,7 +93,7 @@ export default function Hospitals() {
   // 병원정보 패치
   const fetchHospital = async(cd1, cd2, crtPage) => {
     let url = "https://apis.data.go.kr/1790387/orglist3/getOrgList3?"
-    let key = "BrWobrMEW9ec09ztWv0IXtPs3Z39MOf8jtxl27UnVy4jnZ%2FCktcP1mCywJd%2F%2FBTF300vXPA2aV8HGakMYTWopw%3D%3D";
+    let key = process.env.REACT_APP_DATA_KEY;
     url = `${url}serviceKey=${key}`;
     url = `${url}&pageNo=${crtPage}&numOfRows=10&brtcCd=${cd1}&sggCd=${cd2}&returnType=JSON`;
 
@@ -97,7 +112,6 @@ export default function Hospitals() {
     let parsedData = JSON.parse(data);
     const dataAll = parsedData.response.body;
     console.log("data :", dataAll);
-
     // //총 페이지 수
     let maxPage = dataAll.maxPage;
     // console.log("maxPage : ",maxPage);
@@ -108,7 +122,7 @@ export default function Hospitals() {
                       />
 
     let hospitalAll = dataAll.items;
-    const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} />);
+    const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} vaccine={vaccineAllList} />);
     
     setHosCards(cards);
     setPages(pageTags);

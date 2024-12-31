@@ -19,6 +19,7 @@ import Vaccines from './Vaccines';
 import Child from './child/Child';
 import Register from './child/Register';
 import VacInfo from './child/VacInfo';
+import OAuth2 from './OAuth2';
 
 function App() {
 
@@ -84,6 +85,7 @@ function App() {
                             <Route path='/child' element={<Child/>} />
                             <Route path='/child/register' element={<Register/>} />
                             <Route path='/child/vacInfo/:idx' element={<VacInfo/>} />
+                            <Route path='/oauth2' element={<OAuth2/>} />
                         </Routes>
                     </main>
                     <footer className='w-full h-[150px] flex bg-slate-300'>
