@@ -3,10 +3,7 @@
 import './App.css';
 import './HeaderCss.css';
 
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { loginToken, memInfo } from "./AtomMem";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import Signin from "./Signin";
 import Signup from "./Signup";
@@ -20,6 +17,9 @@ import Child from './child/Child';
 import Register from './child/Register';
 import VacInfo from './child/VacInfo';
 import OAuth2 from './OAuth2';
+import Modifychild from "./child/Modifychild";
+import ModifyMyInfo from './pages/ModifyMyInfo';
+
 
 function App() {
 
@@ -57,12 +57,6 @@ function App() {
                        
                         {/* 로그인 or 마이페이지 */}
                         <div className='header_text whitespace-nowrap'>
-                            
-                            {/* {loginToken||loginToken!=="" ? 
-                                <div> 
-                                    <span className='mr-5 '>{memName==null?"" : memName+" 님"} </span> 
-                                    <Link to="/mypage">마이페이지</Link> 
-                                </div>: <Link to="/login">로그인</Link>} */}
                                 { loginToken==null ? 
                                 <Link to="/login">로그인</Link> 
                                 : <div><span className='mr-5 '>{memName==null?"" : memName+" 님"} </span>
@@ -84,16 +78,16 @@ function App() {
                             <Route path='/vaccines' element={<Vaccines/>} />
                             <Route path='/child' element={<Child/>} />
                             <Route path='/child/register' element={<Register/>} />
+                            <Route path='/child/modify/:idx' element={<Modifychild/>} />
                             <Route path='/child/vacInfo/:idx' element={<VacInfo/>} />
                             <Route path='/oauth2' element={<OAuth2/>} />
+                            <Route path='/modify' element={<ModifyMyInfo/>} />
+
                         </Routes>
                     </main>
                     <footer className='w-full h-[150px] flex bg-slate-300'>
-    
-    
                     </footer>
                 </div>
-    
             </BrowserRouter>
     )
 }

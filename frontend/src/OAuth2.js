@@ -6,7 +6,8 @@ export default function OAuth2() {
         // 비동기 작업을 처리할 함수 정의
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/oauth2', {
+
+                const response = await fetch('http://10.125.121.214:8080/oauth2', {
                     method: 'GET',
                     credentials: 'include',
                 });

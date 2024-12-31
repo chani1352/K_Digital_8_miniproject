@@ -1,22 +1,30 @@
 import '../css/child.css';
 import { IoIosArrowDropright } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom"
+import TailButton from '../UI/TailButton';
 
 export default function ChildProfileCard({ child }) {
-
+    const navigate = useNavigate();
     return (
         <div className='flex w-full'>
             <div className='flex w-1/2 shadowBox h-[200px] m-3 bg-red-50'>
                 <div className='w-1/2 m-3 h-auto p-3 bg-red-50'>
                     프로필사진
                 </div>
-                <div className='w-1/2 p-3 h-auto'>
+                <div className='w-1/2 p-3 h-full relative'>
                     <p className='font-bold text-lg my-3'>{child.childName}</p>
                     <div className='flex items-center'>
                         <img src='./img/child/birthday.png' className='size-5 mr-2 rounded-full border'></img>
                         <p className='text-xs'>
                             {child.birth}
                         </p>
+                    </div>
+                    <div className='w-full max-w-[130px] absolute bottom-4 flex justify-center ' >
+                        <TailButton caption={"수정하기"}
+                                    style={"px-8 py-2 bg-gray-200"}
+                                    fontStyle={"text-gray-600 text-xs"}
+                                    handleClick={()=>navigate(`./modify/${child.idx}`)}
+                                    />
                     </div>
                 </div>
 
