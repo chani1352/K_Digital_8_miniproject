@@ -157,7 +157,7 @@ export default function Signup() {
                         <input id="email" type="text" placeholder="abc@abc.com" ref={signupEmail}
                         className={`input_box_short w-[260px] border_${emailBorder}`}
                         onChange={emailChange}></input>
-                        <TailButton caption={'중복확인'} handleClick={dupleCheck} color={'blueSmallText'} 
+                        <TailButton caption={'중복확인'} handleClick={dupleCheck} color={'blue'} 
                                     style={'w-[90px] h-[44px]'} 
                                     fontStyle={'text-[13px] font-semibold font-[NanumSquareNeoB]'}/>
                     </div>

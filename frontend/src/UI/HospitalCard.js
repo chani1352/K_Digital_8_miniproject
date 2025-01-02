@@ -14,7 +14,7 @@ export default function HospitalCard({ hospital,vaccine, showDetail }) {
 
   //컴포넌트 첫 로딩시
   useEffect(() => {
-    makeSmallCard();
+    // makeSmallCard();
     // console.log("hospital vcnList :", hospital["vcnList"]);
     const first =  hospital["vcnList"][0]["vcncd"];
     const vlist_items = hospital["vcnList"].filter(i=>i["vcncd"] != first).map(i=>

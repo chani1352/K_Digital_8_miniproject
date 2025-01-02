@@ -98,13 +98,10 @@ export default function Register2({ info }) {
         if (!resp.ok) {
             throw new Error(`HTTP error! status: ${resp.status}`);
         }
-        // =========== 성공시 코드 짜야함 ==================== 
-        console.log("resp : ", resp);
-        console.log("data : ", data);
+        // console.log("resp : ", resp);
+        // console.log("data : ", data);
 
-
-        // 체크한 항목이 없을 때
-        if (checkedList.length > 0) putVaccineList(data.idx);
+        putVaccineList(data.idx);
     }
 
     const putVaccineList = async (idx) => {

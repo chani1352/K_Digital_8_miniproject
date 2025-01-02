@@ -44,6 +44,7 @@ export default function ModifyMyInfo() {
 
             //form에 기존데이터 입력
             nameRef.current.value = data.name;
+            setName(data.name);
             contactRef.current.value = data.number;
         } catch (error) {
             console.error('Error fetching data', error);
@@ -138,12 +139,14 @@ export default function ModifyMyInfo() {
                     비밀번호<span className='pl-1 text-red-500'>*</span></label>
                 <input id="password" type="password" placeholder="********" ref={pwRef}
                     onChange={changePassword}
+                    autoComplete="new-password"
                     className="input_box"></input>
 
                 <label for="passwordcf" className="input_label mt-[30px]">
                     비밀번호 확인<span className='pl-1 text-red-500'>*</span></label>
                 <input id="passwordcf" type="password" placeholder="********" ref={pwRefConfirmed}
                     onChange={changePwConfirmed}
+                    autoComplete="new-password"
                     className={`input_box ${pwConfirmed.length === 0 ? "border_normal" : isPwConfirmed ? "border_normal" : "focus:outline-none border_err"}`}></input>
                 <span className={`${pwConfirmed.length === 0 ? "hidden" : isPwConfirmed ? "hidden" : "text-red-500 text-xs pt-1"}`}>
                     비밀번호가 일치하지 않습니다
