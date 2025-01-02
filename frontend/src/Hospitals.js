@@ -141,7 +141,7 @@ export default function Hospitals() {
 
     let hospitalAll = dataAll.items;
 
-    const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} vaccine={vaccineAllList} showDetail={()=>openModal(h)/>);
+    const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} vaccine={vaccineAllList} showDetail={()=>openModal(h)}/>);
 
     setHosCards(cards);
     setPages(pageTags);
