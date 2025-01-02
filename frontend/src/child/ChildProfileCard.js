@@ -7,8 +7,8 @@ export default function ChildProfileCard({ child }) {
     const navigate = useNavigate();
     return (
         <div className='flex w-full'>
-            <div className='flex w-1/2 shadowBox h-[200px] m-3 bg-red-50'>
-                <div className='w-1/2 m-3 h-auto p-3 bg-red-50'>
+            <div className='flex w-1/2 shadowBox h-[200px] m-3 bg-red-50 justify-center items-center'>
+                <div className='w-[165px] m-3 h-[165px] p-3 ml-6 bg-red-50'>
                     프로필사진
                 </div>
                 <div className='w-1/2 p-3 h-full relative'>

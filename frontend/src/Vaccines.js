@@ -126,7 +126,7 @@ export default function Vaccines() {
         <div className="grid grid-cols-2 gap-4 justify-items-center">
           {vacCards}
         </div>
-        <div>{pages}</div>
+        <div className="w-full flex justify-center m-14">{pages}</div>
       </div>
       
     </div>
