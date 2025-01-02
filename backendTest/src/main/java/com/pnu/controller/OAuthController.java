@@ -21,7 +21,7 @@ public class OAuthController {
 	
 	@GetMapping("/oauth2")
 	public @ResponseBody ResponseEntity<?> oauthLogin(HttpServletRequest request) {
-		System.out.println("LoginController auth"); //확인
+		System.out.println("OAuthController auth"); //확인
 		return oauthService.oauthLogin(request);
 	}
 

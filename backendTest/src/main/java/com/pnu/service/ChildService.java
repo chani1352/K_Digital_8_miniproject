@@ -1,9 +1,13 @@
 package com.pnu.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pnu.DTO.ChildDTO;
 import com.pnu.domain.Child;
@@ -27,14 +31,58 @@ public class ChildService {
 	private final VaccineInfoRepository vaccineRepo;
 	
 	//아이 등록
-	public Child registerChild(ChildDTO childDTO) {
+	public Child registerChild(ChildDTO childDTO) throws IOException{
 		System.out.println("ChildService registerChild");
+		MultipartFile file = childDTO.getImage();
+		String absolutePath = new File("").getAbsolutePath() + File.separator;
+		String path = "src/main/java/com/pnu/images";
+		File userImg = new File(path);
+		
+        if (!userImg.exists()) {
+            // 폴더없으면 생성
+            userImg.mkdirs();
+        }
+        
+        if (!file.isEmpty()) {
+            // 파일이 비어있지 않으면
+            String contentType = file.getContentType();
+            String originalFileExtension;
+
+            // 타입에 따른 확장자 결정
+            if (ObjectUtils.isEmpty(contentType)) {
+                // 타입 없으면 null
+                return null;
+            } else {
+                if (contentType.contains("image/jpeg")) {
+                    originalFileExtension = ".jpg";
+                } else if (contentType.contains("image/png")) {
+                    originalFileExtension = ".png";
+                } else {
+                    return null;
+                }
+            }
+            
+         // 파일저장 이름
+            String originalFileName = file.getOriginalFilename();
+            // 확장자를 제외한 파일 이름과 확장자 추출
+            int lastIndex = originalFileName.lastIndexOf('.');
+            String fileName = originalFileName.substring(0, lastIndex);
+
+            String userImgName = childDTO.getMember() + "_" + childDTO.getChildName() + originalFileExtension;
+
+            // 파일 저장
+            userImg = new File(absolutePath  + path + File.separator + userImgName);
+            System.out.println("파일 저장경로:" + absolutePath  + path + File.separator + userImgName);
+            file.transferTo(userImg);
+        }
+	
 		Member member = memberRepo.findById(childDTO.getMember()).orElse(null);
 		if(member == null) return null;
 		Child child = childRepo.save(Child.builder()
 							   .childName(childDTO.getChildName())
 							   .member(member)
 							   .birth(childDTO.getBirth())
+							   .image(userImg.getAbsolutePath()) 
 							   .build());
 		
 		//출생일 기준 백신 접종일 초기화
@@ -71,10 +119,10 @@ public class ChildService {
 	}
 	
 	
-	public ChildVaccine registerVaccine(ChildVaccine chVa) {
-		System.out.println("ChildService registerVaccine");
-		return chVaRepo.save(chVa);
-	}
+//	public ChildVaccine registerVaccine(ChildVaccine chVa) {
+//		System.out.println("ChildService registerVaccine");
+//		return chVaRepo.save(chVa);
+//	}
 	
 	public Child getChild(Integer idx) {
 		System.out.println("ChildController getChild");
@@ -101,7 +149,7 @@ public class ChildService {
 		childRepo.deleteById(idx);
 	}
 	
-	//접종한 백신 넘버 넘버
+	//접종한 백신 넘버
 	public List<Integer> checkVaccine(Integer idx) {
 		List<ChildVaccine> child = chVaRepo.selectChildIdx(idx);
 		List<Integer> vaccineNum = new ArrayList<>();

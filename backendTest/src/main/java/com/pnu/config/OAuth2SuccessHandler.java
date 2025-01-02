@@ -36,16 +36,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		System.out.println("OAuth2SuccessHandler onAuthenticationSuccess"); // 확인
 		log.info("OAuth2SuccessHandler:onAuthenticationSuccess");
 		OAuth2User user = (OAuth2User)authentication.getPrincipal();
-		Map<String,Object> attributes = user.getAttributes(); // 확인
-		System.out.println("user : " + attributes.keySet());  // 확인
-		System.out.println("user : " + attributes.values());  // 확인
 		String oauthMail = CustomMyUtil.getUsernameFromOAuth2User(user);
 		String name = null;
 		if(oauthMail == null) {
 			log.error("onAuthenticationSuccess:Cannot generate username from oauth2user!");
 			throw new ServletException("Cannot generate username from oauth2user!");
 		}
-		System.out.println("oauthmail : " + oauthMail);
 		log.info("onAuthenticationSuccess:" + oauthMail);
 		if(oauthMail.contains("Google")) {
 			name = user.getAttribute("name");
@@ -68,8 +64,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		
 		String jwtToken = JWTUtil.getJWT(oauthMail);
 		jwtToken = jwtToken.replace("Bearer ",""); 
-		System.out.println("token : " + jwtToken);
-		
+
 		response.addCookie(createCookie("Authorization", jwtToken));
 		response.sendRedirect("http://localhost:3000/oauth2");
 	}

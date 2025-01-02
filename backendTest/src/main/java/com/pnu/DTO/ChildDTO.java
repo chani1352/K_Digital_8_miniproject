@@ -2,6 +2,8 @@ package com.pnu.DTO;
 
 import java.time.LocalDate;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -23,5 +25,7 @@ public class ChildDTO {
 	private String member;	
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birth;
+    
+	private MultipartFile image;
 	
 }

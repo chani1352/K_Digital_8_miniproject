@@ -32,29 +32,12 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{ //인가 설�
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		System.out.println("JWTAuthorizationFilter doFilterInternal");  //확인용 
-		String srcToken = null;
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			System.out.println("cookie");
-		    for (Cookie cookie : cookies) {
-		        if("Authorization".equals(cookie.getName())) {
-		        	System.out.println("aa : " + cookie.getName());
-		        	srcToken = cookie.getValue();
-		        	break;
-		        }
-		    }
-		} else {
-			srcToken = request.getHeader("Authorization");
-			//System.out.println("get : " + request.);
-			System.out.println("token : " + srcToken);
-		}
-		
+		String srcToken = request.getHeader("Authorization");
 		if(srcToken == null || !srcToken.startsWith("Bearer ")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 
-		System.out.println("srcToken : " + srcToken);
 		String jwtToken = srcToken.replace("Bearer ",""); //토큰에서 bearer제거후 문자열 저장
 		if (JWTUtil.isExpired(jwtToken)) {
 		    System.out.println("JWT Token has expired");
@@ -62,7 +45,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{ //인가 설�
 		    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  // 401 상태 코드
 		    return;
 		}
-															     //build()검증객체 생성 verify 토큰 검증 username의 클레임값을 문자열로 반환 
+														     //build()검증객체 생성 verify 토큰 검증 username의 클레임값을 문자열로 반환 
 		String email = JWT.require(Algorithm.HMAC256("com.pnu.jwt")).build().verify(jwtToken).getClaim("username").asString();
 		
 		Optional<Member> opt = memRepo.findById(email);

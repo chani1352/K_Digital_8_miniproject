@@ -23,32 +23,29 @@ public class MemberController {
 
 	private final MemberService memberService;
 	 
-
 	@PostMapping("/register")
 	public Member registerMember(@RequestBody Member member){
 		System.out.println("MemberController registerMember"); //확인용 
 		return memberService.registerMember(member);
 	}
 	
-
 	@GetMapping("/findMember")
 	public boolean findMember(String email) {
 		System.out.println("MemberController findMember"); //확인용 
 		return memberService.findMember(email);
 	}
 	
-
 	@GetMapping("/data")
 	public ResponseEntity<Member> getUserData(Authentication authentication){
 		System.out.println("MemberController getUserData"); //확인용 
 		return memberService.getUserData(authentication);
 	}
 	
-	@GetMapping("/oauthdata")
-	public void getOauthData(HttpServletRequest request){
-		System.out.println("MemberController getOauthData"); //확인용 
-		memberService.getOauthData(request);
-    }
+//	@GetMapping("/oauthdata")
+//	public void getOauthData(HttpServletRequest request){
+//		System.out.println("MemberController getOauthData"); //확인용 
+//		memberService.getOauthData(request);
+//    }
 	
 	@PutMapping("/updateMember")
 	public Member updateMember(@RequestBody Member member) {
