@@ -37,7 +37,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		try {
 			Member member = mapper.readValue(request.getInputStream(), Member.class);
 			Authentication authToken = new UsernamePasswordAuthenticationToken(member.getEmail(),member.getPassword());
-			System.out.println("aa" + authToken);
 			return authenticationManager.authenticate(authToken);
 		} catch(Exception e) {
 			log.info(e.getMessage());
@@ -59,7 +58,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token); //클라이언트에게 토큰을 보냄 ( HTTP 응답 헤더에 JWT 토큰을 포함) 
 																		  //Authorization: Bearer <JWT 토큰> 이 형태(Bearer은 인증 방식을 뜻함) 
 		response.setStatus(HttpStatus.OK.value()); //상태 코드 설정: 이 코드는 HTTP 응답 상태 코드를 200 OK로 설정
-		System.out.println("token : " + token);
 	}
 
 }

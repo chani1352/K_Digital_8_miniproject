@@ -11,7 +11,6 @@ public class CustomMyUtil {
 		String userString = user.toString();
 		String regName = null;
 		String name = null;
-		System.out.println("ss : " + userString.toString());
 		if(userString.contains("google")) {
 			regName = "Google";
 			name = user.getAttribute("email");

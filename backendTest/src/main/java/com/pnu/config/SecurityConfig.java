@@ -34,7 +34,6 @@ public class SecurityConfig {
 		http.formLogin(frmLogin->frmLogin.disable());
 		http.httpBasic(basic->basic.disable());
 		http.cors(cors->cors.configurationSource(corsSource()));
-		//http.cors().and();
 		http.authorizeHttpRequests(security->security
 									.requestMatchers("/member/**").authenticated()
 									.requestMatchers("/admin/**").hasRole("ADMIN")

@@ -34,13 +34,15 @@ public class Child {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idx;
-	@Column(length = 5, nullable = false)
+	@Column(length = 10, nullable = false)
 	private String childName;
 	@Column(nullable = false)
 	private LocalDate birth;
 	private int optional;
 	private int mandatory;
-//	private MultipartFile image;
+	//private MultipartFile image;
+	//private byte[] image;
+	private String image;
 	
 	@ManyToOne
 	@JoinColumn(name="MEMBER_EMAIL")

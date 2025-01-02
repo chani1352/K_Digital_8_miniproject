@@ -1,14 +1,16 @@
 package com.pnu.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pnu.DTO.ChildDTO;
 import com.pnu.domain.Child;
@@ -24,24 +26,29 @@ public class ChildController {
 	private final ChildService childService;
 	
 	@PostMapping("/registerChild")
-	public Child registerChild(@RequestBody ChildDTO child) {
+	//public Child registerChild(@RequestBody ChildDTO child) throws IOException{
+	public Child registerChild(@RequestParam("image") MultipartFile image,@RequestParam("childName") String childName,
+							  @RequestParam("member") String member,@RequestParam("birth") LocalDate birth) throws IOException {
 		System.out.println("ChildController registerChild");
-		System.out.println("child : " + child.toString());
+		ChildDTO child = ChildDTO.builder()
+							  .childName(childName)
+							  .member(member)
+							  .birth(birth)
+							  .image(image)
+							  .build();
 		return childService.registerChild(child);
 	} 
 	
+//	@PostMapping("/registerVaccine")
+//	public ChildVaccine registerVaccine(ChildVaccine chVa) {
+//		System.out.println("ChildController registerVaccine");
+//		return childService.registerVaccine(chVa);
+//	}
+//	
 	@PutMapping("/selectVaccine")
 	public List<ChildVaccine> selectVaccine(Integer child_idx,@RequestParam(defaultValue = "0") String vaccine_idx) {
 		System.out.println("ChildController selectVaccine");
 		return childService.selectVaccine(child_idx,vaccine_idx);
-	}
-
-	
-	
-	@PostMapping("/registerVaccine")
-	public ChildVaccine registerVaccine(ChildVaccine chVa) {
-		System.out.println("ChildController registerVaccine");
-		return childService.registerVaccine(chVa);
 	}
 	
 	@GetMapping("/getChild")
@@ -49,7 +56,6 @@ public class ChildController {
 		System.out.println("ChildController findChid");
 		return childService.getChild(idx);
 	}
-	
 	
 	@GetMapping("/getChildren")
 	public List<Child> getChildren(String email) {
@@ -72,9 +78,6 @@ public class ChildController {
 	public List<ChildVaccine> scheduleVaccine(Integer child_idx){
 		return childService.scheduleVaccine(child_idx);
 	}
-	
-	
-	
 	
 	@PutMapping("/updateChild")
 	public Child updateChild(Child child) {
