@@ -89,12 +89,9 @@ export default function Register2({ info }) {
         formData.append("file", info.file);
         const childData = {
             method: 'POST',
-            headers: {
-              // 'Content-Type': 'multipart/form-data'
-            },
             body : formData,
         }
-        console.log("===== fetch ====== ");
+        // console.log("===== fetch ====== ");
 
         const resp = await fetch(url, childData);
         const data = await resp.json();

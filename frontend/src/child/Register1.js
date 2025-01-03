@@ -7,6 +7,7 @@ export default function Register1({goNext}) {
     const nameRef = useRef();
     const birthRef = useRef();
     const fileRef = useRef();
+    const [imageUrl,setImageUrl] = useState('/img/child/child_profile_0.png');
     const [image,setImage] = useState('');
 
     // 달력 날짜 오늘이후로 선택 불가능하도록 max 설정
@@ -38,9 +39,20 @@ export default function Register1({goNext}) {
 
         if(file) {
             setImage(file);
+
+            const reader = new FileReader();
+
+            //파일 읽기가 완료 되었을 때 실행되는 콜백
+            reader.onload = (e) => {
+                setImageUrl(e.target.result);
+            }
+            reader.readAsDataURL(file);
         }
     }
     
+    useEffect(()=>{
+        console.log("image : ", image);
+    },[image]);
     return (
         <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">
             <div className="w-full flex flex-col items-center m-6">
@@ -52,7 +64,7 @@ export default function Register1({goNext}) {
                 </div>
 
                 <div className="w-[180px] h-[180px] m-6 relative drop-shadow-lg ">
-                <img src='/img/child/child_profile_0.png' alt="child_profile" className='w-fit h-fit mr-2 rounded-lg'></img>
+                <img src={imageUrl} alt="child_profile" className='w-fit h-fit mr-2 rounded-lg'></img>
                 
                 <input type="file" accept="image/*" ref={fileRef} onChange={handlePhotoChange} className="hidden"/>
                 <button onClick={handleFileClick}
@@ -61,10 +73,6 @@ export default function Register1({goNext}) {
                                 drop-shadow-lg">
                     <IoMdCamera />
                 </button>
-                
-                
-                        
-                    {/* './img/faceonly.png' */}
                     
                 </div>
             </div>

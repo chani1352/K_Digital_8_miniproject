@@ -11,6 +11,12 @@ export default function MyPage() {
     const memEmail = localStorage.getItem("memEmail");
 
     console.log("memName: ",memName);
+
+    const clickLogout = () => {
+        if(window.confirm("로그아웃 하시겠습니까?")){
+            handleLogout();
+          }
+    }
     const handleLogout = () => {
         // setAtomToken(null);
         // localStorage.removeItem("token");
@@ -53,7 +59,7 @@ export default function MyPage() {
 
                 <div className="w-full h-14  flex items-center p-3 mt-32 my-2  ">
                     <span className="hover:cursor-pointer text-gray-500"
-                            onClick={handleLogout}>로그아웃</span>
+                            onClick={clickLogout}>로그아웃</span>
                 </div>
             </div>
             
