@@ -1,0 +1,23 @@
+.category2_selected{
+    /* width: 80px; */
+    color: #5c99ff;
+    position: relative;
+    border-bottom-width: 2px;
+    border-bottom-color: #5c99ff;
+}
+
+/* .category2_selected:after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    bottom: -5px;
+    height: 3px;
+    width: 80px;
+    background: #5c99ff;
+  } */
+
+.category2_unselected{
+    /* width: 80px; */
+    color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+
+}
