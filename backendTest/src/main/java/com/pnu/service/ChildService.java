@@ -35,14 +35,12 @@ public class ChildService {
 		System.out.println("ChildService registerChild");
 		MultipartFile file = childDTO.getImage();
 		String absolutePath = new File("").getAbsolutePath() + File.separator;
-		String path = "src/main/java/com/pnu/images";
+		String path = "src/main/resources/static/images";
 		File userImg = new File(path);
+		String userImgName = null;
 		
-        if (!userImg.exists()) {
-            // 폴더없으면 생성
-            userImg.mkdirs();
-        }
-        
+        if (!userImg.exists()) userImg.mkdirs();
+       
         if (!file.isEmpty()) {
             // 파일이 비어있지 않으면
             String contentType = file.getContentType();
@@ -68,7 +66,7 @@ public class ChildService {
             int lastIndex = originalFileName.lastIndexOf('.');
             String fileName = originalFileName.substring(0, lastIndex);
 
-            String userImgName = childDTO.getMember() + "_" + childDTO.getChildName() + originalFileExtension;
+            userImgName = childDTO.getMember() + "_" + childDTO.getChildName() + originalFileExtension;
 
             // 파일 저장
             userImg = new File(absolutePath  + path + File.separator + userImgName);
@@ -82,7 +80,7 @@ public class ChildService {
 							   .childName(childDTO.getChildName())
 							   .member(member)
 							   .birth(childDTO.getBirth())
-							   .image(userImg.getAbsolutePath()) 
+							   .image(userImgName) 
 							   .build());
 		
 		//출생일 기준 백신 접종일 초기화

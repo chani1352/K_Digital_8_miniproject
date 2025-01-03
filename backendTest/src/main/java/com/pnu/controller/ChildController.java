@@ -27,14 +27,14 @@ public class ChildController {
 	
 	@PostMapping("/registerChild")
 	//public Child registerChild(@RequestBody ChildDTO child) throws IOException{
-	public Child registerChild(@RequestParam("image") MultipartFile image,@RequestParam("childName") String childName,
+	public Child registerChild(@RequestParam("file") MultipartFile file,@RequestParam("childName") String childName,
 							  @RequestParam("member") String member,@RequestParam("birth") LocalDate birth) throws IOException {
 		System.out.println("ChildController registerChild");
 		ChildDTO child = ChildDTO.builder()
 							  .childName(childName)
 							  .member(member)
 							  .birth(birth)
-							  .image(image)
+							  .image(file)
 							  .build();
 		return childService.registerChild(child);
 	} 
