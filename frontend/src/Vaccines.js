@@ -1,5 +1,6 @@
+import "./css/vaccines.css";
 import VaccineCard from "./UI/VaccineCard";
-import { useState, useEffect,useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Pagination from "./UI/Pagination";
 
 export default function Vaccines() {
@@ -45,23 +46,25 @@ export default function Vaccines() {
     setPeriName(Object.entries(period[caption]).map(([key, value]) =>
                               <button key={key} onClick={() => selectVaccine(value, 1)} 
                               id = {`cate${value}`}
-                              className={`category2 font-bold mr-5 ${isClicks === value ? "text-black-500" : "text-gray-400"}`}>
+                              className={`category2 font-bold mr-5`}>
                               {key}</button>));
     selectVaccine(Object.values(period[caption])[0], 1);   
     setIsClick(caption);
     setCurrentPage(1);
   }
   
+  //세부 카테고리 변경될때마다 색상 설정
   useEffect(()=>{
     const cateBtns = document.getElementsByClassName("category2");
     for(let i=0; i<cateBtns.length; i++){
-      cateBtns[i].classList.add('text-gray-400');
+      cateBtns[i].classList.remove('category2_selected');
+      cateBtns[i].classList.add('category2_unselected');
     }
 
     const selectedBtn = document.getElementById("cate"+isClicks);
     if(!selectedBtn) return;
-    selectedBtn.classList.remove('text-gray-400');
-    selectedBtn.classList.add('text-black-500');
+    selectedBtn.classList.remove('category2_unselected');
+    selectedBtn.classList.add('category2_selected');
     setCurrentPage(1);
   },[isClicks]);
 
@@ -89,16 +92,16 @@ export default function Vaccines() {
 
   return (
     <div className="w-full">
-      <div className="w-1/2 flex justify-between my-10 mx-auto">
+      <div className="w-full max-w-[750px] flex justify-between  my-20 mx-auto">
         <div>
           <button onClick={() => vaccineAll('전체')} className={`font-bold ${isClick === "전체" ? "text-black-500" : "text-gray-500"}`}>
-            <img className="w-20 " src='./img/baby.png' />
+            <img className="w-20" src='./img/baby.png' />
             전체
           </button>
         </div>
         <div>
           <button onClick={() => vaccineAll('신생아')} className={`font-bold ${isClick === "신생아" ? "text-black-500" : "text-gray-500"}`}>
-            <img className="w-20 " src='./img/baby.png' />
+            <img className="w-20" src='./img/baby.png' />
             신생아
           </button>
         </div>
@@ -121,12 +124,12 @@ export default function Vaccines() {
           </button>
         </div>
       </div>
-      <div className="w-1/2 mx-auto">
-        <div className="mx-5">{periName}</div>
+      <div className="w-[700px] mx-auto">
+        <div className="m-5 text-lg">{periName}</div>
         <div className="grid grid-cols-2 gap-4 justify-items-center">
           {vacCards}
         </div>
-        <div className="w-full flex justify-center m-14">{pages}</div>
+        <div className="w-full flex items-center justify-center my-14">{pages}</div>
       </div>
       
     </div>

@@ -160,6 +160,12 @@ export default function Hospitals() {
       return;
     }
 
+    if (ops2Ref.current.value === "default2") {
+      alert("시/군/구를 선택하세요");
+      ops2Ref.current.focus();
+      return;
+    }
+
     setCurrentPage(1);
 
     let hrefUrl = "?&brtcCd=";
