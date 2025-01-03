@@ -4,6 +4,9 @@ import "./checkbox.css";
 import TailButton from "../UI/TailButton";
 import CardInfoSmall from '../UI/CardInfoSmall';
 import { useEffect, useState } from "react";
+import { Form } from "react-router-dom";
+import axios from 'axios';
+
 
 export default function Register2({ info }) {
     const memEmail = localStorage.getItem("memEmail");
@@ -79,18 +82,18 @@ export default function Register2({ info }) {
         // let url = "10.125.121.214:8080/registerChild?childName=aa&member=chan@naver.com&vaccine=1";
         let url = "http://10.125.121.214:8080/registerChild";
 
+        const formData = new FormData();
+        formData.append("childName",info.name);
+        formData.append("member", memEmail);
+        formData.append("birth", info.birth);
+        formData.append("file", info.file);
         const childData = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+              // 'Content-Type': 'multipart/form-data'
             },
-            body: JSON.stringify({
-                childName: info.name,
-                member: memEmail,
-                birth: info.birth
-            })
+            body : formData,
         }
-
         console.log("===== fetch ====== ");
 
         const resp = await fetch(url, childData);
@@ -98,8 +101,6 @@ export default function Register2({ info }) {
         if (!resp.ok) {
             throw new Error(`HTTP error! status: ${resp.status}`);
         }
-        // console.log("resp : ", resp);
-        // console.log("data : ", data);
 
         putVaccineList(data.idx);
     }

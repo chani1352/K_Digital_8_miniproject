@@ -7,6 +7,7 @@ export default function Register1({goNext}) {
     const nameRef = useRef();
     const birthRef = useRef();
     const fileRef = useRef();
+    const [image,setImage] = useState('');
 
     // 달력 날짜 오늘이후로 선택 불가능하도록 max 설정
     useEffect(() => {
@@ -22,7 +23,8 @@ export default function Register1({goNext}) {
     const beforeNext = () => {
         const childInfo = {
             name : nameRef.current.value,
-            birth : birthRef.current.value
+            birth : birthRef.current.value,
+            file : image
         }
         goNext(<Register2 info={childInfo}/>);
     }
@@ -32,16 +34,11 @@ export default function Register1({goNext}) {
     }
 
     const handlePhotoChange = (e) => {
-        const file = e.target.files[0]  //첫번째 파일만 선택
+        const file = e.target.files[0];  //첫번째 파일만 선택
+
         if(file) {
-            upLoadFile(file);           //파일을 서버에 업로드
+            setImage(file);
         }
-    }
-    
-    const upLoadFile = async(file) => {
-        console.log("아이 프로필 사진 등록 file:", file);
-        const formData = new FormData();
-        // formData.append('child_idx', child)
     }
     
     return (
