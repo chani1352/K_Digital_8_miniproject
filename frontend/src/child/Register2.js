@@ -37,6 +37,8 @@ export default function Register2({ info }) {
         { disease: "디프테리아, 파상풍, 백일해", code: "TdaP/Td", idx: [32], optional: "선택접종" }
     ]
 
+    const vaccineOptional = [6, 9, 10, 11, 17, 25, 26, 30, 31, 32, 40]
+
     useEffect(() => {
         makeTable();
     }, []);
@@ -48,12 +50,12 @@ export default function Register2({ info }) {
                 <td className="px-6 py-4">{item.disease}</td>
                 <td className="px-6 py-4">{item.code}</td>
                 <td className="px-6 py-4 flex">{item.idx.map(idx =>
-                    <div className="round w-[28px] h-[28px] mx-1 " key={idx}>
-                        <input id={"check" + idx} type="checkbox" value={idx}
-                            onClick={(e) => handleCheck(e.target.checked, e.target.value)}
-                        />
-                        <label htmlFor={"check" + idx} ></label>
-                    </div>
+                    <div className={`round ${(vaccineOptional.includes(idx))?"roundyellow":"roundred"} w-[28px] h-[28px] mx-1`} key={idx}>
+                            <input id={"check" + idx} type="checkbox" value={idx}
+                                onClick={(e) => handleCheck(e.target.checked, e.target.value)}
+                            />
+                            <label htmlFor={"check" + idx}></label>
+                        </div>
                 )}</td>
             </tr>
         );

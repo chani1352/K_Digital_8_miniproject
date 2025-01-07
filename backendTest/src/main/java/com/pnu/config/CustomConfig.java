@@ -13,6 +13,6 @@ public class CustomConfig implements WebMvcConfigurer {
 		//아이 사진 정보
 		System.out.println("CustomConfig addResourceHandlers");
 		registry.addResourceHandler("/registerChild/**")
-			.addResourceLocations("classpath:static/images/");
+			.addResourceLocations("classpath:static/images/","file:c:/K_Digital_8_miniproject/backendTest/src/main/resources/static/images");
 	}
 }

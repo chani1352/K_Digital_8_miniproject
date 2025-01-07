@@ -5,9 +5,9 @@ import './modal.css';;
 
 export default function HospitalModal({ open, close, data }) {
 
-  // console.log("data : ", data);
 
   const [address, setAddress] = useState('');
+  const { kakao } = window;
 
   //컴포넌트 첫 실행시 정보 셋팅
   useEffect(() => {
@@ -19,7 +19,6 @@ export default function HospitalModal({ open, close, data }) {
   useEffect(() => {
     if (!open) return;
 
-    const { kakao } = window;
 
     const mapContainer = document.getElementById('map'); // 지도를 표시할 div
     if (!mapContainer) return;
@@ -57,7 +56,7 @@ export default function HospitalModal({ open, close, data }) {
     });
 
 
-  }, [open, address])
+  }, [open, address, kakao])
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.

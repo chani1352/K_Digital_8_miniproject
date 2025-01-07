@@ -9,7 +9,7 @@ export default function ChildProfileCard({ child }) {
         <div className='flex w-full'>
             <div className='flex w-1/2 shadowBox h-[200px] m-3 bg-red-50 justify-center items-center'>
                 <div className='w-[165px] m-3 h-[165px] p-3 ml-6'>
-                    <img src={child.image ? `http://localhost:8080/registerChild/${child.image}` : '/img/child/child_profile_0.png'} 
+                    <img src={child.image ? `http://10.125.121.214:8080/registerChild/${child.image}` : '/img/child/child_profile_0.png'} 
                               className='size-36 rounded-2xl'></img>
                 </div>
                 <div className='w-1/2 p-3 h-full relative'>

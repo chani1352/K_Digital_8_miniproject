@@ -40,8 +40,6 @@ public class Child {
 	private LocalDate birth;
 	private int optional;
 	private int mandatory;
-	//private MultipartFile image;
-	//private byte[] image;
 	private String image;
 	
 	@ManyToOne

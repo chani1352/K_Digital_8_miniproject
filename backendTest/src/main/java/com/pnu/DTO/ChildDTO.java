@@ -25,6 +25,7 @@ public class ChildDTO {
 	private String member;	
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birth;
+    private int idx;
     
 	private MultipartFile image;
 	
