@@ -1,12 +1,9 @@
 
-import "./checkbox.css";
+import "../../css/checkbox.css";
 
-import TailButton from "../UI/TailButton";
-import CardInfoSmall from '../UI/CardInfoSmall';
+import TailButton from "../../UI/TailButton";
+import CardInfoSmall from '../../UI/CardInfoSmall';
 import { useEffect, useState } from "react";
-import { Form } from "react-router-dom";
-import axios from 'axios';
-
 
 export default function Register2({ info }) {
     const memEmail = localStorage.getItem("memEmail");

@@ -1,10 +1,10 @@
-import HospitalCard from "./UI/HospitalCard";
-import TailButton from "./UI/TailButton";
-import Pagination from "./UI/Pagination";
-import HospitalModal from "./hospital/HospitalModal";
-import CustomSelectBox from "./UI/CustomSelectBox";
+import HospitalCard from "../../UI/Hospitals/HospitalCard";
+import TailButton from "../../UI/TailButton";
+import Pagination from "../../UI/Pagination";
+import HospitalModal from "../../UI/Hospitals/HospitalModal";
+import CustomSelectBox from "../../UI/CustomSelectBox";
 import { useLocation, useSearchParams,  useNavigate } from "react-router-dom";
-import sggcode from "./data/sggcode.json";
+import sggcode from "../../data/sggcode.json";
 
 import { useState, useEffect } from "react";
 import axios from 'axios';

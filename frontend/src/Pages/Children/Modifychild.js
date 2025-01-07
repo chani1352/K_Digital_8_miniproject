@@ -1,5 +1,5 @@
 import { IoMdCamera } from "react-icons/io";
-import TailButton from "../UI/TailButton";
+import TailButton from "../../UI/TailButton";
 import { useParams } from 'react-router-dom'
 import { useEffect, useState, useRef } from "react";
 import axios from 'axios';

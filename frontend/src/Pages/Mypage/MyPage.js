@@ -1,4 +1,4 @@
-import TailButton from "./UI/TailButton"
+import TailButton from "../../UI/TailButton"
 
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"

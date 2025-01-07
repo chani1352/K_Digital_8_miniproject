@@ -1,5 +1,5 @@
-import TailButton from "./UI/TailButton";
-import { Navigate, useNavigate } from "react-router-dom";
+import TailButton from "../../UI/TailButton";
+import { useNavigate } from "react-router-dom";
 export default function Welcome() {
     const navigate = useNavigate();
     return (

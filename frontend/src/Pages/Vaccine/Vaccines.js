@@ -1,7 +1,7 @@
-import "./css/vaccines.css";
-import VaccineCard from "./UI/VaccineCard";
+import "../../css/vaccines.css";
+import VaccineCard from "../../UI/VaccineCard";
 import { useState, useEffect } from 'react';
-import Pagination from "./UI/Pagination";
+import Pagination from "../../UI/Pagination";
 
 export default function Vaccines() {
 

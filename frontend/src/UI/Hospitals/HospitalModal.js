@@ -1,6 +1,6 @@
 import { LuPhoneCall, LuMapPin } from "react-icons/lu";
 import { useEffect, useState } from 'react';
-import './modal.css';;
+import '../../css/hospitalModal.css';;
 
 
 export default function HospitalModal({ open, close, data }) {

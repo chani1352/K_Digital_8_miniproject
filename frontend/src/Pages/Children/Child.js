@@ -1,13 +1,12 @@
-import '../css/child.css';
+import '../../css/child.css';
 import { LuBaby } from "react-icons/lu";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from 'react';
 
-import TailButton from '../UI/TailButton';
-import ChildProfileCard from './ChildProfileCard';
-import VacSchedule from './VacSchedule';
+import ChildProfileCard from "../../UI/Children/ChildProfileCard"
+import VacSchedule from '../../UI/Children/VacSchedule';
 import axios from 'axios';
 
 export default function Child() {
@@ -41,7 +40,11 @@ export default function Child() {
   const fetchChildList = async () => {
     let url = `http://10.125.121.214:8080/getChildren?email=${memEmail}`;
 
-    const resp = await axios.get(url);
+    const resp = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${loginToken}`, // Authorization 헤더에 Bearer 토큰을 포함시킴
+      }
+    });
     // console.log("resp:", resp);
 
     let data = resp.data;
@@ -85,18 +88,14 @@ export default function Child() {
       // console.log("선택된 아이 없음");
       return;
     } else {
-      // console.log("selected ? ", selectedChild);
       setProfile(<ChildProfileCard child={selectedChild} />)
       setSchedule(<VacSchedule child={selectedChild} />);
-      // console.log("childlist ? ", childlist);
       makeChildList();
     }
 
   }, [selectedChild]);
 
   const selectChild = (child) => {
-    // console.log("child click! :", child);
-
     setSelectedChild(child);
     setProfile(<ChildProfileCard child={child} />);
     setSchedule(<VacSchedule child={selectedChild} />);
@@ -142,8 +141,6 @@ export default function Child() {
             <RiDeleteBin5Line className='flex justify-center items-center'/> 삭제
           </div>
 
-          {/* <TailButton caption={"삭제하기"} color={"gray"}
-            handleClick={removeChild} style={"h-fit w-fit py-2 px-3 text-xs"} /> */}
         </div>
         {profile}
 

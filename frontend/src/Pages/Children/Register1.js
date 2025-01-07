@@ -1,5 +1,5 @@
 import { IoMdCamera } from "react-icons/io";
-import TailButton from "../UI/TailButton";
+import TailButton from "../../UI/TailButton";
 import Register2 from "./Register2";
 import { useEffect, useState, useRef, use } from "react";
 

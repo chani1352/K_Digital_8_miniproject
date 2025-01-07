@@ -1,7 +1,7 @@
-import '../css/child.css';
-import { useEffect, useState, useRef, use } from 'react';
+import '../../css/child.css';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import CardInfoSmall from '../UI/CardInfoSmall';
+import CardInfoSmall from '../CardInfoSmall';
 
 export default function VacSchedule({child}) {
     const monthRef = useRef();

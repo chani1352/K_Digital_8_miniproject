@@ -1,10 +1,10 @@
-import '../css/signCss.css';
+import '../../css/signCss.css';
 import { useRef, useState, useEffect } from "react";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import TailButton from "../UI/TailButton";
+import TailButton from "../../UI/TailButton";
 
-export default function ModifyMyInfo() {
+export default function ModifyMyInfos() {
 
     const memEmail = localStorage.getItem("memEmail");
     const token = localStorage.getItem("token");

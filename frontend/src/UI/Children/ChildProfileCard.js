@@ -1,7 +1,7 @@
-import '../css/child.css';
+import '../../css/child.css';
 import { IoIosArrowDropright } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom"
-import TailButton from '../UI/TailButton';
+import TailButton from '../TailButton';
 
 export default function ChildProfileCard({ child }) {
     const navigate = useNavigate();

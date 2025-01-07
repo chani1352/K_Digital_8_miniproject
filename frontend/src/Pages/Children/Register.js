@@ -1,4 +1,3 @@
-import TailButton from "../UI/TailButton";
 import { useEffect, useState } from "react";
 
 import Register1 from "./Register1";

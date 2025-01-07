@@ -1,8 +1,8 @@
-import './css/signCss.css';
+import '../../css/signCss.css';
 import { useRef, useState, useEffect } from "react";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import TailButton from "./UI/TailButton";
+import TailButton from "../../UI/TailButton";
 
 export default function Signup() {
     const navigate = useNavigate();

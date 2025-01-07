@@ -1,37 +1,39 @@
 // import logo from './logo.svg';
 
 import './App.css';
-import './HeaderCss.css';
+import './css/HeaderCss.css';
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
-import Signin from "./Signin";
-import Signup from "./Signup";
-import Welcome from './Welcome';
-import Hospitals from './Hospitals';
-import Test from "./Test";
-import MainPage from './MainPage';
-import MyPage from './MyPage';
-import Vaccines from './Vaccines';
-import Child from './child/Child';
-import Register from './child/Register';
-import VacInfo from './child/VacInfo';
+import Signin from "./Pages/Common/Signin";
+import Signup from "./Pages/Common/Signup";
+import Welcome from './Pages/Common/Welcome';
+import MainPage from './Pages/Common/MainPage';
+
+import Vaccines from './Pages/Vaccine/Vaccines';
+
+import Hospitals from './Pages/Hospitals/Hospitals';
+
+import MyPage from './Pages/Mypage/MyPage';
+import ModifyMyInfo from './Pages/Mypage/ModifyMyInfos';
+
+import Child from './Pages/Children/Child';
+import Register from './Pages/Children/Register';
+import VacInfo from './Pages/Children/VacInfo';
+import Modifychild from "./Pages/Children/Modifychild";
+
 import OAuth2 from './OAuth2';
-import Modifychild from "./child/Modifychild";
-import ModifyMyInfo from './pages/ModifyMyInfo';
 
 
 function App() {
 
     let loginToken = localStorage.getItem("token");
     let memName = localStorage.getItem("memName");
-    console.log("Main- loginToken :", loginToken);
-    console.log("Main- memName :", memName);
+
     return (
         <BrowserRouter>
 
             <div className="w-full min-w-[1000px] h-full ">
-                {/* <div className="w-full h-full "> */}
                 <header className="w-full h-[120px] px-10 lg:px-[120px] z-50
                                   sticky top-0 flex justify-between items-center
                                   bg-[#ecf3f9]">
@@ -74,7 +76,6 @@ function App() {
                         <Route path='/signup' element={<Signup />} />
                         <Route path='/welcome' element={<Welcome />} />
                         <Route path='/hospitals' element={<Hospitals />} />
-                        <Route path='/test' element={<Test />} />
                         <Route path='/mypage' element={<MyPage />} />
                         <Route path='/vaccines' element={<Vaccines />} />
                         <Route path='/child' element={<Child />} />

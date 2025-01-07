@@ -1,5 +1,5 @@
-import "../css/hospitalCardCss.css";
-import CardInfoSmall from "./CardInfoSmall"
+import "../../css/hospitalCardCss.css";
+import CardInfoSmall from "../CardInfoSmall"
 import { useState, useEffect,useRef } from 'react';
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
