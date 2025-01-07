@@ -2,27 +2,30 @@ import HospitalCard from "./UI/HospitalCard";
 import TailButton from "./UI/TailButton";
 import Pagination from "./UI/Pagination";
 import HospitalModal from "./hospital/HospitalModal";
-import { useLocation, useSearchParams, Link, useNavigate } from "react-router-dom";
+import CustomSelectBox from "./UI/CustomSelectBox";
+import { useLocation, useSearchParams,  useNavigate } from "react-router-dom";
 import sggcode from "./data/sggcode.json";
 
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 
 export default function Hospitals() {
 
-  const region1 = [{ cd: "1100000000", cdNm: "서울특별시" }, { cd: "2600000000", cdNm: "부산광역시" }, { cd: "2700000000", cdNm: "대구광역시" }, { cd: "2800000000", cdNm: "인천광역시" },
-  { cd: "2900000000", cdNm: "광주광역시" }, { cd: "3000000000", cdNm: "대전광역시" }, { cd: "3100000000", cdNm: "울산광역시" }, { cd: "3600000000", cdNm: "세종특별자치시" },
-  { cd: "4100000000", cdNm: "경기도" }, { cd: "4300000000", cdNm: "충청북도" }, { cd: "4400000000", cdNm: "충청남도" }, { cd: "4600000000", cdNm: "전라남도" }, { cd: "4700000000", cdNm: "경상북도" },
-  { cd: "4800000000", cdNm: "경상남도" }, { cd: "5000000000", cdNm: "제주특별자치도" }, { cd: "5100000000", cdNm: "강원특별자치도" }, { cd: "5200000000", cdNm: "전북특별자치도" }
+  const sdOptions = [{ value: "1100000000", label: "서울특별시" }, { value: "2600000000", label: "부산광역시" }, { value: "2700000000", label: "대구광역시" }, { value: "2800000000", label: "인천광역시" },
+  { value: "2900000000", label: "광주광역시" }, { value: "3000000000", label: "대전광역시" }, { value: "3100000000", label: "울산광역시" }, { value: "3600000000", label: "세종특별자치시" },
+  { value: "4100000000", label: "경기도" }, { value: "4300000000", label: "충청북도" }, { value: "4400000000", label: "충청남도" }, { value: "4600000000", label: "전라남도" }, { value: "4700000000", label: "경상북도" },
+  { value: "4800000000", label: "경상남도" }, { value: "5000000000", label: "제주특별자치도" }, { value: "5100000000", label: "강원특별자치도" }, { value: "5200000000", label: "전북특별자치도" }
   ]
 
   const navigate = useNavigate();
 
-  const ops1Ref = useRef();
-  const ops2Ref = useRef();
+  const [sggOptions, setSggOptions] = useState([]); // 시군구옵션
 
-  const [ops1, setOps1] = useState([]);
-  const [ops2, setOps2] = useState([]);
+  const [selectedSD, setSelectedSD] = useState(null); // 선택된 시도 (지역1)
+  const [selectedSgg, setSelectedSgg] = useState(null); // 선택된 시군구 (지역2)
+  const [sggDisabled, setSggDisabled] = useState(true);
+
+  const [btnDisabled, setBtnDisabled] = useState(true);
 
   const [hosCards, setHosCards] = useState([]);
 
@@ -71,33 +74,41 @@ export default function Hospitals() {
 
     //쿼리가 없을 때 (첫 페이지 로딩)
     else {
-      let options1 = region1.map(ops => <option key={ops.cd} value={ops.cd}>{ops.cdNm}</option>);
-      setOps1(options1);
-
       // 페이지 네이션 및 검색결과 빈 상태로
       setPages('');
       setHosCards(
-      <div className="opacity-30 w-4/5 pt-10">
-        <img src="./img/findHospitalImg.png" />
+      <div className="opacity-30 w-3/5 pt-10">
+        <img src="./img/findHospitalImg.png" alt="img" />
         <p className="text-3xl font-[SBAggroM] text-[#002532] text-center mt-5">우리 동네 근처 병원을 찾아보세요</p>
       </div>);
     }
   }, [location.search]);
 
   // 시/도 선택되면 그에 따른 시/군/구 셋팅하기
-  const selectReg1 = async (e) => {
-    // ============== json 파일 바로 처리하기 ========================
-    let sggdata = sggcode[e.target.value];
-    let options2 = sggdata.map(ops => <option key={ops.cd} value={ops.cd}>{ops.cdNm}</option>);
-    setOps2(options2);
-  }
+  useEffect(() => {
+    if(!selectedSD) return;
+    console.log("selectedSD:", selectedSD);
+    // console.log("selectedOption1:", selectedOption2);
+    setSggDisabled(false);  //시군구 비활성화 해제
+    setSelectedSgg(null);   //시군구 선택사항 초기화
+    setSggOptions(sggcode[selectedSD.value]); //시군구 셋팅
+  }, [selectedSD]);
+
+  // 옵션들 선택 여부에 따른 버튼 활성/비활성
+  useEffect(()=>{
+    if(!selectedSgg)  {
+      setBtnDisabled(true);
+      return;
+    }
+    setBtnDisabled(false);
+  },[selectedSD, selectedSgg])
 
   //페이지 변경될때마다
   useEffect(() => {
-    let sggCd = ops2Ref.current.value;
-
-    let hrefUrl = "?&brtcCd=";
-    hrefUrl += `${ops1Ref.current.value}${(sggCd === "default2") ? "" : `&sggCd=${sggCd}`}`;
+    if(!selectedSD) return;
+    if(!selectedSgg) return;
+    let hrefUrl = "?&brtcvalue=";
+    hrefUrl += `${selectedSD.value}&sggvalue=${selectedSgg.value}`;
     hrefUrl += `&pageNo=${currentPage}`;
     if (currentPage !== 0) {
       navigate(hrefUrl);
@@ -107,19 +118,20 @@ export default function Hospitals() {
 
 
   // 병원정보 패치
-  const fetchHospital = async (cd1, cd2, crtPage) => {
+  const fetchHospital = async (sd, sgg, crtPage) => {
     setHosCards(<div className="flex opacity-30 w-4/5 h-full text-2xl pt-10 justify-center">로딩중...</div>);
     let url = "https://apis.data.go.kr/1790387/orglist3/getOrgList3?"
     const key = process.env.REACT_APP_DATA_KEY;
 
     url = `${url}serviceKey=${key}`;
-    url = `${url}&pageNo=${crtPage}&numOfRows=10&brtcCd=${cd1}&sggCd=${cd2}&returnType=JSON`;
+    url = `${url}&pageNo=${crtPage}&numOfRows=10&brtcCd=${sd}&sggCd=${sgg}&returnType=JSON`;
 
     console.log("fetch url : ", url);
 
     const resp = await axios.get(url);
 
     let data = resp.data;
+    console.log("fetch후 data:",data);
     // 데이터 오류 처리
     data = data.replace('"resultCode":00', '"resultCode":"00"');
     data = data.replace(/"item":/g, '');
@@ -141,7 +153,7 @@ export default function Hospitals() {
 
     let hospitalAll = dataAll.items;
 
-    const cards = hospitalAll.map(h=> <HospitalCard key={h.orgcd} hospital={h} vaccine={vaccineAllList} showDetail={()=>openModal(h)} />);
+    const cards = hospitalAll.map(h=> <HospitalCard key={h.orgvalue} hospital={h} vaccine={vaccineAllList} showDetail={()=>openModal(h)} />);
 
     setHosCards(cards);
     setPages(pageTags);
@@ -150,28 +162,14 @@ export default function Hospitals() {
 
   //검색버튼 클릭
   const searchBtnClick = () => {
-    // console.log("시/도 : ", ops1Ref.current.value);
-    // console.log("시/군/구  : ", ops2Ref.current.value);
-
-    let sggCd = ops2Ref.current.value;
-    if (ops1Ref.current.value === "default1") {
-      alert("시/도를 선택하세요");
-      ops1Ref.current.focus();
-      return;
-    }
-
-    if (ops2Ref.current.value === "default2") {
-      alert("시/군/구를 선택하세요");
-      ops2Ref.current.focus();
-      return;
-    }
-
     setCurrentPage(1);
 
-    let hrefUrl = "?&brtcCd=";
-    hrefUrl += `${ops1Ref.current.value}${(sggCd === "default2") ? "" : `&sggCd=${sggCd}`}`;
+    let hrefUrl = "?&brtcvalue=";
+    hrefUrl += `${selectedSD.value}&sggvalue=${selectedSgg.value}`;
     hrefUrl += "&pageNo=1";
-
+    console.log("시구 : ", selectedSD.value);
+    console.log("시군구 : ", selectedSgg.value);
+    console.log(hrefUrl);
     navigate(hrefUrl);
   }
 
@@ -179,22 +177,17 @@ export default function Hospitals() {
   return (
     <div className="w-3/5 flex flex-col justify-center">
       <div className="flex justify-center items-center mt-14 mb-10">
-        <select id="countries"
-          onChange={selectReg1}
-          ref={ops1Ref}
-          className=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
-          <option defaultValue value="default1">시/도</option>
-          {ops1}
-        </select>
-        <select id="countries"
-          ref={ops2Ref}
-          className=" w-1/3 h-12 mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:border-2 focus:border-blue-500">
-          <option defaultValue value="default2">시/군/구</option>
-          {ops2}
-        </select>
+        <CustomSelectBox options={sdOptions} selectLabel="시/도" 
+          selectedOption={selectedSD} setSelectedOption={setSelectedSD}
+          size="w-[220px]" />
+        <CustomSelectBox options={sggOptions} selectLabel="시/군/구" 
+          selectedOption={selectedSgg} setSelectedOption={setSelectedSgg} 
+          disabled={sggDisabled} size="w-[220px]" />
         <TailButton caption={'검색'} color={'blue'} handleClick={searchBtnClick}
-          style={'w-1/3 h-12  mx-2 text-[14px] '} />
+          disabled={btnDisabled}
+          style={`w-[150px] h-12  mx-2 text-[14px] `} />
       </div>
+
       <div className="flex flex-col items-center mb-6">
         {hosCards}
         <HospitalModal open={modalOpen} close={closeModal} data={modalData}/>

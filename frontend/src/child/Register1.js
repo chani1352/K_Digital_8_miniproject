@@ -1,14 +1,19 @@
 import { IoMdCamera } from "react-icons/io";
 import TailButton from "../UI/TailButton";
 import Register2 from "./Register2";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, use } from "react";
 
 export default function Register1({goNext}) {
     const nameRef = useRef();
     const birthRef = useRef();
     const fileRef = useRef();
+
+    const [childName, setChildName] = useState(null);
+    const [childBirth, setChildBirth] = useState(null);
     const [imageUrl,setImageUrl] = useState('/img/child/child_profile_0.png');
     const [image,setImage] = useState('');
+
+    const [btnDisabled, setBtnDisabled] = useState(true);
 
     // 달력 날짜 오늘이후로 선택 불가능하도록 max 설정
     useEffect(() => {
@@ -20,6 +25,24 @@ export default function Register1({goNext}) {
 
         birthRef.current.max = dateString;
     }, []);
+
+    const nameChange = (e) => {
+        setChildName(e.target.value);
+    }
+
+    const birthChange = (e) => {
+        setChildBirth(e.target.value);
+    }
+    useEffect(()=>{
+        if(!childName) return;
+        if(!childBirth) return;
+        setBtnDisabled(false);
+    },[childName, childBirth])
+    // useEffect(()=>{
+    //     if(!nameRef.current.value) return;
+    //     if(!birthRef.current.value) return;
+    //     setBtnDisabled(true);
+    // },[nameRef.current.value, birthRef.current.value])
 
     const beforeNext = () => {
         const childInfo = {
@@ -56,10 +79,10 @@ export default function Register1({goNext}) {
     return (
         <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">
             <div className="w-full flex flex-col items-center m-6">
-                <div>
+                <div className="text-3xl font-bold">
                     1단계
                 </div>
-                <div>
+                <div className="text-xl my-4">
                     아이의 기본 정보를 입력해주세요.
                 </div>
 
@@ -80,15 +103,16 @@ export default function Register1({goNext}) {
                 <label htmlFor="childName" className="input_label mt-[30px]">
                     이름<span className='pl-1 text-red-500 '>*</span></label>
                 <input id="childName" type="text" placeholder="ex. 김예방" ref={nameRef}
-                    className="input_box mb-[30px]"></input>
+                    className="input_box mb-[30px]" onChange={nameChange}></input>
                 <label htmlFor="childBirth" className="input_label ">
                     생년월일<span className='pl-1 text-red-500 '>*</span></label>
                 <input id="childBirth" type="date" placeholder="생년월일" ref={birthRef}
+                    onChange={birthChange}
                     className="input_box mb-[30px]" />
 
                 <div className="flex items-center justify-center mt-[10px]">
                     <TailButton caption={'다음'} color={'blue'} handleClick={beforeNext}
-                        style={'w-[360px] h-12 text-[14px] '} />
+                        style={'w-[360px] h-12 text-[14px] disabled:cursor-not-allowed '} disabled={btnDisabled}/>
                 </div>
 
             </div>

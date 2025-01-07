@@ -47,14 +47,9 @@ export default function MyPage() {
                             onClick={()=>navigate('../modify')}>내 정보 수정</span>
                 </div>
 
-                <div className="w-full h-14  flex items-center p-3 my-2  border-b-2">
+                <div className="w-full h-14  flex items-center p-3 my-2 ">
                     <span className="hover:cursor-pointer"
                             onClick={()=>navigate("../child")}>우리 아이 관리</span>
-                </div>
-
-                <div className="w-full h-14  flex items-center p-3 my-2  ">
-                    <span className="hover:cursor-pointer"
-                            onClick={()=>console.log("수정")}>추가메뉴자리</span>
                 </div>
 
                 <div className="w-full h-14  flex items-center p-3 mt-32 my-2  ">
