@@ -16,11 +16,13 @@
 
 ## 👥 팀원 구성
 
+
 | 박래찬 | 조은빈 | 
 |:------:|:------:|
 | <img src="" alt="박래찬" width="150"> | <img src="" alt="조은빈" width="150"> | 
 | BE | FE |
 | [GitHub](https://github.com/chani1352) | [GitHub](https://github.com/iambean-git) | 
+
 
 ## 🔧 개발 환경
 > `FRONT-END:` React.js, HTML, CSS, JavaScript  
