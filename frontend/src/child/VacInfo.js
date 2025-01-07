@@ -38,6 +38,8 @@ export default function VacInfo() {
         { disease: "디프테리아, 파상풍, 백일해", code: "TdaP/Td", idx: [32], optional: "선택접종" }
     ]
 
+    const vaccineOptional = [6, 9, 10, 11, 17, 25, 26, 30, 31, 32, 40]
+
     useEffect(() => {
         fetchVacInfo();
     }, [])
@@ -55,15 +57,16 @@ export default function VacInfo() {
                 <th scope="row" className="px-2 py-4 font-medium text-gray-900 "><CardInfoSmall text={item.optional} type={"short"} /></th>
                 <td className="px-6 py-4">{item.disease}</td>
                 <td className="px-6 py-4">{item.code}</td>
-                <td className="px-6 py-4 flex">{item.idx.map(idx =>
-                    <div className="round w-[28px] h-[28px] mx-1 " key={idx}>
-                        <input id={"check" + idx} type="checkbox" value={idx}
-                            // disabled={!isUpdate}
-                            onClick={(e) => handleCheck(e.target.checked, e.target.value)}
-                        />
-                        <label htmlFor={"check" + idx}></label>
-                    </div>
-                )}</td>
+                    <td className="px-6 py-4 flex">{item.idx.map(idx =>
+                    <div className={`round ${(vaccineOptional.includes(idx))?"roundyellow":"roundred"} w-[28px] h-[28px] mx-1`} key={idx}>
+                            <input id={"check" + idx} type="checkbox" value={idx}
+                                onClick={(e) => handleCheck(e.target.checked, e.target.value)}
+                            />
+                            <label htmlFor={"check" + idx}></label>
+                        </div>
+                    )}</td>
+
+   
             </tr>
         );
 

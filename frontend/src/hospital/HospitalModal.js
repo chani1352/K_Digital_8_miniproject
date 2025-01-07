@@ -5,7 +5,6 @@ import './modal.css';;
 
 export default function HospitalModal({ open, close, data }) {
 
-  // console.log("data : ", data);
 
   const [address, setAddress] = useState('');
   const { kakao } = window;
@@ -19,9 +18,6 @@ export default function HospitalModal({ open, close, data }) {
 
   useEffect(() => {
     if (!open) return;
-
-
-
     const mapContainer = document.getElementById('map'); // 지도를 표시할 div
     if (!mapContainer) return;
 

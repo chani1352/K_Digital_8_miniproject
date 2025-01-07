@@ -7,10 +7,12 @@ export default function ChildProfileCard({ child }) {
     const navigate = useNavigate();
     return (
         <div className='flex w-full'>
+
             <div className='flex w-1/2 shadowBox h-[200px] m-3  justify-center items-center'>
                 <div className='w-[165px] m-3 h-[165px] p-2 ml-6 flex justify-center items-center '>
                     <img src={child.image ? `http://10.125.121.214:8080/registerChild/${child.image}` : '/img/child/child_profile_0.png'} 
                               className='w-full aspect-square rounded-2xl'></img>
+                              
                 </div>
                 <div className='w-1/2 p-3 h-full relative'>
                     <p className='font-bold text-lg my-3'>{child.childName}</p>
