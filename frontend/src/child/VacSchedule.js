@@ -74,7 +74,7 @@ export default function VacSchedule({child}) {
 
     return (
         <div className="w-auto shadowBox m-3 p-4">
-            <div className='m-2 mb-5 flex items-center '>
+            <div className='m-2 mb-5 flex items-center relative '>
                 <p className='font-bold'>접종 일정표</p>
                 <select ref={monthRef}
                     onChange={handleMonthChange}
@@ -82,6 +82,7 @@ export default function VacSchedule({child}) {
                     {/* <option value={202412}>2024년 12월</option> */}
                     {months}
                 </select>
+                <p className='text-sm absolute right-0 top-0 text-gray-700 font-[LINESeedKR-Rg] '><span className='text-red-500'>* </span>월별로 접종 해야하는 예방 접종 목록을 확인해보세요!</p>
             </div>
 
             <div className='w-auto h-[200px] overflow-y-auto relative'>

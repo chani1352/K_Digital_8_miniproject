@@ -1,4 +1,4 @@
-
+import { IoMdCamera } from "react-icons/io";
 import TailButton from "../UI/TailButton";
 import { useParams } from 'react-router-dom'
 import { useEffect, useState, useRef } from "react";
@@ -8,9 +8,13 @@ export default function Modifychild() {
   const child_idx = useParams().idx;
 
   const [prevInfo, setPrevInfo] = useState('');
+
+  const [imagUrl, setImageUrl] = useState('/img/child/child_profile_0.png');
+  const [image, setImage] = useState('');
+
   const nameRef = useRef();
   const birthRef = useRef();
-
+  const fileRef = useRef();
   // 달력 날짜 오늘이후로 선택 불가능하도록 max 설정
   useEffect(() => {
     fetchchildData();
@@ -29,36 +33,72 @@ export default function Modifychild() {
     setPrevInfo(resp.data);
   }
 
+  // 아이의 기존 정보를 화면에 셋팅
   useEffect(() => {
     if (!prevInfo) return;
     nameRef.current.value = prevInfo.childName;
     birthRef.current.value = prevInfo.birth;
+    setImageUrl(`http://10.125.121.214:8080/registerChild/${prevInfo.image}`);
   }, [prevInfo]);
 
-  const doModify = async() => {
+  const doModify = async () => {
 
-    let url = "http://10.125.121.214:8080/updateChild?";
-    url = `${url}idx=${prevInfo.idx}&childName=${nameRef.current.value}&birth=${birthRef.current.value}`;
+    let url = "http://10.125.121.214:8080/updateChild";
+    // url = `${url}idx=${prevInfo.idx}&childName=${nameRef.current.value}&birth=${birthRef.current.value}`;
+
+    const formData = new FormData();
+    formData.append("idx", prevInfo.idx);
+    formData.append("childName", nameRef.current.value);
+    formData.append("birth", birthRef.current.value);
+    if (image) formData.append("file", image);
 
     const modifyChildData = {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      body: formData
     }
 
     const resp = await fetch(url, modifyChildData);
+    // console.log("resp :", resp);
     if (resp.ok) window.location.href = "/child";
+    else throw new Error(`HTTP error! status: ${resp.status}`);
+  }
+
+  // =========== 사진 셋팅 ================
+  const handleFileClick = () => {
+    fileRef.current.click();    //input 클릭
+  }
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];  //첫번째 파일만 선택
+
+    if (file) {
+      setImage(file);
+
+      const reader = new FileReader();
+
+      //파일 읽기가 완료 되었을 때 실행되는 콜백
+      reader.onload = (e) => {
+        setImageUrl(e.target.result);
+      }
+      reader.readAsDataURL(file);
+    }
   }
 
   return (
-    <div className="w-[560px] h-full flex flex-col justify-start items-center py-12">
-      <div>
-        <div>
-          수정하기
-        </div>
-        <div>
-          이미지??
+    <div className="w-[560px] h-full flex flex-col justify-start items-center py-12 ">
+      <div className="w-2/3 flex flex-col justify-center items-center m-6">
+        <div className='w-full text-3xl font-bold mb-10 text-center'> 아이 정보 수정하기</div>
+        <div className="w-[180px] h-[180px] m-6 relative drop-shadow-lg ">
+          <img src={imagUrl} alt="child_profile" className='w-fit h-fit mr-2 rounded-lg border'></img>
+
+          <input type="file" accept="image/*" ref={fileRef} onChange={handlePhotoChange} className="hidden" />
+          <button onClick={handleFileClick}
+            className="size-9 bg-white absolute right-2 top-2
+                                        rounded-full flex justify-center items-center text-xl
+                                        drop-shadow-lg">
+            <IoMdCamera />
+          </button>
+
         </div>
       </div>
       <div className="flex flex-col w-[360px]">

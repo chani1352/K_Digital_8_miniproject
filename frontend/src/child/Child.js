@@ -118,7 +118,7 @@ export default function Child() {
   }
 
   return (
-    <div className="flex w-[1020px] items-start mt-20 p-3">
+    <div className="flex w-[1020px] items-start my-20 p-3">
 
       <div className=" childlist flex-col m-2">
         <ul className="w-full flex flex-col items-center" >
