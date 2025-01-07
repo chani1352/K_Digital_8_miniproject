@@ -91,12 +91,9 @@ export default function Register2({ info }) {
         formData.append("file", info.file);
         const childData = {
             method: 'POST',
-            headers: {
-              // 'Content-Type': 'multipart/form-data'
-            },
             body : formData,
         }
-        console.log("===== fetch ====== ");
+        // console.log("===== fetch ====== ");
 
         const resp = await fetch(url, childData);
         const data = await resp.json();
@@ -132,16 +129,16 @@ export default function Register2({ info }) {
 
     return (
         <div className="w-[800px] h-full flex flex-col justify-start items-center py-12">
-            <div>
-                <div>
+            <div className="w-full flex flex-col items-center m-6">
+                <div className="text-3xl font-bold">
                     2단계
                 </div>
-                <div>
+                <div className="text-xl my-4">
                     아이의 접종 정보를 입력해주세요.
                 </div>
             </div>
 
-            <div className="relative overflow-x-auto">
+            <div className="relative overflow-x-auto mb-8">
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                         <tr>

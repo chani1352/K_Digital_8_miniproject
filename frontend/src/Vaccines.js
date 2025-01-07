@@ -37,54 +37,54 @@ export default function Vaccines() {
     vaccineAll('전체');
   }, [vaccineAllList]);
 
-  useEffect(()=>{
+  useEffect(() => {
     selectVaccine(isClicks, currentPage);
     // console.log("page : ",currentPage)
-  },[currentPage]);
+  }, [currentPage]);
 
   const vaccineAll = (caption) => {
     setPeriName(Object.entries(period[caption]).map(([key, value]) =>
-                              <button key={key} onClick={() => selectVaccine(value, 1)} 
-                              id = {`cate${value}`}
-                              className={`category2 font-bold mr-5`}>
-                              {key}</button>));
-    selectVaccine(Object.values(period[caption])[0], 1);   
+      <button key={key} onClick={() => selectVaccine(value, 1)}
+        id={`cate${value}`}
+        className={`category2 font-bold mr-5`}>
+        {key}</button>));
+    selectVaccine(Object.values(period[caption])[0], 1);
     setIsClick(caption);
     setCurrentPage(1);
   }
-  
+
   //세부 카테고리 변경될때마다 색상 설정
-  useEffect(()=>{
+  useEffect(() => {
     const cateBtns = document.getElementsByClassName("category2");
-    for(let i=0; i<cateBtns.length; i++){
+    for (let i = 0; i < cateBtns.length; i++) {
       cateBtns[i].classList.remove('category2_selected');
       cateBtns[i].classList.add('category2_unselected');
     }
 
-    const selectedBtn = document.getElementById("cate"+isClicks);
-    if(!selectedBtn) return;
+    const selectedBtn = document.getElementById("cate" + isClicks);
+    if (!selectedBtn) return;
     selectedBtn.classList.remove('category2_unselected');
     selectedBtn.classList.add('category2_selected');
     setCurrentPage(1);
-  },[isClicks]);
+  }, [isClicks]);
 
   const selectVaccine = (value, crtPage) => {
     setIsClicks(value);
-    console.log("page1 : ",crtPage);
+    console.log("page1 : ", crtPage);
     let selectVaccine = vaccineAllList;
     if (value !== 15 && vaccineAllList !== "") {
       selectVaccine = vaccineAllList.filter(item => {
         return item["periodFrom"] <= value && item["periodTo"] >= value;
       })
     }
-    let maxPage = Math.ceil(selectVaccine.length/6);
+    let maxPage = Math.ceil(selectVaccine.length / 6);
 
     const pageTags = <Pagination totalPage={maxPage}
-                                 setCurrentPage={setCurrentPage}
-                                 currentPage={crtPage}
-                    />
-    selectVaccine = selectVaccine.slice((crtPage *6) - 6, crtPage * 6);
- 
+      setCurrentPage={setCurrentPage}
+      currentPage={crtPage}
+    />
+    selectVaccine = selectVaccine.slice((crtPage * 6) - 6, crtPage * 6);
+
     const cards = selectVaccine.map(item => <VaccineCard key={item.idx} vaccine={item} />);
     setVacCards(cards);
     setPages(pageTags);
@@ -94,33 +94,33 @@ export default function Vaccines() {
     <div className="w-full">
       <div className="w-full max-w-[750px] flex justify-between  my-20 mx-auto">
         <div>
-          <button onClick={() => vaccineAll('전체')} className={`font-bold ${isClick === "전체" ? "text-black-500" : "text-gray-500"}`}>
-            <img className="w-20" src='./img/baby.png' />
+          <button onClick={() => vaccineAll('전체')} className={`font-bold ${isClick === "전체" ? "text-black" : "text-gray-400"}`}>
+            <img className={`w-32 rounded-3xl  p-7 mb-4 ${isClick === "전체" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/menuall.png' />
             전체
           </button>
         </div>
         <div>
-          <button onClick={() => vaccineAll('신생아')} className={`font-bold ${isClick === "신생아" ? "text-black-500" : "text-gray-500"}`}>
-            <img className="w-20" src='./img/baby.png' />
+          <button onClick={() => vaccineAll('신생아')} className={`font-bold ${isClick === "신생아" ? "text-black" : "text-gray-400"}`}>
+            <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "신생아" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/footprint.png' />
             신생아
           </button>
         </div>
         <div>
-          <button onClick={() => vaccineAll('영아기')} className={`font-bold ${isClick === "영아기" ? "text-black-500" : "text-gray-500"}`}>
-            <img className="w-20 " src='./img/baby.png' />
-            영아기
+          <button onClick={() => vaccineAll('영아기')} className={`font-bold ${isClick === "영아기" ? "text-black" : "text-gray-400"}`}>
+          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "영아기" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/feeding-bottle.png' />
+          영아기
           </button>
         </div>
         <div>
-          <button onClick={() => vaccineAll('유아기')} className={`font-bold ${isClick === "유아기" ? "text-black-500" : "text-gray-500"}`}>
-            <img className="w-20 " src='./img/baby.png' />
-            유아기
+          <button onClick={() => vaccineAll('유아기')} className={`font-bold ${isClick === "유아기" ? "text-black" : "text-gray-400"}`}>
+          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "유아기" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/babyface.png' />
+          유아기
           </button>
         </div>
         <div>
-          <button onClick={() => vaccineAll('아동기')} className={`font-bold ${isClick === "아동기" ? "text-black-500" : "text-gray-500"}`}>
-            <img className="w-20 " src='./img/baby.png' />
-            아동기
+          <button onClick={() => vaccineAll('아동기')} className={`font-bold ${isClick === "아동기" ? "text-black" : "text-gray-400"}`}>
+          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "아동기" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/babyboy.png' />
+          아동기
           </button>
         </div>
       </div>
@@ -131,7 +131,7 @@ export default function Vaccines() {
         </div>
         <div className="w-full flex items-center justify-center my-14">{pages}</div>
       </div>
-      
+
     </div>
   )
 }

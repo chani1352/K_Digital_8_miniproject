@@ -18,10 +18,13 @@ export default function HospitalModal({ open, close, data }) {
 
   useEffect(() => {
     if (!open) return;
-
-
     const mapContainer = document.getElementById('map'); // 지도를 표시할 div
     if (!mapContainer) return;
+
+    if(!kakao) {
+      console.log("카카오맵스 오류");
+      return;
+    }
 
     const mapOption = {
       center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -29,6 +32,8 @@ export default function HospitalModal({ open, close, data }) {
     };
 
     // 지도를 생성합니다
+    // console.log("카카오 맵 maps : ", kakao.maps);
+    
     const map = new kakao.maps.Map(mapContainer, mapOption);
     const geocoder = new kakao.maps.services.Geocoder();
     // console.log('Geocoder 객체 준비 완료:', geocoder);

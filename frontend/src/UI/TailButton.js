@@ -10,7 +10,7 @@ export default function TailButton({caption, color, handleClick, style, fontStyl
     
     return (
         <button className={`inline-flex justify-center items-center
-        ${style ? style : ''}
+        ${style ? style : ''}   disabled:cursor-not-allowed
         ${btnStyle[color]} ${btColorHover[color]} rounded-lg
         transition duration-300 ${fontStyle? fontStyle : 'text-sm font-bold font-[NanumSquareR]'}
         `}

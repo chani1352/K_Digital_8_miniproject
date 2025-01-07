@@ -61,3 +61,13 @@
   font-family: "SBAggroM";
   src: url("./fonts/SBAggroM.ttf");
 }
+
+@font-face {
+  font-family: "LINESeedKR-Th";
+  src: url("./fonts/LINESeedKR-Th.ttf");
+}
+
+@font-face {
+  font-family: "LINESeedKR-Rg";
+  src: url("./fonts/LINESeedKR-Rg.ttf");
+}
