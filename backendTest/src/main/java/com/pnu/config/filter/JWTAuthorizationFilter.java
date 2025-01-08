@@ -39,6 +39,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{ //인가 설�
 		}
 
 		String jwtToken = srcToken.replace("Bearer ",""); //토큰에서 bearer제거후 문자열 저장
+
 		if (JWTUtil.isExpired(jwtToken)) {
 		    System.out.println("JWT Token has expired");
 		    // 응답 상태 코드 설정: 401 Unauthorized

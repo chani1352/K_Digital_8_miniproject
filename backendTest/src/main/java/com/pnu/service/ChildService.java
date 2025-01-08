@@ -166,7 +166,7 @@ public class ChildService {
 		String userImgName = null;
 		
         if (!userImg.exists()) userImg.mkdirs();
-       
+        if (file == null) return null;
         if (!file.isEmpty()) {
             // 파일이 비어있지 않으면
             String contentType = file.getContentType();
@@ -196,7 +196,8 @@ public class ChildService {
             userImg = new File(absolutePath  + path + File.separator + userImgName);
             System.out.println("파일 저장경로:" + absolutePath  + path + File.separator + userImgName);
             file.transferTo(userImg);
-        }
+        } 
+        
         return userImgName;
 	}
 }
