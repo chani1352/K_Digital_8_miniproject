@@ -18,7 +18,7 @@ export default function Welcome() {
             </div>
             <div className="grid grid-cols-2 gap-4 w-full py-5">
                 <TailButton caption={"로그인하기"} color={'blue'} handleClick={()=>{navigate("/login")}} style={'w-full h-12 text-[16px]'}/>
-                <TailButton caption={"메인화면으로"} color={'blue'} handleClick={()=>{navigate("/main")}} style={'w-full h-12 text-[16px]'}/>
+                <TailButton caption={"메인화면으로"} color={'blue'} handleClick={()=>{navigate("/")}} style={'w-full h-12 text-[16px]'}/>
             </div>
         </div>
 

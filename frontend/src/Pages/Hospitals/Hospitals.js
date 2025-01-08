@@ -79,7 +79,7 @@ export default function Hospitals() {
       setHosCards(
       <div className="opacity-30 w-3/5 pt-10">
         <img src="./img/findHospitalImg.png" alt="img" />
-        <p className="text-3xl font-[SBAggroM] text-[#002532] text-center mt-5">우리 동네 근처 병원을 찾아보세요</p>
+        <p className="text-3xl font-[SBAggroM] text-[#002532] text-center mt-5 whitespace-nowrap">우리 동네 근처 병원을 찾아보세요</p>
       </div>);
     }
   }, [location.search]);
