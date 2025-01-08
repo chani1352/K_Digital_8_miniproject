@@ -1,13 +1,15 @@
-import '../css/child.css';
-import { useEffect, useState, useRef, use } from 'react';
+import '../../css/child.css';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import CardInfoSmall from '../UI/CardInfoSmall';
+import CardInfoSmall from '../CardInfoSmall';
+import SmallSelectBox from '../SmallSelectBox';
 
-export default function VacSchedule({child}) {
-    const monthRef = useRef();
-    const [months, setMonths] = useState('');
+export default function VacSchedule({ child }) {
     const [data, setData] = useState([]);
     const [trTags, setTrTags] = useState('');
+
+    const [dateOptions, setDateOptions] = useState([]);
+    const [selectedDate, setSelectedDate] = useState('');
 
     useEffect(() => {
         // console.log("VacSchedule child: ", child);
@@ -15,10 +17,10 @@ export default function VacSchedule({child}) {
         fetchData();
     }, [child]);
 
-    useEffect(()=>{
+    useEffect(() => {
         handleMonthChange();
         // console.log("[VacSchedule] data :", data);
-    },[data]);
+    }, [data]);
 
     const makeMonthOptions = () => {
         const options = [];
@@ -33,9 +35,15 @@ export default function VacSchedule({child}) {
             options.push({ "year": year, "displayMonth": displayMonth });
         }
 
-        setMonths(options.map(i => <option key={i.year + i.displayMonth}
-            value={`${i.year}-${i.displayMonth}`}>{i.year}년 {i.displayMonth}월</option>))
+        let listtmp = [];
+        options.map(i => listtmp.push({ value: `${i.year}-${i.displayMonth}`, label: `${i.year}년 ${i.displayMonth}월` }));
+        setDateOptions(listtmp);
     }
+
+    useEffect(()=>{
+        if(!dateOptions) return;
+        setSelectedDate(dateOptions[0]);
+    },[dateOptions]);
 
     const fetchData = async () => {
         let url = `http://10.125.121.214:8080/scheduleVaccine?child_idx=${child.idx}`;
@@ -44,50 +52,53 @@ export default function VacSchedule({child}) {
         setData(resp.data);
         // console.log("[VacSchedule] resp:", resp);
     }
-    
+
     // 년도/월 기준 날짜 비교
     const compareYearMonth = (date1, date2) => {
         const value1 = date1.getFullYear() * 100 + date1.getMonth(); // YYYYMM 형식으로 숫자화
         const value2 = date2.getFullYear() * 100 + date2.getMonth();
 
-        return value1 - value2;     
-      };
+        return value1 - value2;
+    };
 
-    const handleMonthChange = () =>{
-        const selected = new Date( monthRef.current.value);
-        const thisSchedule = data.filter(i=>  compareYearMonth(selected, new Date(i.scheduledFrom)) >= 0 && compareYearMonth(selected, new Date(i.scheduledTo)) <= 0 );
+    useEffect(() => {
+        handleMonthChange();
+    }, [selectedDate]);
+
+    const handleMonthChange = () => {
+        if(!selectedDate) return;
+        const selected = new Date(selectedDate.value);
+        const thisSchedule = data.filter(i => compareYearMonth(selected, new Date(i.scheduledFrom)) >= 0 && compareYearMonth(selected, new Date(i.scheduledTo)) <= 0);
         // console.log("thisSchedule : ", thisSchedule);
 
-        if(thisSchedule.length<1){
+        if (thisSchedule.length < 1) {
             setTrTags(<tr className='h-32'><td colSpan={4} className='text-center' >접종 예정 스케쥴이 없습니다.</td></tr>);
             return;
         }
-        setTrTags(thisSchedule.map(i=><tr key={i.idx} className="bg-white hover:bg-blue-50">
+        setTrTags(thisSchedule.map(i => <tr key={i.idx} className="bg-white hover:bg-blue-50">
             <td className="px-6 py-2">{i.vaccine.disease}</td>
             <td className="px-6 py-2">{i.vaccine.vaccineName}</td>
-            <td className="px-6 py-2">{(i.scheduledFrom===i.scheduledTo)? i.scheduledFrom : i.scheduledFrom + " ~ " + i.scheduledTo}</td>
+            <td className="px-6 py-2">{(i.scheduledFrom === i.scheduledTo) ? i.scheduledFrom : i.scheduledFrom + " ~ " + i.scheduledTo}</td>
             <td className="px-6 py-2"><CardInfoSmall text={i.vaccine.optional} type="short" /></td>
         </tr>));
     }
-    
-    
+
+
 
     return (
         <div className="w-auto shadowBox m-3 p-4">
             <div className='m-2 mb-5 flex items-center relative '>
                 <p className='font-bold'>접종 일정표</p>
-                <select ref={monthRef}
-                    onChange={handleMonthChange}
-                    className=" w-1/6 h-10 mx-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg font-NanumSquareR" >
-                    {/* <option value={202412}>2024년 12월</option> */}
-                    {months}
-                </select>
+                
+                <SmallSelectBox options={dateOptions} selectLabel="날짜선택"
+                    selectedOption={selectedDate} setSelectedOption={setSelectedDate}
+                    type="small" />
                 <p className='text-sm absolute right-0 top-0 text-gray-700 font-[LINESeedKR-Rg] '><span className='text-red-500'>* </span>월별로 접종 해야하는 예방 접종 목록을 확인해보세요!</p>
             </div>
 
             <div className='w-auto h-[200px] overflow-y-auto relative'>
                 <table className="w-full h-auto text-xs text-left font-NanumSquareNeo text-gray-600  ">
-                
+
                     <thead className="text-gray-400 bg-gray-50 sticky top-0 z-10">
                         <tr>
                             <th scope="col" className="px-6 py-3">
@@ -113,7 +124,7 @@ export default function VacSchedule({child}) {
                             <td className="px-6 py-2">선택</td>
                         </tr> */}
                     </tbody>
-                    
+
                 </table>
             </div>
         </div>

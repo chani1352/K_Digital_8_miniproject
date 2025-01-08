@@ -1,5 +1,5 @@
 import { IoMdCamera } from "react-icons/io";
-import TailButton from "../UI/TailButton";
+import TailButton from "../../UI/TailButton";
 import { useParams } from 'react-router-dom'
 import { useEffect, useState, useRef } from "react";
 import axios from 'axios';
@@ -38,6 +38,7 @@ export default function Modifychild() {
     if (!prevInfo) return;
     nameRef.current.value = prevInfo.childName;
     birthRef.current.value = prevInfo.birth;
+    if(!prevInfo.image) return;
     setImageUrl(`http://10.125.121.214:8080/registerChild/${prevInfo.image}`);
   }, [prevInfo]);
 
@@ -89,7 +90,7 @@ export default function Modifychild() {
       <div className="w-2/3 flex flex-col justify-center items-center m-6">
         <div className='w-full text-3xl font-bold mb-10 text-center'> 아이 정보 수정하기</div>
         <div className="w-[180px] h-[180px] m-6 relative drop-shadow-lg ">
-          <img src={imagUrl} alt="child_profile" className='w-fit h-fit mr-2 rounded-lg border'></img>
+          <img src={imagUrl} alt="child_profile" className='w-fit aspect-square mr-2 rounded-lg border'></img>
 
           <input type="file" accept="image/*" ref={fileRef} onChange={handlePhotoChange} className="hidden" />
           <button onClick={handleFileClick}

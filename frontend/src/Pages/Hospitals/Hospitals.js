@@ -1,10 +1,10 @@
-import HospitalCard from "./UI/HospitalCard";
-import TailButton from "./UI/TailButton";
-import Pagination from "./UI/Pagination";
-import HospitalModal from "./hospital/HospitalModal";
-import CustomSelectBox from "./UI/CustomSelectBox";
+import HospitalCard from "../../UI/Hospitals/HospitalCard";
+import TailButton from "../../UI/TailButton";
+import Pagination from "../../UI/Pagination";
+import HospitalModal from "../../UI/Hospitals/HospitalModal";
+import CustomSelectBox from "../../UI/CustomSelectBox";
 import { useLocation, useSearchParams,  useNavigate } from "react-router-dom";
-import sggcode from "./data/sggcode.json";
+import sggcode from "../../data/sggcode.json";
 
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -87,7 +87,7 @@ export default function Hospitals() {
   // 시/도 선택되면 그에 따른 시/군/구 셋팅하기
   useEffect(() => {
     if(!selectedSD) return;
-    console.log("selectedSD:", selectedSD);
+    // console.log("selectedSD:", selectedSD);
     // console.log("selectedOption1:", selectedOption2);
     setSggDisabled(false);  //시군구 비활성화 해제
     setSelectedSgg(null);   //시군구 선택사항 초기화

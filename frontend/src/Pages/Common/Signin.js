@@ -1,10 +1,10 @@
-import './css/signCss.css';
+import '../../css/signCss.css';
 
 import { useRef} from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-import TailButton from "./UI/TailButton";
-import LogoButton from "./UI/LogoButton";
+import TailButton from "../../UI/TailButton";
+import LogoButton from "../../UI/LogoButton";
 
 // 로그인 성공 후 사용자 정보 가져오기
 export const afterLogin = async (token) => {
@@ -26,7 +26,7 @@ export const afterLogin = async (token) => {
 }
 
 export default function Signin() {
-
+  
   const signinId = useRef();
   const signinPw = useRef();
 

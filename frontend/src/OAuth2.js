@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { afterLogin } from "./Signin";
+import { afterLogin } from "./Pages/Common/Signin";
 
 export default function OAuth2() {
     useEffect(() => {

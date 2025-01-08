@@ -1,7 +1,7 @@
-import "./css/vaccines.css";
-import VaccineCard from "./UI/VaccineCard";
+import "../../css/vaccines.css";
+import VaccineCard from "../../UI/VaccineCard";
 import { useState, useEffect } from 'react';
-import Pagination from "./UI/Pagination";
+import Pagination from "../../UI/Pagination";
 
 export default function Vaccines() {
 
@@ -59,6 +59,7 @@ export default function Vaccines() {
     for (let i = 0; i < cateBtns.length; i++) {
       cateBtns[i].classList.remove('category2_selected');
       cateBtns[i].classList.add('category2_unselected');
+      
     }
 
     const selectedBtn = document.getElementById("cate" + isClicks);
@@ -70,7 +71,7 @@ export default function Vaccines() {
 
   const selectVaccine = (value, crtPage) => {
     setIsClicks(value);
-    console.log("page1 : ", crtPage);
+    // console.log("page1 : ", crtPage);
     let selectVaccine = vaccineAllList;
     if (value !== 15 && vaccineAllList !== "") {
       selectVaccine = vaccineAllList.filter(item => {

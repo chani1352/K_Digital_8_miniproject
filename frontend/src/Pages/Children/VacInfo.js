@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
-import "./checkbox.css";
-import CardInfoSmall from '../UI/CardInfoSmall';
-import TailButton from '../UI/TailButton';
+import "../../css/checkbox.css";
+import CardInfoSmall from '../../UI/CardInfoSmall';
+import TailButton from '../../UI/TailButton';
 
 export default function VacInfo() {
 

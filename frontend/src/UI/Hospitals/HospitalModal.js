@@ -1,6 +1,6 @@
 import { LuPhoneCall, LuMapPin } from "react-icons/lu";
 import { useEffect, useState } from 'react';
-import './modal.css';;
+import '../../css/hospitalModal.css';;
 
 
 export default function HospitalModal({ open, close, data }) {
@@ -93,7 +93,7 @@ export default function HospitalModal({ open, close, data }) {
           </main>
           <footer className="pb-3 px-4">
             <button className="w-[300px]" onClick={close}>
-              close
+              닫기
             </button>
           </footer>
         </section>

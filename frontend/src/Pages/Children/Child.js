@@ -1,13 +1,12 @@
-import '../css/child.css';
+import '../../css/child.css';
 import { LuBaby } from "react-icons/lu";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from 'react';
 
-import TailButton from '../UI/TailButton';
-import ChildProfileCard from './ChildProfileCard';
-import VacSchedule from './VacSchedule';
+import ChildProfileCard from "../../UI/Children/ChildProfileCard"
+import VacSchedule from '../../UI/Children/VacSchedule';
 import axios from 'axios';
 
 export default function Child() {
@@ -41,38 +40,44 @@ export default function Child() {
   const fetchChildList = async () => {
     let url = `http://10.125.121.214:8080/getChildren?email=${memEmail}`;
 
-    //const resp = await axios.get(url);
-    // console.log("resp:", resp);
+    try {
+      const resp = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${loginToken}`, // Authorization 헤더에 Bearer 토큰을 포함시킴
+        }
+      });
+      // console.log("resp:", resp);
 
-    const resp = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${loginToken}`, // Authorization 헤더에 Bearer 토큰을 포함시킴
+      let data = resp.data;
+      setChildlist(data);
+
+      // 등록된 아이가 0명인 경우
+      if (data.length == 0) {
+        // console.log("아이가 없는 사용자");
+        setNochildSection(
+          <div className='w-4/5 h-80 p-2 flex flex-col  justify-center items-center m-2 opacity-30'>
+            <img src='./img/faceonly.png' className='h-40 w-40  my-5'></img>
+            우리 아이를 등록해보세요!
+          </div>
+        );
+
+        const deleteTag = document.getElementById("childInfo");
+        deleteTag.style.display = "none";
+        return;
       }
-    });
 
-    console.log("resp:",resp);
+      // 등록된 아이가 1명 이상인 경우
+      setSelectedChild(data[0]);
+    } catch (err) {
+      // console.log("에러!!! : ",err);
 
-
-    let data = resp.data;
-    setChildlist(data);
-
-    // 등록된 아이가 0명인 경우
-    if (data.length == 0) {
-      // console.log("아이가 없는 사용자");
-      setNochildSection(
-        <div className='w-4/5 h-80 p-2 flex flex-col  justify-center items-center m-2 opacity-30'>
-          <img src='./img/faceonly.png' className='h-40 w-40  my-5'></img>
-          우리 아이를 등록해보세요!
-        </div>
-      );
-
-      const deleteTag = document.getElementById("childInfo");
-      deleteTag.style.display = "none";
-      return;
+      // ========== 토큰만료시, 재 로그인 요청 ======================
+      if (err.response.status === 401) {      
+        alert("로그인 정보가 만료되었습니다.");
+        localStorage.clear();
+        window.location.href="/login";
+      }
     }
-
-    // 등록된 아이가 1명 이상인 경우
-    setSelectedChild(data[0]);
   }
 
   // 아이 목록 버튼 생성
@@ -94,18 +99,13 @@ export default function Child() {
       // console.log("선택된 아이 없음");
       return;
     } else {
-      // console.log("selected ? ", selectedChild);
       setProfile(<ChildProfileCard child={selectedChild} />)
       setSchedule(<VacSchedule child={selectedChild} />);
-      // console.log("childlist ? ", childlist);
       makeChildList();
     }
-
   }, [selectedChild]);
 
   const selectChild = (child) => {
-    // console.log("child click! :", child);
-
     setSelectedChild(child);
     setProfile(<ChildProfileCard child={child} />);
     setSchedule(<VacSchedule child={selectedChild} />);
@@ -121,7 +121,7 @@ export default function Child() {
   }
 
   const clickRemove = () => {
-    if(window.confirm(`"${selectedChild.childName}"을 삭제하시겠습니까?`)){
+    if (window.confirm(`"${selectedChild.childName}"을 삭제하시겠습니까?`)) {
       removeChild();
     }
   }
@@ -147,12 +147,10 @@ export default function Child() {
 
         <div className='h-4 flex justify-end mt-1 mr-1'>
           <div className='h-4 flex items-start text-xs text-gray-600 hover:cursor-pointer'
-                onClick={clickRemove}>
-            <RiDeleteBin5Line className='flex justify-center items-center'/> 삭제
+            onClick={clickRemove}>
+            <RiDeleteBin5Line className='flex justify-center items-center' /> 삭제
           </div>
 
-          {/* <TailButton caption={"삭제하기"} color={"gray"}
-            handleClick={removeChild} style={"h-fit w-fit py-2 px-3 text-xs"} /> */}
         </div>
         {profile}
 
