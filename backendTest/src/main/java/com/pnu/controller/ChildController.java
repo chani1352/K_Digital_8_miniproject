@@ -26,7 +26,7 @@ public class ChildController {
 	private final ChildService childService;
 	
 	@PostMapping("/registerChild")
-	public Child registerChild(@RequestParam("file") MultipartFile file,@RequestParam("childName") String childName,
+	public Child registerChild(@RequestParam(value = "file", required = false) MultipartFile file,@RequestParam("childName") String childName,
 							  @RequestParam("member") String member,@RequestParam("birth") LocalDate birth) throws IOException {
 		System.out.println("ChildController registerChild");
 		ChildDTO child = ChildDTO.builder()
@@ -37,13 +37,7 @@ public class ChildController {
 							  .build();
 		return childService.registerChild(child);
 	} 
-	
-//	@PostMapping("/registerVaccine")
-//	public ChildVaccine registerVaccine(ChildVaccine chVa) {
-//		System.out.println("ChildController registerVaccine");
-//		return childService.registerVaccine(chVa);
-//	}
-//	
+
 	@PutMapping("/selectVaccine")
 	public List<ChildVaccine> selectVaccine(Integer child_idx,@RequestParam(defaultValue = "0") String vaccine_idx) {
 		System.out.println("ChildController selectVaccine");

@@ -41,8 +41,17 @@ export default function Child() {
   const fetchChildList = async () => {
     let url = `http://10.125.121.214:8080/getChildren?email=${memEmail}`;
 
-    const resp = await axios.get(url);
+    //const resp = await axios.get(url);
     // console.log("resp:", resp);
+
+    const resp = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${loginToken}`, // Authorization 헤더에 Bearer 토큰을 포함시킴
+      }
+    });
+
+    console.log("resp:",resp);
+
 
     let data = resp.data;
     setChildlist(data);

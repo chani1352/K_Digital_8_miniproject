@@ -41,12 +41,6 @@ public class MemberController {
 		return memberService.getUserData(authentication);
 	}
 	
-//	@GetMapping("/oauthdata")
-//	public void getOauthData(HttpServletRequest request){
-//		System.out.println("MemberController getOauthData"); //확인용 
-//		memberService.getOauthData(request);
-//    }
-	
 	@PutMapping("/updateMember")
 	public Member updateMember(@RequestBody Member member) {
 		return memberService.updateMember(member);
