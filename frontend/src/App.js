@@ -9,6 +9,7 @@ import Signin from "./Pages/Common/Signin";
 import Signup from "./Pages/Common/Signup";
 import Welcome from './Pages/Common/Welcome';
 import MainPage from './Pages/Common/MainPage';
+import NotFound from './Pages/Common/NotFound';
 
 import Vaccines from './Pages/Vaccine/Vaccines';
 
@@ -84,6 +85,8 @@ function App() {
                         <Route path='/child/vacInfo/:idx' element={<VacInfo />} />
                         <Route path='/oauth2' element={<OAuth2 />} />
                         <Route path='/modify' element={<ModifyMyInfo />} />
+
+                        <Route path='/*' element={<NotFound/>} />
 
                     </Routes>
                 </main>
