@@ -9,7 +9,6 @@ public class CustomConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
 		//아이 사진 정보
 		System.out.println("CustomConfig addResourceHandlers");
 		registry.addResourceHandler("/registerChild/**")
