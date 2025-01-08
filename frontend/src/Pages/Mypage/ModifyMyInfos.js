@@ -50,17 +50,9 @@ export default function ModifyMyInfos() {
             console.error('Error fetching data', error);
         }
     }
-    const changePassword = () => {
-        setPassword(pwRef.current.value);
-    }
-
-    const changePwConfirmed = () => {
-        setPwConfirmed(pwRefConfirmed.current.value);
-    }
-
-    const changeName = () => {
-        setName(nameRef.current.value);
-    }
+    const changePassword = () => {setPassword(pwRef.current.value);}
+    const changePwConfirmed = () => {setPwConfirmed(pwRefConfirmed.current.value);}
+    const changeName = () => {setName(nameRef.current.value);}
 
     //비밀번호 일치 여부 셋팅
     useEffect(() => {

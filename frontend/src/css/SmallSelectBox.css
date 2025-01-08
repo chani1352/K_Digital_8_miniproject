@@ -1,0 +1,86 @@
+.small-select {
+  position: relative;
+  display: inline-block;
+  /* width: 250px; */
+  margin-left: 10PX;
+  margin-right: 10PX;
+  font-size: 0.75rem /* 12px */;
+  line-height: 1rem /* 16px */;
+}
+
+.small-trigger {
+  width: 100%;
+  padding: 6px;
+  background-color: #f2f2f2;
+  border: 1px solid #f2f2f2;
+  /* font-weight: 200; */
+  cursor: pointer;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.small-trigger:disabled {
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #bbbbbb;
+  color: #bbbbbb;
+  cursor: not-allowed;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.small-options {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 5px;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 1000;
+  
+  text-align: center;
+}
+
+.small-option {
+  border-radius: 10px;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.small-option:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+
+.small-options::-webkit-scrollbar {
+  width: 7px;
+  padding-right: 2px;
+}
+
+.small-options::-webkit-scrollbar-track {
+  background-color: rgb(224, 224, 224);
+}
+
+.small-options::-webkit-scrollbar-thumb {
+  background-color: rgb(185, 185, 185);
+}
+
+.small-options::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* 코너에 라운드 효과 */
+.small-options::-webkit-scrollbar-track,
+.small-options::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}

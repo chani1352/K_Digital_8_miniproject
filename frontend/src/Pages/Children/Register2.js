@@ -81,17 +81,18 @@ export default function Register2({ info }) {
         // let url = "10.125.121.214:8080/registerChild?childName=aa&member=chan@naver.com&vaccine=1";
         let url = "http://10.125.121.214:8080/registerChild";
 
+        console.log("사진사진:", info.file);
         const formData = new FormData();
         formData.append("childName",info.name);
         formData.append("member", memEmail);
         formData.append("birth", info.birth);
-        formData.append("file", info.file);
+        if(info.file) formData.append("file", info.file);
         const childData = {
             method: 'POST',
             body : formData,
         }
-        // console.log("===== fetch ====== ");
-
+        console.log("===== fetch ====== ");
+        console.log("childData:", childData);
         const resp = await fetch(url, childData);
         const data = await resp.json();
         if (!resp.ok) {
