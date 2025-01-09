@@ -4,7 +4,8 @@
 ![이미지](./images/capture_main.png)
 
 - **주제:** 어린이 필수 예방 접종 안내 및 관리 시스템
-- **목표:** 어린이 연령별 필수 예방 접종 종류 확인 및 관리, 지역별 접종 가능한 병원 검색
+- **목표:** 연령별 예방접종 정보, 우리 동네 병원 조회, 우리 아이 접종 플랜 및 
+부모의 참여 유도를 통해 어린이들의 건강을 보호하고 전염병 예방
 
 <br/>
 
@@ -15,7 +16,8 @@
 
 ## 📝 활용 데이터 
 - `질병관리청` 어린이 국가예방접종 지원사업 위탁의료기관 현황 정보
-- `Kakao Map api`
+- `질병관리청` 표준예방접종일정표 (2024)
+- `kAKAO MAP API`
 
 <br/>
 
@@ -53,6 +55,7 @@
 <br/>
 
 ### 연령별 예방접종
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_vaccines.png" alt="404page" width="350">
 > - 연령별, 개월수별 필수 예방 접종 정보 제공
 > - 접종 시기와 방법 안내
 > - 필수접종 / 선택접종 여부 안내
@@ -60,6 +63,7 @@
 <br/>
 
 ### 우리 동네 병원
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_hospitals.png" alt="404page" width="350">
 > - 시/도 및 시/군/구 선택 후 검색시 해당 지역의 접종 가능한 병원 리스트 안내
 > - 병원 이름, 주소, 접종 가능한 백신 목록 제공
 > - 자세히 보기를 통해 전화 번호 및 지도를 통한 위치 안내 (Kakao Map)
@@ -67,6 +71,8 @@
 <br/>
 
 ### 우리아이 접종 플랜
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_child.png" alt="404page" width="350">
+
 - **접근 제한**
     > - 로그인 토큰을 통한 접근 제어 
     > - 인증되지 않은 사용자일 경우 로그인 페이지로 전환
@@ -89,21 +95,18 @@
 <br/>
 
 ### 기타
+<img src="./images/capture_error404.png" alt="404page" width="250">
+
 > - **404 에러 처리** : 잘못된 경로로 접속시, 오류 페이지 안내
 
 <br/>
 <br/>
 
-## 📊 RestAPI 명세
 
-이미지 첨부
-
-<br/>
-<br/>
-
-## 💾 DataBase ERD
-
+## 💾 기록
+[Notion LINK](https://bubble-pencil-c95.notion.site/KDT8_-_-15833b9601df81058596c8c3bdf39abc?pvs=4)
 <br/>
 <br/>
 
 ## 🎥 시연 영상
+[![이미지](./images/capture_main.png)](https://youtu.be/Yat73h7MLrY?si=rs-1u0jHYZHlQYDu)
