@@ -44,37 +44,6 @@ public class MemberService {
 		}
 	}
 
-//	public ResponseEntity<?> getOauthData(HttpServletRequest request) {
-//		System.out.println("MemberService getOauthData"); // 확인용
-//		// 서버에서 JWT 토큰을 쿠키에서 읽는 예시
-//		Cookie[] cookies = request.getCookies();
-//		for(Cookie co : cookies) {
-//			Map<String,String> map = co.getAttributes();
-//			System.out.println("map" + map.values());
-//		}
-//		String jwtToken = null;
-//		if (cookies != null) {
-//			for (Cookie cookie : cookies) {
-//				if ("Authorization".equals(cookie.getName())) {
-//					jwtToken = cookie.getValue();
-//					break;
-//				}
-//			}
-//		}
-//		
-//		if (jwtToken != null) {
-//			// 쿠키에서 JWT 토큰을 읽은 경우, 로그인 상태를 JSON으로 반환
-//			Map<String, String> response = new HashMap<>();
-//			response.put("status", "logged-in");
-//			response.put("jwtToken", jwtToken); // 쿠키에서 가져온 JWT 토큰 포함
-//			return ResponseEntity.ok(response); // JSON 응답 반환
-//		} else {
-//			// Authorization 쿠키가 없으면
-//			Map<String, String> response = new HashMap<>();
-//			response.put("status", "not-logged-in");
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-//		}
-//	}
 
 	// 회원 정보 수정
 	public Member updateMember(Member member) {

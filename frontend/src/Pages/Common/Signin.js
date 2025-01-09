@@ -102,19 +102,19 @@ export default function Signin() {
   // 네이버 로그인
   const naverLogin = async(e) => {
     e.preventDefault();
-    window.location.href = 'http://10.125.121.214:8080/oauth2/authorization/naver';
+    window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
 
   }
 
   // 카카오 로그인
   const kakaoLogin = async(e) => {
     e.preventDefault();
-    window.location.href = 'http://10.125.121.214:8080/oauth2/authorization/kakao';
+    window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
   }
 
   const googleLogin = async (e) => {
     e.preventDefault();
-    window.location.href = 'http://10.125.121.214:8080/oauth2/authorization/google';
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   }
 
   return (

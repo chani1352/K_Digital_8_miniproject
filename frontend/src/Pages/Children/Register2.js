@@ -35,14 +35,30 @@ export default function Register2({ info }) {
     ]
 
     const vaccineOptional = [6, 9, 10, 11, 17, 25, 26, 30, 31, 32, 40]
-    const count = [1, 2, 6, 11, 13, 17, 18, 19, 21, 24, 31, 34, 36, 40, 43, 26]
-    const count1 = [3, 7, 12, 14, 20, 22, 27, 33, 35, 37, 41, 25]
-    const [vaccineCheck , setVaccineCheck] = useState('');
+    const front = [3, 7, 12, 14, 20, 22, 27, 33, 35, 37, 41, 25]
+    const back = [6, 11, 13, 17, 21, 24, 31, 34, 36, 40, 43, 26]
+    const only = [1, 2, 18, 19, 32]
+
+    const [vaccineCheck, setVaccineCheck] = useState('');
     const [selDisabled, setSelDisabled] = useState(true);
 
     useEffect(() => {
         makeTable();
     }, []);
+
+    useEffect(() => {
+        if (only.includes(parseInt(vaccineCheck))) return;
+        const vaccineCh = document.getElementById("check" + (parseInt(vaccineCheck) - 1).toString());
+        const vaccineCh1 = document.getElementById("check" + (parseInt(vaccineCheck) + 1).toString());
+        if (!vaccineCh && !vaccineCh1) return;
+        if (!back.includes(parseInt(vaccineCheck))) vaccineCh1.disabled = selDisabled;
+        if (!front.includes(parseInt(vaccineCheck))) vaccineCh.disabled = !selDisabled;
+        if (vaccineCheck != 43) {
+            vaccineCh1.onclick = (e) => {
+                handleCheck(e.target.checked, e.target.value);
+            };
+        }
+    }, [vaccineCheck, selDisabled]);
 
     const makeTable = () => {
         const tags = vaccineList.map(item =>
@@ -51,12 +67,12 @@ export default function Register2({ info }) {
                 <td className="px-6 py-4">{item.disease}</td>
                 <td className="px-6 py-4">{item.code}</td>
                 <td className="px-6 py-4 flex">{item.idx.map(idx =>
-                    <div className={`round ${(vaccineOptional.includes(idx))?"roundyellow":"roundred"} w-[28px] h-[28px] mx-1`} key={idx}>
-                            <input id={"check" + idx} type="checkbox" value={idx} onClick={(e) => handleCheck(e.target.checked, e.target.value)}
-                                   disabled = {item.idx[0] === idx ? false : true}
-                            />
-                            <label htmlFor={"check" + idx}></label>
-                        </div>
+                    <div className={`round ${(vaccineOptional.includes(idx)) ? "roundyellow" : "roundred"} w-[28px] h-[28px] mx-1`} key={idx}>
+                        <input id={"check" + idx} type="checkbox" value={idx} onClick={(e) => handleCheck(e.target.checked, e.target.value)}
+                            disabled={item.idx[0] === idx ? false : true}
+                        />
+                        <label htmlFor={"check" + idx}></label>
+                    </div>
                 )}</td>
             </tr>
         );
@@ -64,19 +80,6 @@ export default function Register2({ info }) {
         setVacTrs(tags);
         // console.log("tags:", tags);
     }
-
-    useEffect(() => {
-        if(count.includes(parseInt(vaccineCheck))) return;
-        const vaccineCh = document.getElementById("check" + (parseInt(vaccineCheck) - 1).toString());
-        const vaccineCh1 = document.getElementById("check" + (parseInt(vaccineCheck) + 1).toString());
-        console.log("vaccineCh:",vaccineCh1);
-        if (!vaccineCh && !vaccineCh1) return ;
-        vaccineCh1.disabled = selDisabled;  
-        vaccineCh1.onclick = (e) => {
-            handleCheck(e.target.checked, e.target.value);
-        };
-        if(!count1.includes(parseInt(vaccineCheck))) vaccineCh.disabled = !selDisabled;  
-    },[vaccineCheck,selDisabled]);
 
     const handleCheck = (checked, id) => {
         console.log("checked : ", checked);
@@ -100,14 +103,14 @@ export default function Register2({ info }) {
         let url = "http://10.125.121.214:8080/child";
 
         const formData = new FormData();
-        formData.append("childName",info.name);
+        formData.append("childName", info.name);
         formData.append("member", memEmail);
         formData.append("birth", info.birth);
-        if(info.file) formData.append("file", info.file);
+        if (info.file) formData.append("file", info.file);
 
         const childData = {
             method: 'POST',
-            body : formData,
+            body: formData,
         }
         console.log("===== fetch ====== ");
         console.log("childData:", childData);

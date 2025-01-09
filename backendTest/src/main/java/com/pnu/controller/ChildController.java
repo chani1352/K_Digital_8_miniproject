@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,11 +22,12 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/child")
 public class ChildController {
 	
 	private final ChildService childService;
 	
-	@PostMapping("/registerChild")
+	@PostMapping
 	public Child registerChild(@RequestParam(value = "file", required = false) MultipartFile file,@RequestParam("childName") String childName,
 							  @RequestParam("member") String member,@RequestParam("birth") LocalDate birth) throws IOException {
 		System.out.println("ChildController registerChild");
@@ -38,13 +40,13 @@ public class ChildController {
 		return childService.registerChild(child);
 	} 
 
-	@PutMapping("/selectVaccine")
+	@PutMapping("/updateVaccines")
 	public List<ChildVaccine> selectVaccine(Integer child_idx,@RequestParam(defaultValue = "0") String vaccine_idx) {
 		System.out.println("ChildController selectVaccine");
 		return childService.selectVaccine(child_idx,vaccine_idx);
 	}
 	
-	@GetMapping("/getChild")
+	@GetMapping
 	public Child getChild(Integer idx) {
 		System.out.println("ChildController findChid");
 		return childService.getChild(idx);
@@ -56,23 +58,23 @@ public class ChildController {
 		return childService.getChildren(email);
 	}
 	
-	@DeleteMapping("/deleteChild")
+	@DeleteMapping
 	public void deleteChild(Integer child_idx) {
 		System.out.println("ChildController deleteChild");
 		childService.deleteChild(child_idx);
 	}
 	
-	@GetMapping("/checkVaccine")
+	@GetMapping("/checkVaccines")
 	public List<Integer> checkVaccine(Integer child_idx){
 		return childService.checkVaccine(child_idx);
 	}
 	
-	@GetMapping("/scheduleVaccine")
+	@GetMapping("/scheduleVaccines")
 	public List<ChildVaccine> scheduleVaccine(Integer child_idx){
 		return childService.scheduleVaccine(child_idx);
 	}
 	
-	@PutMapping("/updateChild")
+	@PutMapping
 	public Child updateChild(@RequestParam(value = "file", required = false) MultipartFile file,@RequestParam("childName") String childName,
 							  @RequestParam("idx") int idx,@RequestParam("birth") LocalDate birth) throws IOException {
 		System.out.println("ChildController updateChild");
