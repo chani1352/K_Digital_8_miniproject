@@ -118,10 +118,9 @@ export default function Signup() {
         }
 
         const url = 'http://10.125.121.214:8080/member/checkDuple?email=' + signupEmail.current.value;
-
         await fetch(url)
             .then(resp => {
-                // console.log("resp is " + resp);
+                console.log("resp is " + resp);
                 return resp.json();
             }).then(result => {
                 console.log("result is " + result);
