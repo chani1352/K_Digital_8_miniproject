@@ -126,7 +126,7 @@ export default function VacInfo() {
     }
 
     const fetchVacInfo = async () => {
-        let url = `http://10.125.121.214:8080/checkVaccine?child_idx=${child_idx}`;
+        let url = `http://10.125.121.214:8080/child/checkVaccines?child_idx=${child_idx}`;
 
         const resp = await axios.get(url);
         // console.log("[VacInfo] data : ", resp.data);
@@ -153,7 +153,7 @@ export default function VacInfo() {
         prevVac.forEach(idx => { vaccine_idxs = vaccine_idxs + idx + "," })
         // console.log("vaccine_idxs", vaccine_idxs);
 
-        let url = "http://10.125.121.214:8080/selectVaccine?";
+        let url = "http://10.125.121.214:8080/child/updateVaccines?";
         url = `${url}child_idx=${child_idx}&vaccine_idx=${vaccine_idxs}`
 
         // console.log("put URL : ", url);

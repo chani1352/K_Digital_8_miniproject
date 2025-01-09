@@ -46,7 +46,7 @@ export default function VacSchedule({ child }) {
     },[dateOptions]);
 
     const fetchData = async () => {
-        let url = `http://10.125.121.214:8080/scheduleVaccine?child_idx=${child.idx}`;
+        let url = `http://10.125.121.214:8080/child/scheduleVaccines?child_idx=${child.idx}`;
         // console.log("스케쥴 url : ", url);
         const resp = await axios.get(url);
         setData(resp.data);

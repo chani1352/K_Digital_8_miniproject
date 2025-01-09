@@ -28,7 +28,7 @@ export default function Modifychild() {
   }, []);
 
   const fetchchildData = async () => {
-    let url = `http://10.125.121.214:8080/getChild?idx=${child_idx}`;
+    let url = `http://10.125.121.214:8080/child?idx=${child_idx}`;
     const resp = await axios.get(url);
     setPrevInfo(resp.data);
   }
@@ -44,8 +44,7 @@ export default function Modifychild() {
 
   const doModify = async () => {
 
-    let url = "http://10.125.121.214:8080/updateChild";
-    // url = `${url}idx=${prevInfo.idx}&childName=${nameRef.current.value}&birth=${birthRef.current.value}`;
+    let url = "http://10.125.121.214:8080/child";
 
     const formData = new FormData();
     formData.append("idx", prevInfo.idx);

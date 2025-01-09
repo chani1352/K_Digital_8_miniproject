@@ -97,10 +97,8 @@ export default function Register2({ info }) {
 
     const handleNext = async (e) => {
         e.preventDefault();
-        // let url = "10.125.121.214:8080/registerChild?childName=aa&member=chan@naver.com&vaccine=1";
-        let url = "http://10.125.121.214:8080/registerChild";
+        let url = "http://10.125.121.214:8080/child";
 
-        console.log("사진사진:", info.file);
         const formData = new FormData();
         formData.append("childName",info.name);
         formData.append("member", memEmail);

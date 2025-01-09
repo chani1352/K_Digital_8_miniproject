@@ -72,22 +72,14 @@ export default function Signup() {
             setBtnDisabled(true);
             return;
         }
-        //2. 비밀번호 유효성
-
-        //3. 이름 유효성
-
         postSignUp();
     }
-
-    // useEffect(()=>{
-    //     console.log("useEffect");
-    // },[])
 
     //서버에 전달
     const postSignUp = async () => {
 
         console.log("post ", name);
-        const url = 'http://10.125.121.214:8080/register';
+        const url = 'http://10.125.121.214:8080/member';
         const postData = {
             method: 'POST',
             headers: {
@@ -125,7 +117,7 @@ export default function Signup() {
             return;
         }
 
-        const url = 'http://10.125.121.214:8080/findMember?email=' + signupEmail.current.value;
+        const url = 'http://10.125.121.214:8080/member/checkDuple?email=' + signupEmail.current.value;
 
         await fetch(url)
             .then(resp => {
