@@ -3,18 +3,13 @@ package com.pnu.service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.pnu.util.JWTUtil;
-
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class OAuthService {
-	
-	JWTUtil jwtUtil = new JWTUtil();
 	
 	public ResponseEntity<?> oauthLogin(HttpServletRequest request) {
 		System.out.println("LoginController auth"); //확인

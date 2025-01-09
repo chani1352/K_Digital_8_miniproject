@@ -35,8 +35,8 @@ public class SecurityConfig {
 		http.httpBasic(basic->basic.disable());
 		http.cors(cors->cors.configurationSource(corsSource()));
 		http.authorizeHttpRequests(security->security
-									.requestMatchers("/member/**").authenticated()
-									.requestMatchers("/admin/**").hasRole("ADMIN")
+									//.requestMatchers("/child/**").authenticated()
+									//.requestMatchers("/admin/**").hasRole("ADMIN")
 									.anyRequest().permitAll());
 
 		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));

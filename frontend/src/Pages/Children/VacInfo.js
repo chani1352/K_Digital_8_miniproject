@@ -39,9 +39,10 @@ export default function VacInfo() {
     ]
 
     const vaccineOptional = [6, 9, 10, 11, 17, 25, 26, 30, 31, 32, 40]
-    const count = [1,2,6,11,13,17,18,19,21,24,31,34,36,40,43,26]
-    const count1 = [3, 7, 12, 14, 20, 22, 27, 33, 35, 37, 41, 25]
-    const [vaccineCheck , setVaccineCheck] = useState('');
+    const front = [3, 7, 12, 14, 20, 22, 27, 33, 35, 37, 41, 25]
+    const back = [6, 11, 13, 17, 21, 24, 31, 34, 36, 40, 43, 26]
+    const only = [1, 2, 18, 19, 32]
+    const [vaccineCheck, setVaccineCheck] = useState('');
     const [selDisabled, setSelDisabled] = useState(true);
 
     useEffect(() => {
@@ -61,16 +62,16 @@ export default function VacInfo() {
                 <th scope="row" className="px-2 py-4 font-medium text-gray-900 "><CardInfoSmall text={item.optional} type={"short"} /></th>
                 <td className="px-6 py-4">{item.disease}</td>
                 <td className="px-6 py-4">{item.code}</td>
-                    <td className="px-6 py-4 flex">{item.idx.map(idx =>
-                    <div className={`round ${(vaccineOptional.includes(idx))?"roundyellow":"roundred"} w-[28px] h-[28px] mx-1`} key={idx}>
-                            <input id={"check" + idx} type="checkbox" value={idx} onClick={(e) => handleCheck(e.target.checked, e.target.value)}
-                                   disabled = {item.idx[0] === idx ? false : true}
-                            />
-                            <label htmlFor={"check" + idx}></label>
-                        </div>
-                    )}</td>
+                <td className="px-6 py-4 flex">{item.idx.map(idx =>
+                    <div className={`round ${(vaccineOptional.includes(idx)) ? "roundyellow" : "roundred"} w-[28px] h-[28px] mx-1`} key={idx}>
+                        <input id={"check" + idx} type="checkbox" value={idx} onClick={(e) => handleCheck(e.target.checked, e.target.value)}
+                        //disabled = {item.idx[0] === idx ? false : true}
+                        />
+                        <label htmlFor={"check" + idx}></label>
+                    </div>
+                )}</td>
 
-   
+
             </tr>
         );
 
@@ -81,9 +82,8 @@ export default function VacInfo() {
     const makeCheck = () => {
         prevVac.map(idx => {
             const checkbox = document.getElementById("check" + idx);
- 
             if (checkbox) {
-                console.log("idx :",idx)
+                console.log("idx :", idx)
                 checkbox.checked = true; // 체크 여부 설정
             }
         });
@@ -99,17 +99,17 @@ export default function VacInfo() {
     }
 
     useEffect(() => {
-        if(count.includes(parseInt(vaccineCheck))) return;
+        if (only.includes(parseInt(vaccineCheck))) return;
         const vaccineCh = document.getElementById("check" + (parseInt(vaccineCheck) - 1).toString());
         const vaccineCh1 = document.getElementById("check" + (parseInt(vaccineCheck) + 1).toString());
-        console.log("vaccineCh:",vaccineCh1);
-        if (!vaccineCh && !vaccineCh1) return ;
-        vaccineCh1.disabled = selDisabled;  
+        console.log("vaccineCh:", vaccineCh1);
+        if (!vaccineCh && !vaccineCh1) return;
+        if (!back.includes(parseInt(vaccineCheck))) vaccineCh1.disabled = selDisabled;
+        if (!front.includes(parseInt(vaccineCheck))) vaccineCh.disabled = !selDisabled;
         vaccineCh1.onclick = (e) => {
             handleCheck(e.target.checked, e.target.value);
         };
-        if(!count1.includes(parseInt(vaccineCheck))) vaccineCh.disabled = !selDisabled;  
-    },[vaccineCheck,selDisabled]);
+    }, [vaccineCheck, selDisabled]);
 
     const handleCheck = (checked, id) => {
         console.log("checked : ", checked);
@@ -138,11 +138,30 @@ export default function VacInfo() {
     const changeToModify = () => {
         console.log("수정하기");
         setIsUpdate(true);
-
         const checkboxs = document.getElementsByTagName("input");
-        for (var i = 0; i < checkboxs.length; i++) {
+        for (var i = 0; i < 43; i++) {
+            if(i === 37) i = 41;
+            else if(i === 38) i = 42;
+            else if(i === 39) i = 43;
+            else if(i === 41) i = 37;
+            else if(i === 42) i = 38;
+            else if(i === 43) i = 39;
             var checkbox1 = checkboxs.item(i);
+            const checkbox = document.getElementById("check" + (i));
+            const checkboxPl = document.getElementById("check" + (i + 2));
             checkbox1.disabled = false;
+            if (checkbox1.checked) {
+                if (checkbox) {
+                    if (!front.includes(i + 1)) {
+                        checkbox.disabled = true;
+                        checkboxPl.disabled = false;
+                    }
+                    if (only.includes(i + 1)) {
+                        checkbox.disabled = false;
+                    }
+                }
+            }
+            console.log("checkbox1:", checkbox1)
             checkbox1.classList.remove('hover:cursor-not-allowed');
         }
     }
@@ -204,12 +223,12 @@ export default function VacInfo() {
                 </table>
 
                 <div className='w-full flex justify-center'>
-                <TailButton caption="수정하기" color={"blue"}
-                    style={isUpdate ? "w-full m-10 h-12" : "hidden"}
-                    fontStyle={`text-base`}
-                    handleClick={putModify} />
+                    <TailButton caption="수정하기" color={"blue"}
+                        style={isUpdate ? "w-full m-10 h-12" : "hidden"}
+                        fontStyle={`text-base`}
+                        handleClick={putModify} />
                 </div>
-                
+
             </div>
         </div>
     )
