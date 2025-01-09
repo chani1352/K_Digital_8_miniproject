@@ -9,7 +9,7 @@ import LogoButton from "../../UI/LogoButton";
 // 로그인 성공 후 사용자 정보 가져오기
 export const afterLogin = async (token) => {
   try {
-    const response = await fetch('http://10.125.121.214:8080/data', {
+    const response = await fetch('http://10.125.121.214:8080/member', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
@@ -88,12 +88,12 @@ export default function Signin() {
 
       } else {
         console.log('Authorization header not found');
-        alert("로그인에 실패하였습니다");
+        alert("로그인에 실패하였습니다. Email 또는 패스워드를 다시 확인해주세요.");
         window.location.reload();
       }
     } catch (err) {
       console.error('Error fetching data:', err);
-      alert("로그인에 실패하였습니다");
+      alert("로그인에 실패하였습니다. Email 또는 패스워드를 다시 확인해주세요.");
       window.location.reload();
     }
   }

@@ -119,7 +119,11 @@ export default function Hospitals() {
 
   // 병원정보 패치
   const fetchHospital = async (sd, sgg, crtPage) => {
-    setHosCards(<div className="flex opacity-30 w-4/5 h-full text-2xl pt-10 justify-center">로딩중...</div>);
+    setHosCards(
+    <div className="flex  flex-col opacity-40 w-4/5 h-full text-2xl pt-10 justify-center items-center">
+      <img src="/img/loadingImg.gif" alt="loading" className="w-1/3" />
+      <p>로딩중...</p>
+    </div>);
     let url = "https://apis.data.go.kr/1790387/orglist3/getOrgList3?"
     const key = process.env.REACT_APP_DATA_KEY;
 
@@ -136,8 +140,6 @@ export default function Hospitals() {
     data = data.replace('"resultCode":00', '"resultCode":"00"');
     data = data.replace(/"item":/g, '');
     data = data.replace(/"vcnInfo":/g, '');
-
-
 
     let parsedData = JSON.parse(data);
     const dataAll = parsedData.response.body;

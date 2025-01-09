@@ -97,10 +97,8 @@ export default function Register2({ info }) {
 
     const handleNext = async (e) => {
         e.preventDefault();
-        // let url = "10.125.121.214:8080/registerChild?childName=aa&member=chan@naver.com&vaccine=1";
-        let url = "http://10.125.121.214:8080/registerChild";
+        let url = "http://10.125.121.214:8080/child";
 
-        console.log("사진사진:", info.file);
         const formData = new FormData();
         formData.append("childName",info.name);
         formData.append("member", memEmail);
@@ -130,7 +128,7 @@ export default function Register2({ info }) {
         checkedList.forEach(idx => { vaccine_idxs = vaccine_idxs + idx + "," })
         console.log("vaccine_idxs", vaccine_idxs);
 
-        let url = "http://10.125.121.214:8080/selectVaccine?";
+        let url = "http://10.125.121.214:8080/child/updateVaccines?";
         url = `${url}child_idx=${idx}&vaccine_idx=${vaccine_idxs}`
 
         console.log("put URL : ", url);

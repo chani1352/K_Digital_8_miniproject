@@ -38,7 +38,7 @@ export default function Child() {
   }, []);
 
   const fetchChildList = async () => {
-    let url = `http://10.125.121.214:8080/getChildren?email=${memEmail}`;
+    let url = `http://10.125.121.214:8080/child/getChildren?email=${memEmail}`;
 
     try {
       const resp = await axios.get(url, {
@@ -115,7 +115,7 @@ export default function Child() {
   const removeChild = async () => {
     // console.log("remove : ", selectedChild);
 
-    let url = `http://10.125.121.214:8080/deleteChild?child_idx=${selectedChild.idx}`;
+    let url = `http://10.125.121.214:8080/child?child_idx=${selectedChild.idx}`;
     const resp = await fetch(url, { method: 'DELETE' });
     if (resp.ok) window.location.reload();
   }
