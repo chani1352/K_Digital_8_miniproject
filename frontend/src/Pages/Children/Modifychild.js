@@ -28,7 +28,7 @@ export default function Modifychild() {
   }, []);
 
   const fetchchildData = async () => {
-    let url = `http://10.125.121.214:8080/child?idx=${child_idx}`;
+    let url = `${process.env.REACT_APP_SERVER_ADDR}/child?idx=${child_idx}`;
     const resp = await axios.get(url);
     setPrevInfo(resp.data);
   }
@@ -39,12 +39,12 @@ export default function Modifychild() {
     nameRef.current.value = prevInfo.childName;
     birthRef.current.value = prevInfo.birth;
     if(!prevInfo.image) return;
-    setImageUrl(`http://10.125.121.214:8080/registerChild/${prevInfo.image}`);
+    setImageUrl(`${process.env.REACT_APP_SERVER_ADDR}/registerChild/${prevInfo.image}`);
   }, [prevInfo]);
 
   const doModify = async () => {
 
-    let url = "http://10.125.121.214:8080/child";
+    let url = `${process.env.REACT_APP_SERVER_ADDR}/child`;
 
     const formData = new FormData();
     formData.append("idx", prevInfo.idx);

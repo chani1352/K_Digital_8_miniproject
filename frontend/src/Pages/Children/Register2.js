@@ -100,7 +100,7 @@ export default function Register2({ info }) {
 
     const handleNext = async (e) => {
         e.preventDefault();
-        let url = "http://10.125.121.214:8080/child";
+        let url = `${process.env.REACT_APP_SERVER_ADDR}/child`;
 
         const formData = new FormData();
         formData.append("childName", info.name);
@@ -131,7 +131,7 @@ export default function Register2({ info }) {
         checkedList.forEach(idx => { vaccine_idxs = vaccine_idxs + idx + "," })
         console.log("vaccine_idxs", vaccine_idxs);
 
-        let url = "http://10.125.121.214:8080/child/updateVaccines?";
+        let url = `${process.env.REACT_APP_SERVER_ADDR}/child/updateVaccines?`;
         url = `${url}child_idx=${idx}&vaccine_idx=${vaccine_idxs}`
 
         console.log("put URL : ", url);

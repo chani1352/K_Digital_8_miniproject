@@ -22,7 +22,8 @@ export default function Vaccines() {
   }
 
   const dataAll = async () => {
-    const url = 'http://10.125.121.214:8080/findVaccine';
+    const url = `${process.env.REACT_APP_SERVER_ADDR}/findVaccine`;
+    console.log("백신 url : ", url);
     await fetch(url)
       .then(resp => resp.json())
       .then(data => setVaccineAllList(data))
@@ -96,31 +97,31 @@ export default function Vaccines() {
       <div className="w-full max-w-[750px] flex justify-between  my-20 mx-auto">
         <div>
           <button onClick={() => vaccineAll('전체')} className={`font-bold ${isClick === "전체" ? "text-black" : "text-gray-400"}`}>
-            <img className={`w-32 rounded-3xl  p-7 mb-4 ${isClick === "전체" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/menuall.png' />
+            <img className={`w-32 rounded-3xl  p-7 mb-4 ${isClick === "전체" ? "bg-gray-300" : "bg-gray-100"}`} src='./img/vaccinepage/menuall.png' />
             전체
           </button>
         </div>
         <div>
           <button onClick={() => vaccineAll('신생아')} className={`font-bold ${isClick === "신생아" ? "text-black" : "text-gray-400"}`}>
-            <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "신생아" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/footprint.png' />
+            <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "신생아" ? "bg-gray-300" : "bg-gray-100"}`} src='./img/vaccinepage/footprint.png' />
             신생아
           </button>
         </div>
         <div>
           <button onClick={() => vaccineAll('영아기')} className={`font-bold ${isClick === "영아기" ? "text-black" : "text-gray-400"}`}>
-          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "영아기" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/feeding-bottle.png' />
+          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "영아기" ? "bg-gray-300" : "bg-gray-100"}`} src='./img/vaccinepage/feeding-bottle.png' />
           영아기
           </button>
         </div>
         <div>
           <button onClick={() => vaccineAll('유아기')} className={`font-bold ${isClick === "유아기" ? "text-black" : "text-gray-400"}`}>
-          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "유아기" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/babyface.png' />
+          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "유아기" ? "bg-gray-300" : "bg-gray-100"}`} src='./img/vaccinepage/babyface.png' />
           유아기
           </button>
         </div>
         <div>
           <button onClick={() => vaccineAll('아동기')} className={`font-bold ${isClick === "아동기" ? "text-black" : "text-gray-400"}`}>
-          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "아동기" ? "bg-gray-200" : "bg-gray-50"}`} src='./img/vaccinepage/babyboy.png' />
+          <img className={`w-32 rounded-3xl  p-6 mb-4 ${isClick === "아동기" ? "bg-gray-300" : "bg-gray-100"}`} src='./img/vaccinepage/babyboy.png' />
           아동기
           </button>
         </div>
