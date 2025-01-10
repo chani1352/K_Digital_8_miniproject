@@ -38,7 +38,8 @@ public class ChildService {
 		
 		//사진 경로 저장
 		String userImgName =  imageUpload(childDTO);
-
+		
+		//입력받은 아이 정보 저장
 		Member member = memberRepo.findById(childDTO.getMember()).orElse(null);
 		if(member == null) return null;
 		Child child = childRepo.save(Child.builder()
@@ -54,8 +55,7 @@ public class ChildService {
 		for(VaccineInfo vaccine : vaccines) {
 			int from = vaccine.getPeriodFrom();
 			int to = vaccine.getPeriodTo();
-			ChildVaccine childVaccine = new ChildVaccine();
-			chVaRepo.save(childVaccine.builder()
+			chVaRepo.save(ChildVaccine.builder()
 				    .child(child)
 			        .vaccine(vaccine)
 			        .scheduledFrom(childDTO.getBirth().plusMonths(month[from]))
@@ -91,6 +91,7 @@ public class ChildService {
 		return child;
 	}
 	
+	//선택한 아이 한명 정보
 	public Child getChild(Integer idx) {
 		System.out.println("ChildController getChild");
 		return childRepo.findById(idx).orElse(null);
@@ -187,10 +188,10 @@ public class ChildService {
             }
             
          // 파일저장 이름
-            String originalFileName = file.getOriginalFilename();
+            //String originalFileName = file.getOriginalFilename();
             // 확장자를 제외한 파일 이름과 확장자 추출
-            int lastIndex = originalFileName.lastIndexOf('.');
-            String fileName = originalFileName.substring(0, lastIndex);
+            //int lastIndex = originalFileName.lastIndexOf('.');
+            //String fileName = originalFileName.substring(0, lastIndex);
             userImgName = childDTO.getMember() + "_" + childDTO.getChildName() + originalFileExtension;
             // 파일 저장
             userImg = new File(absolutePath  + path + File.separator + userImgName);

@@ -64,8 +64,6 @@ export default function VacInfo() {
                         <label htmlFor={"check" + idx}></label>
                     </div>
                 )}</td>
-
-
             </tr>
         );
 

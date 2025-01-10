@@ -15,6 +15,7 @@ public class VaccineInfoService {
 	
 	private final VaccineInfoRepository vacRepo;
 	
+	//백신 전체 데이터 전달
 	public List<VaccineInfo> getVaccines() {
 		System.out.println("VaccineInfoService getVaccines");
 		return vacRepo.findAll();

@@ -3,7 +3,6 @@ package com.pnu.config;
 import java.io.IOException;
 import java.util.Map;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
