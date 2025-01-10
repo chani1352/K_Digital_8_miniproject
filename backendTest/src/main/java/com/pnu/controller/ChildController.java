@@ -28,8 +28,8 @@ public class ChildController {
 	private final ChildService childService;
 	
 	@PostMapping
-	public Child registerChild(@RequestParam(value = "file", required = false) MultipartFile file,@RequestParam("childName") String childName,
-							  @RequestParam("member") String member,@RequestParam("birth") LocalDate birth) throws IOException {
+	public Child registerChild(@RequestParam(required = false) MultipartFile file,@RequestParam String childName,
+							  @RequestParam String member,@RequestParam LocalDate birth) throws IOException {
 		System.out.println("ChildController registerChild");
 		ChildDTO child = ChildDTO.builder()
 							  .childName(childName)
@@ -75,8 +75,8 @@ public class ChildController {
 	}
 	
 	@PutMapping
-	public Child updateChild(@RequestParam(value = "file", required = false) MultipartFile file,@RequestParam("childName") String childName,
-							  @RequestParam("idx") int idx,@RequestParam("birth") LocalDate birth) throws IOException {
+	public Child updateChild(@RequestParam(required = false) MultipartFile file,@RequestParam String childName,
+							  @RequestParam int idx,@RequestParam LocalDate birth) throws IOException {
 		System.out.println("ChildController updateChild");
 		ChildDTO child = ChildDTO.builder()
 							  .childName(childName)

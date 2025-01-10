@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.pnu.domain.Child;
-import com.pnu.domain.ChildVaccine;
 
 public interface ChildRepository extends JpaRepository<Child,Integer>{
 	

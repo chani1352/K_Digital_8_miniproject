@@ -41,7 +41,7 @@ function App() {
                     <div className='min-w-[140px] h-[70px] '>
                         <Link to="/">
                             {/* 로고 */}
-                            <img className="h-full " src='./img/headerLogo.png' alt="logo" />
+                            <img className="h-full " src='/img/headerLogo.png' alt="logo" />
                         </Link>
                     </div>
 
