@@ -38,7 +38,7 @@ export default function Child() {
   }, []);
 
   const fetchChildList = async () => {
-    let url = `http://10.125.121.214:8080/child/getChildren?email=${memEmail}`;
+    let url = `${process.env.REACT_APP_SERVER_ADDR}/child/getChildren?email=${memEmail}`;
 
     try {
       const resp = await axios.get(url, {
@@ -69,8 +69,6 @@ export default function Child() {
       // 등록된 아이가 1명 이상인 경우
       setSelectedChild(data[0]);
     } catch (err) {
-      // console.log("에러!!! : ",err);
-
       // ========== 토큰만료시, 재 로그인 요청 ======================
       if (err.response.status === 401) {      
         alert("로그인 정보가 만료되었습니다.");

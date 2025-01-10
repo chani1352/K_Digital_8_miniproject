@@ -9,7 +9,7 @@ import LogoButton from "../../UI/LogoButton";
 // 로그인 성공 후 사용자 정보 가져오기
 export const afterLogin = async (token) => {
   try {
-    const response = await fetch('http://10.125.121.214:8080/member', {
+    const response = await fetch(`${process.env.REACT_APP_SERVER_ADDR}/member`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
@@ -64,7 +64,7 @@ export default function Signin() {
     }
 
 
-    const url = 'http://10.125.121.214:8080/login';
+    const url = `${process.env.REACT_APP_SERVER_ADDR}/login`;
 
     try {
       const resp = await fetch(url, loginData);
@@ -102,19 +102,19 @@ export default function Signin() {
   // 네이버 로그인
   const naverLogin = async(e) => {
     e.preventDefault();
-    window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+    window.location.href = `${process.env.REACT_APP_SERVER_ADDR}/oauth2/authorization/naver`;
 
   }
 
   // 카카오 로그인
   const kakaoLogin = async(e) => {
     e.preventDefault();
-    window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
+    window.location.href = `${process.env.REACT_APP_SERVER_ADDR}/oauth2/authorization/kakao`;
   }
 
   const googleLogin = async (e) => {
     e.preventDefault();
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = `${process.env.REACT_APP_SERVER_ADDR}/oauth2/authorization/google`;
   }
 
   return (

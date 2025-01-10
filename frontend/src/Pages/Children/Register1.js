@@ -1,7 +1,7 @@
 import { IoMdCamera } from "react-icons/io";
 import TailButton from "../../UI/TailButton";
 import Register2 from "./Register2";
-import { useEffect, useState, useRef, use } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function Register1({goNext}) {
     const nameRef = useRef();
@@ -38,11 +38,6 @@ export default function Register1({goNext}) {
         if(!childBirth) return;
         setBtnDisabled(false);
     },[childName, childBirth])
-    // useEffect(()=>{
-    //     if(!nameRef.current.value) return;
-    //     if(!birthRef.current.value) return;
-    //     setBtnDisabled(true);
-    // },[nameRef.current.value, birthRef.current.value])
 
     const beforeNext = () => {
         const childInfo = {

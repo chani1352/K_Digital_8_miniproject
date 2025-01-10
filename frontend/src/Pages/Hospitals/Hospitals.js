@@ -42,7 +42,7 @@ export default function Hospitals() {
   //필수접종,선택접종 구분을 위한 백신 정보
   useEffect(()=>{
     const dataAll = async () => {
-      const url = 'http://10.125.121.214:8080/findVaccine';
+      const url = `${process.env.REACT_APP_SERVER_ADDR}/findVaccine`;
       await fetch(url)
         .then(resp => resp.json())
         .then(data => setVaccineAllList(data))

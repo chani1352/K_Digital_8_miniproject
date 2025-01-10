@@ -32,7 +32,7 @@ export default function ModifyMyInfos() {
     //form에 기존데이터 입력
     const setPrevData = async () => {
         try {
-            const response = await fetch('http://10.125.121.214:8080/member', {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_ADDR}/member`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,  // JWT 토큰을 Authorization 헤더에 포함
@@ -88,7 +88,7 @@ export default function ModifyMyInfos() {
     const putModify = async () => {
 
         console.log("PUT(modify)");
-        const url = 'http://10.125.121.214:8080/member';
+        const url = `${process.env.REACT_APP_SERVER_ADDR}/member`;
         const putData = {
             method: 'PUT',
             headers: {

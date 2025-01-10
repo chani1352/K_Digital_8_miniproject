@@ -46,7 +46,7 @@ export default function VacSchedule({ child }) {
     },[dateOptions]);
 
     const fetchData = async () => {
-        let url = `http://10.125.121.214:8080/child/scheduleVaccines?child_idx=${child.idx}`;
+        let url = `${process.env.REACT_APP_SERVER_ADDR}/child/scheduleVaccines?child_idx=${child.idx}`;
         // console.log("스케쥴 url : ", url);
         const resp = await axios.get(url);
         setData(resp.data);
@@ -117,12 +117,6 @@ export default function VacSchedule({ child }) {
                     </thead>
                     <tbody className="">
                         {trTags}
-                        {/* <tr className="bg-white hover:bg-blue-50">
-                            <td className="px-6 py-2">B형간염</td>
-                            <td className="px-6 py-2">abc</td>
-                            <td className="px-6 py-2">2024.12</td>
-                            <td className="px-6 py-2">선택</td>
-                        </tr> */}
                     </tbody>
 
                 </table>

@@ -79,7 +79,7 @@ export default function Signup() {
     const postSignUp = async () => {
 
         console.log("post ", name);
-        const url = 'http://10.125.121.214:8080/member';
+        const url = `${process.env.REACT_APP_SERVER_ADDR}/member`;
         const postData = {
             method: 'POST',
             headers: {
@@ -97,12 +97,10 @@ export default function Signup() {
 
         await fetch(url,postData)
         .then(resp=>{
-            // console.log("sucess result is " + resp);
             return resp.json();
         }).then(result=>{
-            console.log("result is ");
-            console.log(result);
-            // setDataBoard(result);
+            // console.log("result is ");
+            // console.log(result);
             navigate('/welcome')
         }).catch(err=>{
             console.error("Error fetching Board:", err);
@@ -117,7 +115,7 @@ export default function Signup() {
             return;
         }
 
-        const url = 'http://10.125.121.214:8080/member/checkDuple?email=' + signupEmail.current.value;
+        const url = `${process.env.REACT_APP_SERVER_ADDR}/member/checkDuple?email=${signupEmail.current.value}`;
         await fetch(url)
             .then(resp => {
                 console.log("resp is " + resp);
