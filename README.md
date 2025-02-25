@@ -55,7 +55,7 @@
 <br/>
 
 ### 3. 연령별 예방접종
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_vaccines.png" alt="404page" width="400">
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_vaccines.png" alt="404page" width="100%">
 > - 연령별, 개월수별 필수 예방 접종 정보 제공
 > - 접종 시기와 방법 안내
 > - 필수접종 / 선택접종 여부 안내
@@ -63,7 +63,7 @@
 <br/>
 
 ### 4. 우리 동네 병원
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_hospitals.png" alt="404page" width="400">
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_hospitals.png" alt="404page" width="100%">
 > - 시/도 및 시/군/구 선택 후 검색시 해당 지역의 접종 가능한 병원 리스트 안내
 > - 병원 이름, 주소, 접종 가능한 백신 목록 제공
 > - 자세히 보기를 통해 전화 번호 및 지도를 통한 위치 안내 (Kakao Map)
@@ -71,7 +71,7 @@
 <br/>
 
 ### 5. 우리아이 접종 플랜
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_child.png" alt="404page" width="400">
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/capture_child.png" alt="404page" width="100%">
 
 - **접근 제한**
     > - 로그인 토큰을 통한 접근 제어 
@@ -95,7 +95,7 @@
 <br/>
 
 ### 기타
-<img src="./images/capture_error404.png" alt="404page" width="320">
+<img src="./images/capture_error404.png" alt="404page" width="100%">
 
 > - **404 에러 처리** : 잘못된 경로로 접속시, 오류 페이지 안내
 
